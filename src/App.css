@@ -36,40 +36,40 @@
 
 @font-face {
   font-family: "Bold";
-  src: url(../public/assets/fonts/IBMPlexSansThai-Bold.ttf);
+  src: url(./assets/fonts/IBMPlexSansThai-Bold.ttf);
 }
 
 @font-face {
   font-family: "ExtraLight";
-  src: url(../public/assets/fonts/IBMPlexSansThai-ExtraLight.ttf);
+  src: url(./assets/fonts/IBMPlexSansThai-ExtraLight.ttf);
 }
 
 @font-face {
   font-family: "Light";
-  src: url(../public/assets/fonts/IBMPlexSansThai-Light.ttf);
+  src: url(./assets/fonts/IBMPlexSansThai-Light.ttf);
 }
 
 @font-face {
   font-family: "Medium";
-  src: url(../public/assets/fonts/IBMPlexSansThai-Medium.ttf);
+  src: url(./assets/fonts/IBMPlexSansThai-Medium.ttf);
 }
 
 @font-face {
   font-family: "Regular";
-  src: url(../public/assets/fonts/IBMPlexSansThai-Regular.ttf);
+  src: url(./assets/fonts/IBMPlexSansThai-Regular.ttf);
 }
 
 @font-face {
   font-family: "SemiBold";
-  src: url(../public/assets/fonts/IBMPlexSansThai-SemiBold.ttf);
+  src: url(./assets/fonts/IBMPlexSansThai-SemiBold.ttf);
 }
 
 @font-face {
   font-family: "ThaiText";
-  src: url(../public/assets/fonts/IBMPlexSansThai-Text.ttf);
+  src: url(./assets/fonts/IBMPlexSansThai-Text.ttf);
 }
 
 @font-face {
   font-family: "Thin";
-  src: url(../public/assets/fonts/IBMPlexSansThai-Thin.ttf);
+  src: url(./assets/fonts/IBMPlexSansThai-Thin.ttf);
 }
