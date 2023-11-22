@@ -187,3 +187,23 @@
     height: 40px;
     z-index: 4;
 }
+
+.emptyState-icon {
+    position: absolute;
+    width: 120px;
+    height: 84px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.no-activity {
+    position: absolute;
+    top: 56%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: var(--grey2);
+    font-size: 16px;
+    font-family: bold;
+
+}
