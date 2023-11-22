@@ -1,42 +1,14 @@
-:root {
-    --persianBlue: "#3762FC";
-    --persianBlue60: "#87A1FD";
-    --persianBlue20: "#D7E0FE";
-    --black: "#000000";
-    --grey1: "#2A323C";
-    --grey2: "#697D96";
-    --grey3: "#93ABC1";
-    --grey4: "#C2D2E7";
-    --grey6: "#E5EEF9";
-    --grey7: "#F3F7FB";
-    --grey8: "#92A4BB";
-    --white: "#FFFFFF";
-    --negative1: "#D43A3A";
-    --negative2: "#F6D8D8";
-    --negative3: "#FBEBEB";
-    --warning1: "#D89E08";
-    --warning2: "#F7ECCE";
-    --warning3: "#FBF5E6";
-    --orange: "#F06A12";
-    --permutationBoard: "#C9D1DB";
-    --wireframeLine: "#734C99";
-    --positive1: "#22B967";
-    --positive2: "#D3F1E1";
-    --positive3: "#E9F8F0";
-    --mayaBlue: "#69CBE4";
-    --mayaBlue60: "#9BE0EF";
-    --mayaBlue20: "#DEF5FA";
-    --neutralGrey: "#D4E0F0";
-    --neutralGrey3: "#93A8C1";
-    --tertiaryYellow: "#F0AB44";
-    --tertiaryMagenta: "#F15E79";
-    --secondary_MayaBlue: "#59CBE4";
+.justify-between {
+    display: flex;
+    justify-content: space-between;
 }
 
 .box-activity {
     padding: 0px 16px 16px 16px;
     background-color: var(--white);
+
 }
+
 
 .nav-activity {
     width: 100%;
@@ -68,17 +40,150 @@
 .head-box {
     width: 50%;
     height: 39px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--grey3);
-    cursor: pointer;
 }
+
+
 
 .head-text {
     color: var(--neutralGrey3);
+    text-align: center;
 }
 
 .head-active {
     color: var(--persianBlue);
+    text-align: center;
+}
+
+.active-hr-button {
+    width: 100%;
+    height: 2px;
+    background-color: var(--persianBlue);
+    margin: 0 !important;
+}
+
+.hr-button {
+    width: 100%;
+    height: 2px;
+    background-color: var(--neutralGrey3);
+    margin-top: 0;
+}
+
+.activity-box-user {
+    position: relative;
+    width: 100%;
+    height: auto;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    /* Adjust the values as needed */
+    margin-bottom: 24px;
+    border-radius: 16px;
+    padding-bottom: 16px;
+}
+
+.activity-image {
+    position: relative;
+    margin-top: 24px;
+    width: 100%;
+    height: 193px;
+    border-top-right-radius: 18px;
+    border-top-left-radius: 18px;
+    background-color: var(--positive1);
+    z-index: 1;
+
+}
+
+.img-activity {
+    position: relative;
+    width: 100%;
+    height: 193px;
+    z-index: 0;
+}
+
+.opacity-tick {
+    opacity: 0.5;
+}
+
+
+
+
+.details-text {
+    font-size: 16px;
+    font-family: bold;
+    color: var(--black);
+    margin: 16px;
+}
+
+.details-text-date {
+    font-size: 14px;
+    font-family: Regular;
+    color: var(--grey1);
+    margin: 0px 16px 0px 16px;
+}
+
+.date-icon {
+    width: 16px;
+    height: 16px;
+    margin-right: 8px;
+}
+
+.fixed-top {
+    position: sticky;
+    top: 43px;
+    /* or any other value depending on your design */
+    margin-top: 43px;
+    z-index: 1000;
+    background-color: var(--white);
+    padding: 0px 16px 16px 16px;
+}
+
+.success-text {
+    margin: 0px 16px;
+    font-size: 14px;
+    font-family: Regular;
+    color: var(--grey2);
+}
+
+
+.progress-activity {
+    margin-top: -8px;
+    position: relative;
+    margin-left: 16px;
+    margin-right: 16px;
+    height: 8px;
+    border-radius: 50px;
+    background-color: var(--grey6);
+}
+
+.progress-bar {
+    height: 100%;
+    background-color: var(--neutralGrey3);
+    border-radius: 50px;
+}
+
+.progress-bar-active {
+    height: 100%;
+    background-color: var(--persianBlue);
+    border-radius: 50px;
+}
+
+.view-scores {
+    margin-top: 21px;
+    font-size: 16px;
+    font-family: bold;
+    text-align: center;
+    color: var(--persianBlue60);
+}
+
+.scores-text {
+    font-family: bold;
+    color: var(--persianBlue);
+}
+
+.img-tick3x {
+    position: absolute;
+    top: 77px;
+    left: 50%;
+    transform: translate(-50%);
+    width: 40px;
+    height: 40px;
+    z-index: 4;
 }

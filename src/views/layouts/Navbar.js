@@ -5,9 +5,9 @@ import Chevron from "../../assets/image/icon/Chevron.png";
 
 const Navbar = () => {
   return (
-    <div className={styles.styles}>
+    <nav className={styles["navbar"]}>
       <img className={styles.chevron} src={Chevron} alt="" />
-    </div>
+    </nav>
   );
 };
 
