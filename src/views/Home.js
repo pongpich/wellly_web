@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import Navbar from "./layouts/Navbar";
 
 import style from "../assets/css/home.module.css";
@@ -28,8 +28,6 @@ const Home = () => {
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
-
-  console.log("barVisible", barVisible);
 
   return (
     <>

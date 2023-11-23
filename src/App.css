@@ -158,3 +158,18 @@ a {
 .sliding-bar.visible {
   top: 0;
 }
+
+.sliding-bar2 {
+  position: fixed;
+  left: 0;
+  width: 100%;
+  padding: 15px;
+  z-index: 100;
+  top: -50px;
+  transition: top 0.3s, background-color 0.3s;
+}
+
+.sliding-bar2.visible {
+  background-color: var(--white);
+  top: 0;
+}

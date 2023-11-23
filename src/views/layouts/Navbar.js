@@ -6,7 +6,6 @@ import { useNavigate } from "react-router-dom";
 
 const Navbar = ({ path }) => {
   const navigate = useNavigate();
-  console.log("path", path);
   const goBack = () => {
     if (path) {
       navigate(path);
