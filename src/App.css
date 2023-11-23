@@ -73,3 +73,7 @@
   font-family: "Thin";
   src: url(./assets/fonts/IBMPlexSansThai-Thin.ttf);
 }
+
+a {
+  text-decoration: none !important;
+}
