@@ -38,8 +38,10 @@
     margin-right: 9px;
 }
 
-.message {
+.message-content {
+    position: relative;
     font-size: 16px;
     font-family: Regular;
     color: var(--grey1);
+    margin-bottom: 150px;
 }
