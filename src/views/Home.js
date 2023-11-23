@@ -33,7 +33,7 @@ const Home = () => {
 
   return (
     <>
-      <Navbar />
+      <Navbar path="/" />
 
       <div className={style["fixed-top"]}>
         <div className={style["nav-activity"]}>

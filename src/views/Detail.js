@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import Navbar from "./layouts/Navbar";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import style from "../assets/css/detail.module.css";
@@ -13,10 +14,10 @@ const Detail = () => {
 
   const register = () => {
     navigate("/");
-    console.log("888");
   };
   return (
     <>
+      <Navbar path="/all" />
       <div className={style["box-head-img"]}>
         <Link to="/">
           <img src={CloseButton} className={style["close-button"]} />
