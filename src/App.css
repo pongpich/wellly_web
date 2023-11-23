@@ -78,6 +78,9 @@ a {
   text-decoration: none !important;
 }
 
+p {
+  font-weight: 1.5rem;
+}
 
 .details-text-date {
 
