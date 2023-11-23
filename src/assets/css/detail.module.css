@@ -1,0 +1,45 @@
+.box-head-img {
+    position: relative;
+    width: 100%;
+    height: 212px;
+}
+
+.img-Ads {
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+}
+
+.close-button {
+    position: absolute;
+    width: 32px;
+    height: 32px;
+    margin-top: 60px;
+    margin-left: 16px;
+
+}
+
+.box-content {
+    margin-top: -16px;
+    padding: 0px 16px;
+}
+
+.text-head {
+    font-size: 20px;
+    font-family: bold;
+    color: var(--black);
+}
+
+.mt--16 {
+    margin-top: -16px;
+}
+
+.mr-9 {
+    margin-right: 9px;
+}
+
+.message {
+    font-size: 16px;
+    font-family: Regular;
+    color: var(--grey1);
+}

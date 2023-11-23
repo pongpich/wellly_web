@@ -1,12 +1,7 @@
 import React, { useState, useEffect } from "react";
-import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
-  Navigate,
-  Link,
-} from "react-router-dom";
+import { Link } from "react-router-dom";
 import Navbar from "./layouts/Navbar";
+
 import style from "../assets/css/home.module.css";
 import History from "../assets/image/icon/History.png";
 import Frame13716 from "../assets/image/img/Frame13716.png";
@@ -22,15 +17,31 @@ const Home = () => {
   const [tickData, setTickData] = useState(true);
   const [success, setSuccess] = useState(true);
   const [dataState, setDataState] = useState(true);
+  const [barVisible, setBarVisible] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setBarVisible(window.scrollY > 20);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
+  console.log("barVisible", barVisible);
 
   return (
     <>
       <Navbar />
+
       <div className={style["fixed-top"]}>
         <div className={style["nav-activity"]}>
           <span className={style["text-activity"]}>กิจกรรม</span>
           <img src={History} className={style["history"]} />
         </div>
+      </div>
+      <div className={`sliding-bar ${barVisible ? "visible" : ""}`}>
         <div className={style["button-head"]}>
           <div
             className={style["head-box"]}
