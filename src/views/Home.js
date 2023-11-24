@@ -31,8 +31,7 @@ const Home = () => {
 
   return (
     <>
-      <Navbar path="/" />
-
+      <div className={style["navbar-fixed-top"]} />
       <div className={style["fixed-top"]}>
         <div className={style["nav-activity"]}>
           <span className={style["text-activity"]}>กิจกรรม</span>
