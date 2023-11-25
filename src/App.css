@@ -78,9 +78,6 @@ a {
   text-decoration: none !important;
 }
 
-p {
-  font-weight: 1.5rem;
-}
 
 .details-text-date {
 
@@ -96,6 +93,7 @@ p {
 }
 
 .btn-manu {
+
   display: initial;
   padding: 4px 8px;
   font-size: 16px;
@@ -106,6 +104,7 @@ p {
 }
 
 .btn-manu-active {
+  margin-top: 24px;
   display: initial;
   padding: 4px 8px;
   font-size: 16px;
@@ -175,3 +174,4 @@ p {
   background-color: var(--white);
   top: 0;
 }
+

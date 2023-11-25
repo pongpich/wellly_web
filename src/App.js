@@ -15,6 +15,7 @@ import {
 import Home from "../src/views/Home";
 import Detail from "../src/views/Detail";
 import All from "../src/views/All";
+import DetailSucceed from "../src/views/DetailSucceed";
 
 Amplify.configure(awsConfig);
 
@@ -32,8 +33,9 @@ const App = () => {
       <Route path="/" element={<Home />} />
       <Route path="/all" element={<All />} />
       <Route path="/detail" element={<Detail />} />
+      <Route path="/DetailSucceed" element={<DetailSucceed />} />
       {/* Fallback route, redirects to the home page */}
-      <Route path="*" element={<Navigate to="/" replace />} />
+     {/*  <Route path="*" element={<Navigate to="/" replace />} /> */}
     </Routes>
   );
 };

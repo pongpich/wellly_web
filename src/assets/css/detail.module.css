@@ -32,6 +32,7 @@
 
 .mt--16 {
     margin-top: -16px;
+    margin-bottom: 24px;
 }
 
 .mr-9 {
@@ -58,6 +59,11 @@
     margin-top: 16px;
 }
 
+.mb-box-reward {
+    margin-top: 16px;
+    padding-bottom: 64px;
+}
+
 .reward-img {
     width: 80px;
     height: 100%;
@@ -75,8 +81,30 @@
     justify-content: space-between;
 }
 
+.reward-too {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.reward-too-user {
+    margin-top: 24px;
+}
+
+.mb-16 {
+    margin-bottom: 16px;
+    margin-top: 16px;
+}
+
 .reward-1 {
     font-size: 16px;
+    font-family: bold;
+    color: var(--grey1);
+
+}
+
+.reward-user {
+    font-size: 20px;
     font-family: bold;
     color: var(--grey1);
 
@@ -89,9 +117,46 @@
 
 }
 
+.reward-scoreboard {
+    font-size: 16px;
+    font-family: regular;
+    color: var(--persianBlue);
+}
+
 .reward-detail {
     font-size: 16px;
-    font-family: regular ;
+    font-family: regular;
     color: var(--grey2);
 
+}
+
+.reward-detail-2 {
+    margin-top: 0px;
+    font-size: 16px;
+    font-family: regular;
+    color: var(--grey2);
+}
+
+.img-reward-succeed {
+    width: 100%;
+    height: 343px;
+    border-radius: 8px;
+}
+
+.img-right {
+    margin-bottom: -6px;
+    width: 24px;
+    height: 24px;
+    margin-right: 8px;
+}
+
+.tec {
+    position: relative;
+    font-size: 16px;
+    font-family: regular;
+    color: var(--black);
+}
+
+.box-reward-succeed {
+    margin-bottom: 24px;
 }
