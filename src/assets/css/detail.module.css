@@ -160,3 +160,66 @@
 .box-reward-succeed {
     margin-bottom: 24px;
 }
+
+.score-user {
+    font-size: 20px;
+    font-family: bold;
+    color: var(--black);
+}
+
+.score {
+    font-size: 16px;
+    font-family: Regular;
+    color: var(--persianBlue);
+}
+
+.progress-activity {
+    margin-top: -8px;
+    position: relative;
+    height: 16px;
+    border-radius: 50px;
+    background-color: var(--grey6);
+}
+
+.progress-bar {
+    height: 100%;
+    background-color: var(--neutralGrey3);
+    border-radius: 50px;
+}
+
+.progress-bar-active {
+    height: 100%;
+    background-color: var(--persianBlue);
+    border-radius: 50px;
+}
+
+.scores-text {
+    font-family: bold;
+    font-size: 14px;
+    color: var(--persianBlue);
+}
+
+.date-icon {
+    width: 16px;
+    height: 16px;
+    margin-right: 8px;
+}
+
+.justify-between {
+    display: flex;
+    justify-content: space-between;
+}
+
+.tex-pace {
+    font-size: 12px;
+    color: var(--grey2);
+    font-family: Regular;
+}
+
+.mt-bar {
+    margin-top: 8px;
+}
+
+.mt--bar {
+    margin-top: -16px;
+}

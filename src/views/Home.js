@@ -178,7 +178,163 @@ const Home = () => {
                     )}
                   </div>
                 </Link>
-                <Link to="/all">
+
+                <div className={style["activity-box-user"]}>
+                  {!tickData && (
+                    <img src={Tick3x} className={style["img-tick3x"]} />
+                  )}
+                  <div className={style["activity-image"]}>
+                    <img
+                      src={Frame13716}
+                      className={`${style["img-activity"]} ${
+                        !tickData && style["opacity-tick"]
+                      }`}
+                    />
+                  </div>{" "}
+                  <p className={style["details-text"]}>
+                    วิ่งเก็บระยะทางมาราธอน 10 ชั่วโมง ประจำปี 2566 ขององค์กร
+                    ABCDF group 1
+                  </p>
+                  <p className={style["details-text-date"]}>
+                    <span>
+                      <img src={dateIcon} className={style["date-icon"]} />
+                    </span>
+                    1 ม.ค. - 30 ม.ค. 2566
+                  </p>
+                  {success == true && (
+                    <>
+                      <div
+                        className={`${style["success-text"]} ${style["justify-between"]}`}
+                      >
+                        <p className={`${tickData && style["scores-text"]}`}>
+                          <span>
+                            <img
+                              src={Foot_step}
+                              className={style["date-icon"]}
+                            />
+                          </span>
+                          1500
+                        </p>
+                        <p>400,000 ก้าว</p>
+                      </div>
+                      <div className={style["progress-activity"]}>
+                        <div
+                          className={`${
+                            tickData
+                              ? style["progress-bar-active"]
+                              : style["progress-bar"]
+                          }`}
+                          style={{ width: "40%" }}
+                        ></div>
+                      </div>
+                      <div
+                        className={`${style["success-text"]} ${style["justify-between"]}`}
+                      >
+                        <p className={`${tickData && style["scores-text"]}`}>
+                          <span>
+                            <img
+                              src={Foot_step}
+                              className={style["date-icon"]}
+                            />
+                          </span>
+                          1500
+                        </p>
+                        <p>400,000 ก้าว</p>
+                      </div>
+                      <div className={style["progress-activity"]}>
+                        <div
+                          className={`${
+                            tickData
+                              ? style["progress-bar-active"]
+                              : style["progress-bar"]
+                          }`}
+                          style={{ width: "30%" }}
+                        ></div>
+                      </div>
+                    </>
+                  )}
+                  {!tickData && (
+                    <p className={style["view-scores"]}>ดูผลคะแนน</p>
+                  )}
+                </div>
+
+                <Link to="/detailSucceed">
+                  <div className={style["activity-box-user"]}>
+                    <img src={Tick3x} className={style["img-tick3x"]} />
+                    <div className={style["activity-image"]}>
+                      <img
+                        src={Frame13717}
+                        className={`${style["img-activity"]} ${
+                          tickData && style["opacity-tick"]
+                        }`}
+                      />
+                    </div>{" "}
+                    <p className={style["details-text"]}>
+                      วิ่งเก็บระยะทางมาราธอน 10 ชั่วโมง ประจำปี 2566 ขององค์กร
+                      ABCDF group 1
+                    </p>
+                    <p className={style["details-text-date"]}>
+                      <span>
+                        <img src={dateIcon} className={style["date-icon"]} />
+                      </span>
+                      1 ม.ค. - 30 ม.ค. 2566
+                    </p>
+                    <div
+                      className={`${style["success-text"]} ${style["justify-between"]}`}
+                    >
+                      <p className={`${!tickData && style["scores-text"]}`}>
+                        <span>
+                          <img src={Foot_step} className={style["date-icon"]} />
+                        </span>
+                        1500
+                      </p>
+                      <p>400,000 ก้าว</p>
+                    </div>
+                    <div className={style["progress-activity"]}>
+                      <div
+                        className={style["progress-bar"]}
+                        style={{ width: "40%" }}
+                      ></div>
+                    </div>
+                    <div
+                      className={`${style["success-text"]} ${style["justify-between"]}`}
+                    >
+                      <p className={`${!tickData && style["scores-text"]}`}>
+                        <span>
+                          <img src={Distance} className={style["date-icon"]} />
+                        </span>
+                        1500
+                      </p>
+                      <p>400,000 ก้าว</p>
+                    </div>
+                    <div className={style["progress-activity"]}>
+                      <div
+                        className={`${
+                          !tickData
+                            ? style["progress-bar-active"]
+                            : style["progress-bar"]
+                        }`}
+                        style={{ width: "30%" }}
+                      ></div>
+                    </div>
+                    {tickData && (
+                      <p className={style["view-scores"]}>ดูผลคะแนน</p>
+                    )}
+                  </div>
+                </Link>
+              </>
+            ) : (
+              <div>
+                <img src={EmptyState} className={style["emptyState-icon"]} />
+                <p className={style["no-activity"]}>ยังไม่มีกิจกรรม</p>
+              </div>
+            )}
+          </>
+        ) : (
+          <>
+            {dataState ? (
+              <>
+                <Link to="/detailRegister">
                   <div className={style["activity-box-user"]}>
                     {!tickData && (
                       <img src={Tick3x} className={style["img-tick3x"]} />
@@ -258,160 +414,6 @@ const Home = () => {
                     )}
                   </div>
                 </Link>
-                <Link to="/DetailSucceed">
-                  <div className={style["activity-box-user"]}>
-                    <img src={Tick3x} className={style["img-tick3x"]} />
-                    <div className={style["activity-image"]}>
-                      <img
-                        src={Frame13717}
-                        className={`${style["img-activity"]} ${
-                          tickData && style["opacity-tick"]
-                        }`}
-                      />
-                    </div>{" "}
-                    <p className={style["details-text"]}>
-                      วิ่งเก็บระยะทางมาราธอน 10 ชั่วโมง ประจำปี 2566 ขององค์กร
-                      ABCDF group 1
-                    </p>
-                    <p className={style["details-text-date"]}>
-                      <span>
-                        <img src={dateIcon} className={style["date-icon"]} />
-                      </span>
-                      1 ม.ค. - 30 ม.ค. 2566
-                    </p>
-                    <div
-                      className={`${style["success-text"]} ${style["justify-between"]}`}
-                    >
-                      <p className={`${!tickData && style["scores-text"]}`}>
-                        <span>
-                          <img src={Foot_step} className={style["date-icon"]} />
-                        </span>
-                        1500
-                      </p>
-                      <p>400,000 ก้าว</p>
-                    </div>
-                    <div className={style["progress-activity"]}>
-                      <div
-                        className={style["progress-bar"]}
-                        style={{ width: "40%" }}
-                      ></div>
-                    </div>
-                    <div
-                      className={`${style["success-text"]} ${style["justify-between"]}`}
-                    >
-                      <p className={`${!tickData && style["scores-text"]}`}>
-                        <span>
-                          <img src={Distance} className={style["date-icon"]} />
-                        </span>
-                        1500
-                      </p>
-                      <p>400,000 ก้าว</p>
-                    </div>
-                    <div className={style["progress-activity"]}>
-                      <div
-                        className={`${
-                          !tickData
-                            ? style["progress-bar-active"]
-                            : style["progress-bar"]
-                        }`}
-                        style={{ width: "30%" }}
-                      ></div>
-                    </div>
-                    {tickData && (
-                      <p className={style["view-scores"]}>ดูผลคะแนน</p>
-                    )}
-                  </div>
-                </Link>
-              </>
-            ) : (
-              <div>
-                <img src={EmptyState} className={style["emptyState-icon"]} />
-                <p className={style["no-activity"]}>ยังไม่มีกิจกรรม</p>
-              </div>
-            )}
-          </>
-        ) : (
-          <>
-            {!dataState ? (
-              <>
-                <div className={style["activity-box-user"]}>
-                  {!tickData && (
-                    <img src={Tick3x} className={style["img-tick3x"]} />
-                  )}
-                  <div className={style["activity-image"]}>
-                    <img
-                      src={Frame13716}
-                      className={`${style["img-activity"]} ${
-                        !tickData && style["opacity-tick"]
-                      }`}
-                    />
-                  </div>{" "}
-                  <p className={style["details-text"]}>
-                    วิ่งเก็บระยะทางมาราธอน 10 ชั่วโมง ประจำปี 2566 ขององค์กร
-                    ABCDF group 1
-                  </p>
-                  <p className={style["details-text-date"]}>
-                    <span>
-                      <img src={dateIcon} className={style["date-icon"]} />
-                    </span>
-                    1 ม.ค. - 30 ม.ค. 2566
-                  </p>
-                  {success == true && (
-                    <>
-                      <div
-                        className={`${style["success-text"]} ${style["justify-between"]}`}
-                      >
-                        <p className={`${tickData && style["scores-text"]}`}>
-                          <span>
-                            <img
-                              src={Foot_step}
-                              className={style["date-icon"]}
-                            />
-                          </span>
-                          1500
-                        </p>
-                        <p>400,000 ก้าว</p>
-                      </div>
-                      <div className={style["progress-activity"]}>
-                        <div
-                          className={`${
-                            tickData
-                              ? style["progress-bar-active"]
-                              : style["progress-bar"]
-                          }`}
-                          style={{ width: "40%" }}
-                        ></div>
-                      </div>
-                      <div
-                        className={`${style["success-text"]} ${style["justify-between"]}`}
-                      >
-                        <p className={`${tickData && style["scores-text"]}`}>
-                          <span>
-                            <img
-                              src={Foot_step}
-                              className={style["date-icon"]}
-                            />
-                          </span>
-                          1500
-                        </p>
-                        <p>400,000 ก้าว</p>
-                      </div>
-                      <div className={style["progress-activity"]}>
-                        <div
-                          className={`${
-                            tickData
-                              ? style["progress-bar-active"]
-                              : style["progress-bar"]
-                          }`}
-                          style={{ width: "30%" }}
-                        ></div>
-                      </div>
-                    </>
-                  )}
-                  {!tickData && (
-                    <p className={style["view-scores"]}>ดูผลคะแนน</p>
-                  )}
-                </div>
               </>
             ) : (
               <div>

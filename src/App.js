@@ -14,8 +14,11 @@ import {
 
 import Home from "../src/views/Home";
 import Detail from "../src/views/Detail";
+import DetailRegister from "../src/views/DetailRegister";
 import All from "../src/views/All";
 import DetailSucceed from "../src/views/DetailSucceed";
+import Scoreboard from "./views/Scoreboard";
+import ScoreboardSucceed from "./views/ScoreboardSucceed";
 
 Amplify.configure(awsConfig);
 
@@ -33,9 +36,12 @@ const App = () => {
       <Route path="/" element={<Home />} />
       <Route path="/all" element={<All />} />
       <Route path="/detail" element={<Detail />} />
-      <Route path="/DetailSucceed" element={<DetailSucceed />} />
+      <Route path="/detailRegister" element={<DetailRegister />} />
+      <Route path="/detailSucceed" element={<DetailSucceed />} />
+      <Route path="/scoreboard" element={<Scoreboard />} />
+      <Route path="/scoreboardSucceed" element={<ScoreboardSucceed />} />
       {/* Fallback route, redirects to the home page */}
-     {/*  <Route path="*" element={<Navigate to="/" replace />} /> */}
+      <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
   );
 };

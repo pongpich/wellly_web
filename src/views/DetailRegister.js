@@ -10,11 +10,13 @@ import dateIcon from "../assets/image/icon/🗓️.png";
 import Reward1 from "../assets/image/img/Reward1.png";
 import Reward2 from "../assets/image/img/Reward2.png";
 import Reward3 from "../assets/image/img/Reward3.png";
-import Group13719 from "../assets/image/icon/Group13719.png";
+import Foot_step from "../assets/image/icon/Foot_step.png";
+import Distance from "../assets/image/icon/Distance.png";
 
 const Detail = () => {
   const navigate = useNavigate();
-  const [statusManu, setStatusManu] = useState("reward");
+  const [statusManu, setStatusManu] = useState("score");
+  const [statusProgressBar, setStatusProgressBar] = useState(true);
 
   const register = () => {
     navigate("/");
@@ -60,61 +62,108 @@ const Detail = () => {
           publishing software like Aldus PageMaker including versions of Lorem
           Ipsum
         </p>
-
-        <div className="box-button">
-          <div className="btn-persianBlue" onClick={register}>
-            ลงทะเบียน
-          </div>
-        </div>
       </>
     );
   };
 
   const rewardActivity = () => {
     return (
-      <div className={style["mb-box-reward"]}>
-        <div className={style["reward-too-user"]}>
-          <p className={`${style["mb-16"]} ${style["reward-too"]} `}>
-            <span className={style["reward-user"]}>ผู้ได้รับรางวัล</span>
-            <Link to="/scoreboardSucceed">
-              <span className={style["reward-scoreboard"]}>ตารางคะแนน</span>
-            </Link>
-          </p>
-        </div>
-
-        <div className={style["box-reward-succeed"]}>
-          <div className={style["reward-too"]}>
-            <span className={style["reward-1"]}>รางวัลที่ 1</span>
-            <span className={style["reward-2"]}>1 รางวัล</span>
+      <div className={style["mt-box-reward"]}>
+        <div className={style["box-reward"]}>
+          <div className={style["reward-img"]}>
+            <img src={Reward1} className={style["img-reward"]} />
           </div>
-          <p className={style["reward-detail-2"]}>
-            เครื่องอบขนมปังลายทหารอากาศจากอิตาลี
-          </p>
-          <img src={Reward1} className={style["img-reward-succeed"]} />
-          <p className={style["tec"]}>
-            <span>
-              <img src={Group13719} className={style["img-right"]} />
+          <div>
+            <div className={style["reward-one"]}>
+              <span className={style["reward-1"]}>รางวัลที่ 1</span>
+              <span className={style["reward-2"]}>1 รางวัล</span>
+            </div>
+            <span className={style["reward-detail"]}>
+              เครื่องอบขนมปังลายทหารอากาศจากอิตาลี
             </span>
-            Borpitbull Tec.
-          </p>
-        </div>
-        <div className={style["box-reward-succeed"]}>
-          <div className={style["reward-too"]}>
-            <span className={style["reward-1"]}>รางวัลที่ 2</span>
-            <span className={style["reward-2"]}>1 รางวัล</span>
           </div>
-          <p className={style["reward-detail-2"]}>
-            เครื่องอบขนมปังลายทหารอากาศจากอิตาลี
-          </p>
-          <img src={Reward2} className={style["img-reward-succeed"]} />
-          <p className={style["tec"]}>
-            <span>
-              <img src={Group13719} className={style["img-right"]} />
+        </div>
+        <div className={style["box-reward"]}>
+          <div className={style["reward-img"]}>
+            <img src={Reward2} className={style["img-reward"]} />
+          </div>
+          <div>
+            <div className={style["reward-one"]}>
+              <span className={style["reward-1"]}>รางวัลที่ 2</span>
+              <span className={style["reward-2"]}>2 รางวัล</span>
+            </div>
+            <span className={style["reward-detail"]}>
+              เครื่องเขียนถ่านไฟฉายตากบอ๋บๆ
             </span>
-            Borpitbull Tec.
-          </p>
+          </div>
+        </div>
+        <div className={style["box-reward"]}>
+          <div className={style["reward-img"]}>
+            <img src={Reward3} className={style["img-reward"]} />
+          </div>
+          <div>
+            <div className={style["reward-one"]}>
+              <span className={style["reward-1"]}>รางวัลที่ 3</span>
+              <span className={style["reward-2"]}>3 รางวัล</span>
+            </div>
+            <span className={style["reward-detail"]}>เงินจำนวน 10 บาท</span>
+          </div>
         </div>
       </div>
+    );
+  };
+
+  const rewardScore = () => {
+    return (
+      <>
+        <div className={style["reward-one"]}>
+          <p className={style["score-user"]}>คะแนนของฉัน</p>
+          <Link to="/scoreboard">
+            <p>ตารางคะแนน</p>
+          </Link>
+        </div>
+
+        <div
+          className={`${style["mt-bar"]} ${style["mt--bar"]} ${style["justify-between"]}`}
+        >
+          <p className={style["scores-text"]}>
+            <span>
+              <img src={Foot_step} className={style["date-icon"]} />
+            </span>
+            1500
+          </p>
+          <p className={style["tex-pace"]}>400,000 ก้าว</p>
+        </div>
+        <div className={style["progress-activity"]}>
+          <div
+            className={`${
+              statusProgressBar
+                ? style["progress-bar-active"]
+                : style["progress-bar"]
+            }`}
+            style={{ width: "40%" }}
+          ></div>
+        </div>
+        <div className={`${style["mt-bar"]} ${style["justify-between"]}`}>
+          <p className={style["scores-text"]}>
+            <span>
+              <img src={Distance} className={style["date-icon"]} />
+            </span>
+            400
+          </p>
+          <p className={style["tex-pace"]}>1000 กิโลเมตร</p>
+        </div>
+        <div className={style["progress-activity"]}>
+          <div
+            className={`${
+              statusProgressBar
+                ? style["progress-bar-active"]
+                : style["progress-bar"]
+            }`}
+            style={{ width: "30%" }}
+          ></div>
+        </div>
+      </>
     );
   };
 
@@ -136,21 +185,33 @@ const Detail = () => {
         </p>
         <div
           className={` ${
-            statusManu == "reward" ? "btn-manu-active" : "btn-manu"
+            statusManu == "score" ? "btn-manu-active" : "btn-manu"
           } ${style["mr-9"]}`}
-          onClick={() => setStatusManu("reward")}
+          onClick={() => setStatusManu("score")}
         >
-          ประกาศรางวัล
+          คะแนน
         </div>
         <div
-          onClick={() => setStatusManu("details")}
           className={` ${
             statusManu == "details" ? "btn-manu-active" : "btn-manu"
-          }`}
+          } ${style["mr-9"]}`}
+          onClick={() => setStatusManu("details")}
         >
           รายละเอียด
         </div>
-        {statusManu == "details" ? messageContent() : rewardActivity()}
+        <div
+          onClick={() => setStatusManu("reward")}
+          className={` ${
+            statusManu == "reward" ? "btn-manu-active" : "btn-manu"
+          }`}
+        >
+          รางวัล
+        </div>
+        {statusManu == "details"
+          ? messageContent()
+          : statusManu == "score"
+          ? rewardScore()
+          : rewardActivity()}
       </div>
     </>
   );

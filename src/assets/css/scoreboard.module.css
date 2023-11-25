@@ -1,0 +1,83 @@
+.justify-between {
+    display: flex;
+    justify-content: space-between;
+}
+
+.box-scoreboard {
+    margin-top: 64px;
+    padding: 0px 16px 64px 16px;
+}
+
+.scoreboard-list {
+    font-size: 24px;
+    font-family: bold;
+    color: var(--grey1);
+}
+
+.box-list {
+    margin: 0px !important;
+}
+
+.list-head {
+    display: flex;
+    justify-content: space-between;
+    font-size: 14px;
+    color: var(--grey2);
+    font-family: Regular;
+}
+
+.list-user {
+    margin-top: -16px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.list-user .list-id {
+    width: 0px;
+    height: auto;
+}
+
+.list-name {
+    font-size: 16px;
+    font-family: bold;
+    color: var(--grey1);
+}
+
+.list-id {
+    font-size: 14px;
+    font-family: Regular;
+    color: var(--grey1);
+}
+
+.list-score {
+    font-size: 16px;
+    font-family: Regular;
+    color: var(--grey1);
+}
+
+.list-row {
+    display: flex;
+    flex-direction: row;
+}
+
+.box-list-name {
+    margin-top: 13px;
+    width: 32px;
+    height: 32px;
+    border-radius: 100px;
+    background-color: var(--persianBlue);
+    color: var(--white);
+    font-size: 13px;
+    font-family: bold;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 8px;
+}
+
+.score-user {
+    margin: -8px -8px 12px -8px !important;
+    background-color: var(--mayaBlue20);
+    border-radius: 8px;
+    padding: 0px 8px;
+}
