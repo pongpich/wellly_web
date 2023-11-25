@@ -8,9 +8,7 @@ const Navbar = ({ path }) => {
   const navigate = useNavigate();
   const goBack = () => {
     if (path) {
-     
-        navigate(path);
-      
+      navigate(path);
     }
   };
   return (

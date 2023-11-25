@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import Navbar from "./Navbar";
+import NavbarWeb from "./NavbarWeb";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import style from "../../assets/css/detail.module.css";
@@ -21,7 +21,7 @@ const NavbarImg = ({ path }) => {
   return (
     <div className={`sliding-bar2 ${barVisible ? "visible" : ""}`}>
       {barVisible ? (
-        <Navbar path={path} />
+        <NavbarWeb path={path} />
       ) : (
         <Link to={path}>
           <img src={CloseButton} className={style["close-button"]} />

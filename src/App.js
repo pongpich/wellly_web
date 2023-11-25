@@ -31,7 +31,7 @@ const App = () => {
       {/* Empty path Route as the entry point */}
       <Route path="/" element={<Home />} />
       <Route path="/all" element={<All />} />
-      <Route path="detail" element={<Detail />} />
+      <Route path="/detail" element={<Detail />} />
       {/* Fallback route, redirects to the home page */}
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
