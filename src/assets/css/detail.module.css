@@ -229,3 +229,47 @@
     font-size: 16px;
     font-family: Regular;
 }
+
+.box-frame13754 {
+    width: calc(100% - 32px);
+    height: 56px;
+    border-radius: 100px;
+    background-color: var(--grey6);
+    bottom: 40px;
+    position: absolute;
+    z-index: 0;
+}
+
+.start-exercising {
+    text-align: center;
+    z-index: 1;
+    color: var(--grey2);
+    font-size: 16px;
+    font-family: bold;
+}
+
+.frame13 {
+    position: absolute;
+    z-index: 2;
+    width: 72px;
+    height: 40px;
+    margin: 8px 12px;
+}
+
+.frame13 {
+    transition: left 0s ease;
+
+    /* Adjust the duration and timing function as needed */
+
+    /* ลำดับเริ่มต้น */
+}
+
+.left {
+    order: 1;
+    /* ลำดับเมื่อลากไปทางซ้าย */
+}
+
+.right {
+    order: 0;
+    /* ลำดับเมื่อลากไปทางขวา */
+}

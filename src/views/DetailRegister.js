@@ -4,6 +4,7 @@ import NavbarImg from "./layouts/NavbarImg";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import style from "../assets/css/detail.module.css";
+
 import Ads from "../assets/image/img/Ads.png";
 import CloseButton from "../assets/image/icon/CloseButton.png";
 import dateIcon from "../assets/image/icon/🗓️.png";
@@ -12,15 +13,28 @@ import Reward2 from "../assets/image/img/Reward2.png";
 import Reward3 from "../assets/image/img/Reward3.png";
 import Foot_step from "../assets/image/icon/Foot_step.png";
 import Distance from "../assets/image/icon/Distance.png";
+import Frame13 from "../assets/image/icon/Frame13754.png";
 
 const Detail = () => {
   const navigate = useNavigate();
   const [statusManu, setStatusManu] = useState("score");
   const [statusProgressBar, setStatusProgressBar] = useState(true);
+  const [isLeft, setIsLeft] = useState(true);
+  const [position, setPosition] = useState(0);
+  const [viewportWidth, setViewportWidth] = useState(window.innerWidth);
 
-  const register = () => {
-    navigate("/");
-  };
+  useEffect(() => {
+    const handleResize = () => {
+      setViewportWidth(window.innerWidth);
+    };
+
+    window.addEventListener("resize", handleResize);
+
+    // Cleanup the event listener when the component unmounts
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
 
   const messageContent = () => {
     return (
@@ -113,7 +127,25 @@ const Detail = () => {
     );
   };
 
+  const handleTouchMove = (event) => {
+    const { clientX, target } = event.changedTouches[0];
+    const { left, width } = target.getBoundingClientRect();
+    const midPoint = left + width / 2;
+    let newPosition = midPoint - width / 2;
+
+    newPosition = Math.max(
+      0,
+      Math.min(viewportWidth - 56 - width, newPosition)
+    );
+
+    /*     console.log("left, width", left, width);
+    console.log("clientX, midPoint", left, width); */
+    setIsLeft(clientX > midPoint);
+    setPosition(newPosition);
+  };
+
   const rewardScore = () => {
+    console.log("isLeft", isLeft, viewportWidth);
     return (
       <>
         <div className={style["reward-one"]}>
@@ -162,6 +194,18 @@ const Detail = () => {
             }`}
             style={{ width: "30%" }}
           ></div>
+        </div>
+        <div className={style["box-frame13754"]}>
+          <img
+            src={Frame13}
+            className={`${style["frame13"]} ${
+              isLeft ? style["left"] : style["right"]
+            }`}
+            style={{ left: `${position}px` }}
+            draggable="true"
+            onTouchMove={handleTouchMove}
+          />
+          <p className={style["start-exercising"]}>เริ่มออกกำลังกาย</p>
         </div>
       </>
     );
