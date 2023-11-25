@@ -6,7 +6,7 @@ const data = Array(34).fill(null);
 const Scoreboard = () => {
   return (
     <div className={style["box-head"]}>
-      <NavbarScoreboard path="/detailSucceed" />
+      <NavbarScoreboard path="/detailRegister" />
       <div className={style["box-scoreboard"]}>
         <span className={style["scoreboard-list"]}>ตารางคะแนน</span>
         <div className={style["box-list"]}>

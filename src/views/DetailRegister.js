@@ -119,7 +119,7 @@ const Detail = () => {
         <div className={style["reward-one"]}>
           <p className={style["score-user"]}>คะแนนของฉัน</p>
           <Link to="/scoreboard">
-            <p>ตารางคะแนน</p>
+            <p className={style["score-board"]}>ตารางคะแนน</p>
           </Link>
         </div>
 
