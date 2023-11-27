@@ -178,7 +178,7 @@ const Home = () => {
                     )}
                   </div>
                 </Link>
-                <Link to="/all">
+                <Link to="/all-test">
                   <div className={style["activity-box-user"]}>
                     {!tickData && (
                       <img src={Tick3x} className={style["img-tick3x"]} />

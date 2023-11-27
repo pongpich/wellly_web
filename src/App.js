@@ -17,7 +17,7 @@ import Detail from "../src/views/Detail";
 import DetailRegister from "../src/views/DetailRegister";
 import DetailTimer from "../src/views/DetailTimer";
 import DetailSucceed from "../src/views/DetailSucceed";
-import All from "../src/views/All";
+import AllTest from "./views/AllTest";
 import Scoreboard from "./views/Scoreboard";
 import ScoreboardSucceed from "./views/ScoreboardSucceed";
 
@@ -35,7 +35,7 @@ const App = () => {
     <Routes>
       {/* Empty path Route as the entry point */}
       <Route path="/" element={<Home />} />
-      <Route path="/all" element={<All />} />
+      <Route path="/all-test" element={<AllTest />} />
       <Route path="/detail" element={<Detail />} />
       <Route path="/detailRegister" element={<DetailRegister />} />
       <Route path="/detailSucceed" element={<DetailSucceed />} />
