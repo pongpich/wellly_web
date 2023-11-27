@@ -140,12 +140,17 @@ const Detail = () => {
 
     /*     console.log("left, width", left, width);
     console.log("clientX, midPoint", left, width); */
+    console.log("newPosition", clientX, midPoint);
     setIsLeft(clientX > midPoint);
     setPosition(newPosition);
   };
 
+  useEffect(() => {
+    if (isLeft == false) {
+    }
+  }, [isLeft]);
   const rewardScore = () => {
-    console.log("isLeft", isLeft, viewportWidth);
+    console.log("isLeft", isLeft);
     return (
       <>
         <div className={style["reward-one"]}>
