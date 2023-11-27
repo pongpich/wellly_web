@@ -19,13 +19,13 @@ const { store, persister } = configureStore();
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <Router>
+    <HashRouter>
       <Provider store={store}>
         <PersistGate persistor={persister}>
           <App />
         </PersistGate>
       </Provider>
-    </Router>
+    </HashRouter>
   </React.StrictMode>
 );
 

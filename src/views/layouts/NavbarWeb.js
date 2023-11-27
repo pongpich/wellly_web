@@ -12,9 +12,9 @@ const Navbar = ({ path }) => {
     }
   };
   return (
-    <nav className={styles["navbar"]} onClick={goBack}>
+    <div className={styles["navbar"]} onClick={goBack}>
       <img className={styles.chevron} src={Chevron} alt="" />
-    </nav>
+    </div>
   );
 };
 
