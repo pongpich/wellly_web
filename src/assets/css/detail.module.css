@@ -20,8 +20,8 @@
 }
 
 .box-content {
-    margin-top: -16px;
-    padding: 0px 16px;
+    padding: 0px 16px 150px 16px;
+
 }
 
 .text-head {
@@ -31,7 +31,7 @@
 }
 
 .mt--16 {
-    margin-top: -16px;
+
     margin-bottom: 24px;
 }
 
@@ -82,7 +82,13 @@
 }
 
 .reward-too {
-    width: 100%;
+
+    display: flex;
+    justify-content: space-between;
+}
+
+.reward-tee {
+    width: calc(100% - 16px);
     display: flex;
     justify-content: space-between;
 }
@@ -104,6 +110,7 @@
 }
 
 .reward-user {
+    margin-left: -16px;
     font-size: 20px;
     font-family: bold;
     color: var(--grey1);
@@ -272,4 +279,23 @@
 .right {
     order: 0;
     /* ลำดับเมื่อลากไปทางขวา */
+}
+
+.box-time {
+    margin-top: 48px;
+    padding: 48px 16px 32px 16px;
+}
+
+.time {
+    text-align: center;
+    font-size: 16px;
+    font-family: Regular;
+    color: var(--grey2);
+}
+
+.count-time {
+    text-align: center;
+    font-size: 64px;
+    font-family: bold;
+    color: var(--black);
 }

@@ -78,6 +78,10 @@ a {
   text-decoration: none !important;
 }
 
+p {
+  margin: 16px !important;
+}
+
 
 .details-text-date {
 
