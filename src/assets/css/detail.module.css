@@ -282,8 +282,8 @@
 }
 
 .box-time {
-    margin-top: 48px;
-    padding: 48px 16px 32px 16px;
+
+    padding: 48px 16px;
 }
 
 .time {
@@ -298,4 +298,104 @@
     font-size: 64px;
     font-family: bold;
     color: var(--black);
+}
+
+.justify-around {
+    display: flex;
+    justify-content: space-around;
+}
+
+.text-walk {
+    text-align: center;
+    font-size: 16px;
+    font-family: Regular;
+    color: var(--grey2);
+}
+
+.count-walk {
+    font-size: 48px;
+    font-family: bold;
+    color: var(--black);
+
+}
+
+.run-1 {
+    display: flex;
+    margin-top: -100px;
+    width: 100%;
+    height: 599px;
+    background-image: url('../image/icon/run.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.run-2 {
+    display: flex;
+    margin-top: -100px;
+    width: 100%;
+    height: 599px;
+    background-image: url('../image/icon/run2.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.box-run {
+    padding: 99px 16px 32px 16px;
+}
+
+
+.box-start-run {
+    bottom: 42px;
+    display: flex;
+    justify-content: center;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.img-stop {
+    width: 80px;
+    height: 80px;
+}
+
+.btn-play {
+    width: 80px;
+    background-color: var(--white);
+    height: 80px;
+    color: var(--secondary_MayaBlue);
+    border-radius: 50px;
+    border: 2px solid var(--secondary_MayaBlue);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 16px;
+    font-size: 20px;
+    font-family: bold;
+}
+
+.btn-finish {
+    width: 80px;
+    background-color: var(--secondary_MayaBlue);
+    height: 80px;
+    color: var(--white);
+    border-radius: 50px;
+    border: 2px solid var(--secondary_MayaBlue);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    font-family: bold;
+}
+
+.text-abandon {
+
+    left: 45%;
+    transform: translateX(-45%);
+    bottom: 0px;
+    font-size: 16px;
+    font-family: bold;
+    color: var(--grey2);
+    position: absolute;
 }
