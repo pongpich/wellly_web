@@ -140,17 +140,26 @@ const Detail = () => {
 
     /*     console.log("left, width", left, width);
     console.log("clientX, midPoint", left, width); */
-    console.log("newPosition", clientX, midPoint);
-    setIsLeft(clientX > midPoint);
+    /*     console.log("newPosition", isLeft, clientX, midPoint); */
+    /*  console.log("left", left);
+    console.log("width", width);
+    console.log("newPosition", newPosition); */
+    if (left > newPosition) {
+      setIsLeft(false);
+    }
+
     setPosition(newPosition);
   };
 
   useEffect(() => {
     if (isLeft == false) {
+      setTimeout(() => {
+        navigate("/detailTimer");
+      }, 400);
     }
   }, [isLeft]);
   const rewardScore = () => {
-    console.log("isLeft", isLeft);
+    /*     console.log("isLeft", isLeft); */
     return (
       <>
         <div className={style["reward-one"]}>

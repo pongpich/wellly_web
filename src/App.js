@@ -15,8 +15,9 @@ import {
 import Home from "../src/views/Home";
 import Detail from "../src/views/Detail";
 import DetailRegister from "../src/views/DetailRegister";
-import All from "../src/views/All";
+import DetailTimer from "../src/views/DetailTimer";
 import DetailSucceed from "../src/views/DetailSucceed";
+import All from "../src/views/All";
 import Scoreboard from "./views/Scoreboard";
 import ScoreboardSucceed from "./views/ScoreboardSucceed";
 
@@ -38,6 +39,7 @@ const App = () => {
       <Route path="/detail" element={<Detail />} />
       <Route path="/detailRegister" element={<DetailRegister />} />
       <Route path="/detailSucceed" element={<DetailSucceed />} />
+      <Route path="/detailTimer" element={<DetailTimer />} />
       <Route path="/scoreboard" element={<Scoreboard />} />
       <Route path="/scoreboardSucceed" element={<ScoreboardSucceed />} />
       {/* Fallback route, redirects to the home page */}

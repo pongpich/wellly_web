@@ -1,7 +1,7 @@
 import React from "react";
 
-const DetailTime = () => {
+const DetailTimer = () => {
   return <div>DetailTime</div>;
 };
 
-export default DetailTime;
+export default DetailTimer;
