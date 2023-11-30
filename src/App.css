@@ -97,7 +97,6 @@ p {
 }
 
 .btn-manu {
-
   display: initial;
   padding: 4px 8px;
   font-size: 16px;
@@ -146,6 +145,20 @@ p {
   font-family: bold;
   color: var(--white);
   background-color: var(--persianBlue);
+}
+
+.btn-persianWhite {
+  width: calc(100% - 32px);
+  height: 48px;
+  border-radius: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 16px;
+
+  font-family: bold;
+  color: var(--persianBlue);
+  background-color: var(--white);
 }
 
 .sliding-bar {
@@ -213,16 +226,16 @@ p {
   height: calc(100% - var(--bs-modal-margin) * 2)
 }
 
+
 .run-time .modal {
   --bs-modal-zindex: 1055;
   --bs-modal-width: 500px;
   --bs-modal-padding: 1rem;
   --bs-modal-margin: 0 !important;
-  --bs-modal-color: ;
   --bs-modal-bg: var(--bs-body-bg);
   --bs-modal-border-color: var(--bs-border-color-translucent);
   --bs-modal-border-width: var(--bs-border-width);
-  --bs-modal-border-radius: var(--bs-border-radius-lg);
+  --bs-modal-border-radius: 16px 16px 0 0;
   --bs-modal-box-shadow: var(--bs-box-shadow-sm);
   --bs-modal-inner-border-radius: calc(var(--bs-border-radius-lg) - (var(--bs-border-width)));
   --bs-modal-header-padding-x: 1rem;
