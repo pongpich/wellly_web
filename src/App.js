@@ -33,7 +33,6 @@ const App = () => {
 
   return (
     <Routes>
-      {/* Empty path Route as the entry point */}
       <Route path="/" element={<Home />} />
       <Route path="/all-test" element={<AllTest />} />
       <Route path="/detail" element={<Detail />} />
@@ -42,7 +41,6 @@ const App = () => {
       <Route path="/detailTimer" element={<DetailTimer />} />
       <Route path="/scoreboard" element={<Scoreboard />} />
       <Route path="/scoreboardSucceed" element={<ScoreboardSucceed />} />
-      {/* Fallback route, redirects to the home page */}
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
   );
