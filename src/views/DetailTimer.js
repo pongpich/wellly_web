@@ -4,6 +4,8 @@ import { useNavigate } from "react-router-dom";
 import style from "../assets/css/detail.module.css";
 import stop from "../assets/image/icon/stop.png";
 import Contextual from "../assets/image/icon/Contextual.png";
+import GPSTracker2 from '../components/GPSTracker2';
+
 
 const DetailTimer = () => {
   const navigate = useNavigate();
@@ -111,6 +113,8 @@ const DetailTimer = () => {
           </div>
         </div>
       </div>
+      <GPSTracker2 />
+
 
       <div className="run-time">
         <div
