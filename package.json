@@ -22,7 +22,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "deploy:prod": "REACT_APP_STAGE=prod npm run build && scp -i mainKP.pem -r build/* nc-user@139.5.147.76:/var/www/wellly.planforfit.com/html"
   },
   "eslintConfig": {
     "extends": [
