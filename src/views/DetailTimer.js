@@ -4,94 +4,70 @@ import { useNavigate } from "react-router-dom";
 import style from "../assets/css/detail.module.css";
 import stop from "../assets/image/icon/stop.png";
 import Contextual from "../assets/image/icon/Contextual.png";
-import GPSTracker from '../components/GPSTracker';
-
 
 const DetailTimer = () => {
   const navigate = useNavigate();
   const [statusAbandon, setStatusAbandon] = useState(0);
   const [totalSeconds, setTotalSeconds] = useState(0);
   const [isRunning, setIsRunning] = useState(true);
-  const [state, setState] = useState({
-    distance: 0,
-    positions: [],
-    tracking: false,
-    latitude: null,
-    longitude: null,
-    error: null,
-    debugSuccess: 0,
-    debugFail: 0,
-    debugGeo: 0
-  });
+  //สำหรับตัวจับระยะทาง
+  const [distance, setDistance] = useState(0);
+  const [positions, setPositions] = useState([]);
+  const [tracking, setTracking] = useState(false);
+  const [watchId, setWatchId] = useState(null)
+
 
   useEffect(() => {
     if (navigator.geolocation) {
-      setState({ ...state, debugGeo: 1 });
-      navigator.geolocation.getCurrentPosition(
-        handleSuccess,
-        handleError,
-        { maximumAge: 60000, timeout: 5000, enableHighAccuracy: true }
-      );
-      setState({ ...state, debugGeo: 2 });
+      navigator.geolocation.getCurrentPosition(handleSuccess, handleError, { maximumAge: 60000, timeout: 5000, enableHighAccuracy: true });
     } else {
-      setState({ ...state, debugGeo: 3 });
-      setState({ ...state, error: 'ไม่สนับสนุน Geolocation API' });
+      console.log("Geolocation not supported");
     }
   }, []);
 
   const handleSuccess = (position) => {
-    setState({ ...state, debugSuccess: 1 });
     const { latitude, longitude } = position.coords;
-    setState({ ...state, debugSuccess: 2 });
-    setState({ ...state, latitude, longitude });
-    setState({ ...state, debugSuccess: 3 });
+    const newPosition = { latitude, longitude };
+
+    if (tracking) {
+      const lastPosition = positions[positions.length - 1];
+      const distanceIncrement = calculateDistance(
+        lastPosition.latitude,
+        lastPosition.longitude,
+        newPosition.latitude,
+        newPosition.longitude
+      );
+
+      setDistance((prevDistance) => prevDistance + distanceIncrement);
+      setPositions((prevPositions) => [...prevPositions, newPosition]);
+    } else {
+      setPositions([newPosition]);
+    }
   };
 
   const handleError = (error) => {
-    setState({ ...state, debugFail: 1 });
-    setState({ ...state, error: 'ไม่สามารถเข้าถึงตำแหน่งทางภูมิศาสตร์' });
-  };
-
-  const toggleTracking = () => {
-    if (state.tracking) {
-      navigator.geolocation.clearWatch(state.watchId);
-      setState({ ...state, tracking: false });
-    } else {
-      const watchId = navigator.geolocation.watchPosition(
-        handlePositionChange,
-        handlePositionError
-      );
-      setState({ ...state, tracking: true, watchId });
-    }
-  };
-
-  const handlePositionChange = (position) => {
-    const { positions } = state;
-    if (positions.length > 0) {
-      const lastPosition = positions[positions.length - 1];
-      const distanceIncrement = calculateDistance(
-        lastPosition.coords.latitude,
-        lastPosition.coords.longitude,
-        position.coords.latitude,
-        position.coords.longitude
-      );
-
-      setState(prevState => ({
-        ...prevState,
-        distance: prevState.distance + distanceIncrement,
-        positions: [...prevState.positions, position],
-      }));
-    } else {
-      setState({ ...state, positions: [position] });
-    }
-  };
-
-  const handlePositionError = (error) => {
     console.error("Error getting position:", error);
   };
 
+  const toggleTracking = () => {
+    setTracking((prevTracking) => !prevTracking);
+  };
+
+  useEffect(() => {
+    if (!tracking) {
+      navigator.geolocation.clearWatch(watchId);
+    } else {
+      const watchId = navigator.geolocation.watchPosition(
+        handleSuccess,
+        handleError
+      );
+      setWatchId(watchId);
+
+    }
+  }, [tracking]);
+
   const calculateDistance = (lat1, lon1, lat2, lon2) => {
-    const R = 6371;
+    const R = 6371; // รัศมีของโลกในหน่วยกิโลเมตร
     const dLat = (lat2 - lat1) * (Math.PI / 180);
     const dLon = (lon2 - lon1) * (Math.PI / 180);
     const a =
@@ -104,6 +80,7 @@ const DetailTimer = () => {
     const distance = R * c;
 
     return distance;
+
   };
 
   const clickFinish = () => {
@@ -122,6 +99,13 @@ const DetailTimer = () => {
     return () => clearInterval(intervalId);
   }, [isRunning]);
 
+  useEffect(() => {
+    //ตั้งไว้หลังจากเริ่มจับเวลา 3วินาที ค่อยเริ่มนับ km เพราะก่อนหน้านี้บัค
+    if (totalSeconds === 1) {
+      setTracking(true);
+    }
+  }, [totalSeconds])
+
   const formatTime = (seconds) => {
     const hours = Math.floor(seconds / 3600);
     const minutes = Math.floor((seconds % 3600) / 60);
@@ -139,18 +123,18 @@ const DetailTimer = () => {
 
   const handleStart = () => {
     setIsRunning(true);
+    setTracking(true);
   };
 
   const handlePause = () => {
     setIsRunning(false);
+    setTracking(false);
   };
 
   const handleReset = () => {
     setIsRunning(false);
     setTotalSeconds(0);
   };
-
-  const { distance, tracking, positions } = state;
 
   return (
     <div>
@@ -164,7 +148,7 @@ const DetailTimer = () => {
           </div>
           <div>
             <p className={style["text-walk"]}>ระยะทาง (กม.)</p>
-            <p className={style["count-walk"]}>1.40</p>
+            <p className={style["count-walk"]}>{distance.toFixed(2)}</p>
           </div>
         </div>
       </div>
@@ -208,23 +192,7 @@ const DetailTimer = () => {
           </div>
         </div>
       </div>
-      <GPSTracker />
-      {/* <div>
-        <p>ระยะทางที่วิ่งได้ Curr: {distance.toFixed(2)} km</p>
 
-        <button onClick={toggleTracking}>
-          {tracking ? "หยุดนับระยะทาง" : "เริ่มนับระยะทาง"}
-        </button>
-
-        <ul>
-          {positions.map((position, index) => (
-            <li key={index}>
-              Lat: {position.coords.latitude}, Long: {position.coords.longitude}
-            </li>
-          ))}
-        </ul>
-      </div>
- */}
       <div className="run-time">
         <div
           className="modal fade"
