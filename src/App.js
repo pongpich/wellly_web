@@ -20,6 +20,8 @@ import DetailSucceed from "../src/views/DetailSucceed";
 import AllTest from "./views/AllTest";
 import Scoreboard from "./views/Scoreboard";
 import ScoreboardSucceed from "./views/ScoreboardSucceed";
+import Login from "./views/backend/Login";
+import CreateNewActivity from "./views/backend/CreateNewActivity";
 
 Amplify.configure(awsConfig);
 
@@ -33,6 +35,7 @@ const App = () => {
 
   return (
     <Routes>
+      {/*  frontend */}
       <Route path="/" element={<Home />} />
       <Route path="/all-test" element={<AllTest />} />
       <Route path="/detail" element={<Detail />} />
@@ -41,6 +44,10 @@ const App = () => {
       <Route path="/detailTimer" element={<DetailTimer />} />
       <Route path="/scoreboard" element={<Scoreboard />} />
       <Route path="/scoreboardSucceed" element={<ScoreboardSucceed />} />
+
+      {/*  backend */}
+      <Route path="/login" element={<Login />} />
+      <Route path="/create-new-activity" element={<CreateNewActivity />} />
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
   );
