@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import style from "../assets/css/detail.module.css";
 import stop from "../assets/image/icon/stop.png";
 import Contextual from "../assets/image/icon/Contextual.png";
-import GPSTracker2 from '../components/GPSTracker2';
+import GPSTracker from '../components/GPSTracker';
 
 
 const DetailTimer = () => {
@@ -106,8 +106,6 @@ const DetailTimer = () => {
     return distance;
   };
 
-  const { distance, tracking, positions } = state;
-
   const clickFinish = () => {
     navigate("/detailRegister");
   };
@@ -151,6 +149,8 @@ const DetailTimer = () => {
     setIsRunning(false);
     setTotalSeconds(0);
   };
+
+  const { distance, tracking, positions } = state;
 
   return (
     <div>
@@ -208,13 +208,14 @@ const DetailTimer = () => {
           </div>
         </div>
       </div>
-      {/*  <GPSTracker2 /> */}
+      <GPSTracker />
+      {/* <div>
+        <p>ระยะทางที่วิ่งได้ Curr: {distance.toFixed(2)} km</p>
 
-      <div>
-        <p>ระยะทางที่วิ่งได้ คือ: {distance.toFixed(2)} km</p>
         <button onClick={toggleTracking}>
           {tracking ? "หยุดนับระยะทาง" : "เริ่มนับระยะทาง"}
         </button>
+
         <ul>
           {positions.map((position, index) => (
             <li key={index}>
@@ -223,8 +224,7 @@ const DetailTimer = () => {
           ))}
         </ul>
       </div>
-
-
+ */}
       <div className="run-time">
         <div
           className="modal fade"
