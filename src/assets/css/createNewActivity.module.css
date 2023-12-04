@@ -1,0 +1,153 @@
+.flex-row {
+    display: flex;
+    flex-direction: row;
+}
+
+.flex-row-criteria {
+    display: flex;
+    flex-direction: row;
+    font-size: 20px;
+    font-family: Regular;
+    color: var(--black);
+}
+
+.flex-row-criteria>div {
+    margin-top: 24px;
+    margin-right: 36px;
+}
+
+/* หรือถ้าไม่ต้องการให้ลงทุนทางขวาของ Flex Item สุดท้าย */
+.flex-row-criteria>div:last-child {
+    margin-right: 0;
+}
+
+.box-challenge {
+    padding-top: 104px;
+    width: 223px;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    background-color: #D9D9D9;
+    overflow-y: auto;
+
+
+}
+
+.challenge {
+    width: 100%;
+    min-height: 100vh;
+    background-color: var(--white);
+    padding: 0px 16px;
+    flex: 1;
+    /* เพิ่ม flex เพื่อให้ .challenge ขยายขนาดตามขนาดของ .box-challenge */
+}
+
+.box-new-activity {
+    margin-top: 40px;
+    padding: 0px 24px;
+    background-color: #858585;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    color: var(--white);
+    font-size: 24px;
+    font-family: bold;
+
+}
+
+.hr {
+    background-color: var(--black);
+    width: 69px;
+    height: 5px;
+    border-radius: 5px;
+}
+
+.name-activity {
+    margin-top: 40px !important;
+    font-size: 18px;
+    font-family: bold;
+    color: var(--black);
+}
+
+.name-activity>span {
+    color: var(--red);
+}
+
+.date-picker {
+    position: relative;
+}
+
+.calendar {
+    margin-top: -32px;
+    position: absolute;
+    display: flex;
+    right: 16px;
+    width: 24px;
+    height: 24px;
+}
+
+.period {
+    margin-top: 24px !important;
+    font-size: 18px;
+    font-family: bold;
+    color: var(--black);
+}
+
+.period>span {
+    color: var(--red);
+}
+
+.btn-next {
+    width: auto;
+    height: auto;
+    padding: 12px 46px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    border: 2px solid var(--persianBlue);
+    background-color: var(--persianBlue);
+    color: var(--white);
+    font-size: 18px;
+    font-family: bold;
+
+}
+
+.btn-cancel {
+    width: auto;
+    height: auto;
+    padding: 12px 46px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    border: 2px solid var(--persianBlue);
+    background-color: var(--white);
+    color: var(--persianBlue);
+    font-size: 18px;
+    font-family: bold;
+
+}
+
+
+
+.flex-row-btn {
+    display: flex;
+    flex-direction: row;
+    display: flex;
+    justify-content: flex-end;
+    /* จัดตำแหน่งไปทางขวา */
+}
+
+.flex-row-btn>button {
+
+    margin-top: 48px;
+    margin-right: 19px;
+    margin-bottom: 64px;
+
+}
+
+/* หรือถ้าไม่ต้องการให้ลงทุนทางขวาของ Flex Item สุดท้าย */
+.flex-row-btn>button:last-child {
+    margin-right: 0;
+}
