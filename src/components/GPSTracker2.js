@@ -1,98 +1,86 @@
-import React, { Component } from "react";
+import React, { useState, useEffect } from "react";
 
-class GPSTracker2 extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            distance: 0, // ระยะทางที่ผู้ใช้วิ่ง
-            positions: [], // ตำแหน่งที่บันทึกไว้
-            tracking: false, // สถานะการติดตาม GPS
-            latitude: null,
-            longitude: null,
-            error: null,
-            debugSuccess: 0,
-            debugFail: 0,
-            debugGeo: 0
-        };
-    }
+const GPSTracker2 = () => {
+    const [state, setState] = useState({
+        distance: 0,
+        positions: [],
+        tracking: false,
+        latitude: null,
+        longitude: null,
+        error: null,
+        debugSuccess: 0,
+        debugFail: 0,
+        debugGeo: 0
+    });
 
-    componentDidMount() {
-        // ตรวจสอบว่า Geolocation API มีการสนับสนุนในเบราว์เซอร์หรือไม่
+    useEffect(() => {
         if (navigator.geolocation) {
-            this.setState({ debugGeo: 1 });
-            // ขออนุญาตให้เข้าถึงตำแหน่งทางภูมิศาสตร์
+            setState({ ...state, debugGeo: 1 });
             navigator.geolocation.getCurrentPosition(
-                this.handleSuccess,
-                this.handleError,
+                handleSuccess,
+                handleError,
                 { maximumAge: 60000, timeout: 5000, enableHighAccuracy: true }
             );
-            this.setState({ debugGeo: 2 });
+            setState({ ...state, debugGeo: 2 });
         } else {
-            this.setState({ debugGeo: 3 });
-            this.setState({ error: 'ไม่สนับสนุน Geolocation API' });
+            setState({ ...state, debugGeo: 3 });
+            setState({ ...state, error: 'ไม่สนับสนุน Geolocation API' });
         }
-    }
+    }, []);
 
-    handleSuccess = (position) => {
-        this.setState({ debugSuccess: 1 });
+    const handleSuccess = (position) => {
+        setState({ ...state, debugSuccess: 1 });
         const { latitude, longitude } = position.coords;
-        this.setState({ debugSuccess: 2 });
-        this.setState({ latitude, longitude });
-        this.setState({ debugSuccess: 3 });
-
+        setState({ ...state, debugSuccess: 2 });
+        setState({ ...state, latitude, longitude });
+        setState({ ...state, debugSuccess: 3 });
     };
 
-    handleError = (error) => {
-        this.setState({ debugFail: 1 });
-        this.setState({ error: 'ไม่สามารถเข้าถึงตำแหน่งทางภูมิศาสตร์' });
+    const handleError = (error) => {
+        setState({ ...state, debugFail: 1 });
+        setState({ ...state, error: 'ไม่สามารถเข้าถึงตำแหน่งทางภูมิศาสตร์' });
     };
 
-    // เพิ่มเมธอดสำหรับเริ่มหรือหยุดติดตาม GPS
-    toggleTracking = () => {
-        if (this.state.tracking) {
-            // หยุดติดตาม GPS
-            navigator.geolocation.clearWatch(this.watchId);
-            this.setState({ tracking: false });
+    const toggleTracking = () => {
+        if (state.tracking) {
+            navigator.geolocation.clearWatch(state.watchId);
+            setState({ ...state, tracking: false });
         } else {
-            // เริ่มติดตาม GPS ใหม่
-            this.watchId = navigator.geolocation.watchPosition(
-                this.handlePositionChange,
-                this.handlePositionError
+            const watchId = navigator.geolocation.watchPosition(
+                handlePositionChange,
+                handlePositionError
             );
-            this.setState({ tracking: true });
+            setState({ ...state, tracking: true, watchId });
         }
     };
 
-    handlePositionChange = (position) => {
-        const { positions } = this.state;
-
-        // คำนวณระยะทางและเพิ่มตำแหน่งใหม่ลงใน state
+    const handlePositionChange = (position) => {
+        const { positions } = state;
         if (positions.length > 0) {
             const lastPosition = positions[positions.length - 1];
-            const distanceIncrement = this.calculateDistance(
+            const distanceIncrement = calculateDistance(
                 lastPosition.coords.latitude,
                 lastPosition.coords.longitude,
                 position.coords.latitude,
                 position.coords.longitude
             );
 
-            this.setState((prevState) => ({
+            setState(prevState => ({
+                ...prevState,
                 distance: prevState.distance + distanceIncrement,
                 positions: [...prevState.positions, position],
             }));
         } else {
-            this.setState({ positions: [position] });
+            setState({ ...state, positions: [position] });
         }
     };
 
-    handlePositionError = (error) => {
+    const handlePositionError = (error) => {
         console.error("Error getting position:", error);
     };
 
-    calculateDistance = (lat1, lon1, lat2, lon2) => {
-        // คำนวณระยะทางระหว่างจุดสองจุดด้วย Haversine formula
-        // (โค้ดคำนวณอาจมีความซับซ้อนกว่านี้)
-        const R = 6371; // รัศมีของโลกในหน่วยกิโลเมตร
+    const calculateDistance = (lat1, lon1, lat2, lon2) => {
+        const R = 6371;
         const dLat = (lat2 - lat1) * (Math.PI / 180);
         const dLon = (lon2 - lon1) * (Math.PI / 180);
         const a =
@@ -107,29 +95,23 @@ class GPSTracker2 extends React.Component {
         return distance;
     };
 
-    render() {
-        const { distance, tracking } = this.state;
+    const { distance, tracking, positions } = state;
 
-        return (
-            <div>
-                <p>ระยะทางที่วิ่งได้: {distance.toFixed(2)} km</p>
-
-                {/* เพิ่มปุ่มเริ่มนับระยะทางหรือหยุดนับระยะทาง */}
-                <button onClick={this.toggleTracking}>
-                    {tracking ? "หยุดนับระยะทาง" : "เริ่มนับระยะทาง"}
-                </button>
-
-                {/* แสดงตำแหน่งที่บันทึกไว้ */}
-                <ul>
-                    {this.state.positions.map((position, index) => (
-                        <li key={index}>
-                            Lat: {position.coords.latitude}, Long: {position.coords.longitude}
-                        </li>
-                    ))}
-                </ul>
-            </div>
-        );
-    }
-}
+    return (
+        <div>
+            <p>ระยะทางที่วิ่งได้: {distance.toFixed(2)} km</p>
+            <button onClick={toggleTracking}>
+                {tracking ? "หยุดนับระยะทาง" : "เริ่มนับระยะทาง"}
+            </button>
+            <ul>
+                {positions.map((position, index) => (
+                    <li key={index}>
+                        Lat: {position.coords.latitude}, Long: {position.coords.longitude}
+                    </li>
+                ))}
+            </ul>
+        </div>
+    );
+};
 
 export default GPSTracker2;
