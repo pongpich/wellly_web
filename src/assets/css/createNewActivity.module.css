@@ -151,3 +151,59 @@
 .flex-row-btn>button:last-child {
     margin-right: 0;
 }
+
+.flex-row-btn-ml {
+    display: flex;
+    flex-direction: row;
+    display: flex;
+    justify-content: start;
+    /* จัดตำแหน่งไปทางขวา */
+}
+
+.flex-row-btn-ml>button {
+
+    margin-top: 48px;
+    margin-right: 19px;
+    margin-bottom: 64px;
+
+}
+
+/* หรือถ้าไม่ต้องการให้ลงทุนทางขวาของ Flex Item สุดท้าย */
+.flex-row-btn-ml>button:last-child {
+    margin-right: 0;
+}
+
+.flex-row-radios {
+    display: flex;
+    flex-direction: row;
+    font-size: 18px;
+    font-family: Regular;
+    color: var(--black);
+}
+
+.flex-row-radios>div {
+    margin-right: 8%;
+}
+
+/* หรือถ้าไม่ต้องการให้ลงทุนทางขวาของ Flex Item สุดท้าย */
+.flex-row-radios>div:last-child {
+    margin-right: 0;
+}
+
+.box-person {
+    position: relative;
+}
+
+.person {
+    margin-top: -32px;
+    position: absolute;
+    right: 16px;
+}
+
+.span-red {
+    color: red;
+}
+
+.ml {
+    margin-left: 64px;
+}
