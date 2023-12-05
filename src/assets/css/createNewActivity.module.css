@@ -207,3 +207,73 @@
 .ml {
     margin-left: 64px;
 }
+
+.box-rewards {
+    margin-top: 40px !important;
+
+
+
+
+}
+
+.overflow-x {
+    overflow-x: auto;
+}
+
+.box-rewards>div {
+    margin-right: 16px;
+}
+
+/* หรือถ้าไม่ต้องการให้ลงทุนทางขวาของ Flex Item สุดท้าย */
+.box-rewards>div:last-child {
+    margin-right: 0;
+}
+
+.rewards-active {
+    width: 111px;
+    height: 47px;
+    background-color: var(--persianBlue);
+    color: var(--white);
+    font-size: 18px;
+    font-family: Regular;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 5px;
+}
+
+.rewards {
+    width: 111px;
+    height: 47px;
+    background-color: var(--white);
+    color: var(--persianBlue);
+    font-size: 18px;
+    font-family: Regular;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.add-rewards {
+    width: 157px !important;
+    height: 47px;
+    background-color: var(--white);
+    color: var(--persianBlue);
+    font-size: 18px;
+    font-family: Regular;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 5px;
+    cursor: pointer;
+    border: 2px solid var(--persianBlue);
+
+}
+
+.group7728 {
+    width: 202px;
+    height: 202px;
+    cursor: pointer;
+}

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import style from "../../assets/css/createNewActivity.module.css";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
@@ -6,6 +6,7 @@ import th from "date-fns/locale/th"; // import locale ภาษาไทย
 import enUS from "date-fns/locale/en-US"; // import locale ภาษาอังกฤษ
 
 import calendarIcon from "../../assets/image/icon/date.png"; // ปรับเปลี่ยนที่อยู่ของไฟล์รูปภาพปฏิทิน
+import Group7728 from "../../assets/image/icon/Group7728.png"; // ปรับเปลี่ยนที่อยู่ของไฟล์รูปภาพปฏิทิน
 
 const CreateNewActivity = () => {
   const [statusCreateActivity, setStatusCreateActivity] = useState("rewards"); //activity = กิจกรรม, criteria = เกณฑ์ ,Rewards = ของรางวัล,badge = ตราสัญลักษณ์
@@ -16,7 +17,23 @@ const CreateNewActivity = () => {
   const [language, setLanguage] = useState("th");
   const [limited, setLimited] = useState(true);
   const [limitedNumber, setLimitedNumber] = useState("จำกัด");
+  const [rewardsNumber, setRewardsNumber] = useState(1);
+  const fileInputRef = useRef(null);
+  const [rewards, setRewards] = useState([
+    { number: 1, name: "", image: "", quantity: "" },
+    { number: 2, name: "", image: "", quantity: "" },
+  ]);
 
+  const addReward = () => {
+    const newReward = {
+      number: rewards.length + 1,
+      name: "",
+      image: "",
+      quantity: "",
+    };
+
+    setRewards((prevRewards) => [...prevRewards, newReward]);
+  };
   const handleStartDateChange = (date, event) => {
     if (event == "activity") {
       setStartDateActivity(date);
@@ -31,6 +48,37 @@ const CreateNewActivity = () => {
     } else {
       setEndDate(date);
     }
+  };
+
+  const handleTextareaChange = (number, value, name) => {
+    setRewards((prevRewards) =>
+      prevRewards.map((reward) =>
+        reward.number === number ? { ...reward, [name]: value } : reward
+      )
+    );
+  };
+
+  const handleImageClick = () => {
+    // เมื่อคลิกที่รูปภาพ
+    // เรียก click() method ของไฟล์อินพุท
+    fileInputRef.current.click();
+  };
+
+  const handleFileChange = (e) => {
+    // เมื่อมีการเปลี่ยนแปลงในไฟล์อินพุท
+    // ทำตามต้องการ เช่น ดึงข้อมูลไฟล์, อัปโหลดไปที่เซิร์ฟเวอร์, เปลี่ยนสถานะ, ฯลฯ
+    const selectedFile = e.target.files[0];
+
+    // สร้าง URL ของไฟล์ที่ถูกเลือก
+    const imageUrl = URL.createObjectURL(selectedFile);
+    setRewards((prevRewards) =>
+      prevRewards.map((reward) =>
+        reward.number === rewardsNumber
+          ? { ...reward, image: imageUrl }
+          : reward
+      )
+    );
+    console.log("Selected file:", selectedFile);
   };
 
   const createActivity = () => {
@@ -350,7 +398,116 @@ const CreateNewActivity = () => {
   };
 
   const createRewards = () => {
-    return <>rewards</>;
+    console.log("rewards", rewards);
+    return (
+      <>
+        <div className={style["overflow-x"]}>
+          <div className={`${style["box-rewards"]} ${style["flex-row"]}`}>
+            {rewards &&
+              rewards.map((reward) => (
+                <div key={reward.number}>
+                  <div
+                    className={
+                      reward.number === rewardsNumber
+                        ? style["rewards-active"]
+                        : style["rewards"]
+                    }
+                    onClick={() => {
+                      setRewards((prevRewards) =>
+                        prevRewards.map((prevReward) =>
+                          prevReward.number === reward.number
+                            ? { ...prevReward }
+                            : prevReward
+                        )
+                      );
+                      setRewardsNumber(reward.number);
+                    }}
+                  >
+                    รางวัลที่ {reward.number}
+                  </div>
+                </div>
+              ))}
+            <div style={{ width: 170 }}>
+              <div className={style["add-rewards"]} onClick={addReward}>
+                +เพิ่มของรางวัล
+              </div>
+            </div>
+          </div>
+        </div>
+        {rewards &&
+          rewards.map((reward) => {
+            return (
+              rewardsNumber == reward.number && (
+                <div key={reward.number}>
+                  <p className={style["name-activity"]}>
+                    ชื่อรางวัลที่ {reward.number} (ห้ามเกิน 2 บรรทัด){" "}
+                    <span>*</span>
+                  </p>
+                  <textarea
+                    className="form-control"
+                    value={reward.name}
+                    id={`exampleFormControlTextarea${reward.number}`}
+                    rows="2"
+                    name="name"
+                    onChange={(e) =>
+                      handleTextareaChange(
+                        reward.number,
+                        e.target.value,
+                        e.target.name
+                      )
+                    }
+                  ></textarea>
+                  <p className={style["name-activity"]}>
+                    อัพโหลดรูปของรางวัล <span>*</span>
+                  </p>
+                  <img
+                    src={reward.image !== "" ? reward.image : Group7728}
+                    alt="calendar"
+                    className={style["group7728"]}
+                    onClick={() => handleImageClick(reward.number)}
+                  />
+                  <input
+                    type="file"
+                    ref={fileInputRef}
+                    style={{ display: "none" }}
+                    onChange={handleFileChange}
+                  />
+                  <p className={style["name-activity"]}>
+                    จำนวนของรางวัล <span>*</span>
+                  </p>
+                  <input
+                    type="text"
+                    className="form-control"
+                    id={`exampleFormControlInput${reward.number}`}
+                    placeholder="ใส่ตัวเลข"
+                    value={reward.quantity}
+                    name="quantity"
+                    onChange={(e) =>
+                      handleTextareaChange(
+                        reward.number,
+                        e.target.value,
+                        e.target.name
+                      )
+                    }
+                  />
+                </div>
+              )
+            );
+          })}
+        <div
+          className={style["flex-row-btn-ml"]}
+          onClick={() => setStatusCreateActivity("activity")}
+        >
+          <button className={style["btn-cancel"]}>ยกเลิก</button>
+          <button
+            className={style["btn-next"]}
+            onClick={() => setStatusCreateActivity("rewards")}
+          >
+            ถัดไป
+          </button>
+        </div>
+      </>
+    );
   };
 
   return (
@@ -389,7 +546,7 @@ const CreateNewActivity = () => {
             ? createActivity()
             : statusCreateActivity == "criteria"
             ? createCriteria()
-            : null}
+            : createRewards()}
         </div>
       </div>
     </>
