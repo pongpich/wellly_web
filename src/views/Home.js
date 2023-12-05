@@ -5,7 +5,7 @@ import style from "../assets/css/home.module.css";
 import History from "../assets/image/icon/History.png";
 import Frame13716 from "../assets/image/img/Frame13716.png";
 import Frame13717 from "../assets/image/img/Frame13717.png";
-import dateIcon from "../assets/image/icon/🗓️.png";
+import dateIcon from "../assets/image/icon/schedule.png";
 import Foot_step from "../assets/image/icon/Foot_step.png";
 import Distance from "../assets/image/icon/Distance.png";
 import Tick3x from "../assets/image/icon/Tick3x.png";

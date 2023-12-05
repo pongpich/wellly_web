@@ -7,7 +7,7 @@ import style from "../assets/css/detail.module.css";
 
 import Ads from "../assets/image/img/Ads.png";
 import CloseButton from "../assets/image/icon/CloseButton.png";
-import dateIcon from "../assets/image/icon/🗓️.png";
+import dateIcon from "../assets/image/icon/schedule.png";
 import Reward1 from "../assets/image/img/Reward1.png";
 import Reward2 from "../assets/image/img/Reward2.png";
 import Reward3 from "../assets/image/img/Reward3.png";
