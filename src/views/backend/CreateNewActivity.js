@@ -9,7 +9,7 @@ import calendarIcon from "../../assets/image/icon/date.png"; // ปรับเ�
 import Group7728 from "../../assets/image/icon/Group7728.png"; // ปรับเปลี่ยนที่อยู่ของไฟล์รูปภาพปฏิทิน
 
 const CreateNewActivity = () => {
-  const [statusCreateActivity, setStatusCreateActivity] = useState("rewards"); //activity = กิจกรรม, criteria = เกณฑ์ ,Rewards = ของรางวัล,badge = ตราสัญลักษณ์
+  const [statusCreateActivity, setStatusCreateActivity] = useState("activity"); //activity = กิจกรรม, criteria = เกณฑ์ ,Rewards = ของรางวัล,badge = ตราสัญลักษณ์
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
   const [startDateActivity, setStartDateActivity] = useState(null);
@@ -381,16 +381,13 @@ const CreateNewActivity = () => {
             </div>
           </div>
         </div>
-        <div
-          className={style["flex-row-btn-ml"]}
-          onClick={() => setStatusCreateActivity("activity")}
-        >
+        <div className={style["flex-row-btn-ml"]}>
           <button className={style["btn-cancel"]}>ยกเลิก</button>
           <button
             className={style["btn-next"]}
             onClick={() => setStatusCreateActivity("rewards")}
           >
-            ถัดไป
+            ถัดไป 555
           </button>
         </div>
       </>
@@ -494,10 +491,7 @@ const CreateNewActivity = () => {
               )
             );
           })}
-        <div
-          className={style["flex-row-btn-ml"]}
-          onClick={() => setStatusCreateActivity("activity")}
-        >
+        <div className={style["flex-row-btn-ml"]}>
           <button className={style["btn-cancel"]}>ยกเลิก</button>
           <button
             className={style["btn-next"]}
