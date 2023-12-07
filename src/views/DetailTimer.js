@@ -29,13 +29,15 @@ const DetailTimer = () => {
     const { latitude, longitude } = position.coords;
     const newPosition = { latitude, longitude };
 
+    console.log("handleSuccess !!!");
+
     if (tracking) {
       const lastPosition = positions[positions.length - 1];
       const distanceIncrement = calculateDistance(
-        lastPosition.latitude,
-        lastPosition.longitude,
-        newPosition.latitude,
-        newPosition.longitude
+        lastPosition && lastPosition.latitude,
+        lastPosition && lastPosition.longitude,
+        newPosition && newPosition.latitude,
+        newPosition && newPosition.longitude
       );
 
       setDistance((prevDistance) => prevDistance + distanceIncrement);
