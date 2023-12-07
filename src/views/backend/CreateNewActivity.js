@@ -10,15 +10,42 @@ import Group7728 from "../../assets/image/icon/Group7728.png"; // ปรับ�
 
 const CreateNewActivity = () => {
   const [statusCreateActivity, setStatusCreateActivity] = useState("activity"); //activity = กิจกรรม, criteria = เกณฑ์ ,Rewards = ของรางวัล,badge = ตราสัญลักษณ์
-  const [startDate, setStartDate] = useState(null);
-  const [endDate, setEndDate] = useState(null);
-  const [startDateActivity, setStartDateActivity] = useState(null);
-  const [endDateActivity, setEndDateActivity] = useState(null);
+
   const [language, setLanguage] = useState("th");
-  const [limited, setLimited] = useState(true);
-  const [limitedNumber, setLimitedNumber] = useState("จำกัด");
   const [rewardsNumber, setRewardsNumber] = useState(1);
   const fileInputRef = useRef(null);
+
+  // ส่วนเก็บข้อมูล  กิจกรรม, nameActivity
+  const [event_name, setEvent_name] = useState(""); // ชื่อกิจกรรม
+  const [event_detail, setEvent_detail] = useState(""); //รายละเอียด กิจกรรม
+  const [startDate, setStartDate] = useState(null); //ระยะเวลาการแสดงผล start
+  const [endDate, setEndDate] = useState(null); //ระยะเวลาการแสดงผล end
+  const [startDateActivity, setStartDateActivity] = useState(null); //ระยะเวลากิจกรรม start
+  const [endDateActivity, setEndDateActivity] = useState(null); //ระยะเวลากิจกรรม * end
+
+  // error  ส่วนเก็บข้อมูล กิจกรรม
+  const [errorEvent_name, setErrorEvent_name] = useState(""); // ชื่อกิจกรรม
+  const [errorEvent_detail, setErrorEvent_detail] = useState(""); //รายละเอียด กิจกรรม
+  const [errorStartDate, setErrorStartDate] = useState(null); //ระยะเวลาการแสดงผล
+  const [errorEndDate, setErrorEndDate] = useState(null); //ระยะเวลากิจกรรม
+  const [errorStartDateActivity, setErrorStartDateActivity] = useState(null); //ระยะเวลากิจกรรม start
+  const [errorEndDateActivity, setErrorEndDateActivity] = useState(null); //ระยะเวลากิจกรรม * end
+
+  //  error  ส่วนเก็บข้อมูล   เกณฑ์  activityType
+  const [activityType, setActivityType] = useState(""); // ชื่อกิจกรรม
+  const [limited, setLimited] = useState(true);
+  const [limitedNumber, setLimitedNumber] = useState(null);
+  const [criteria_distance, setCriteria_distance] = useState(true);
+  const [distance, setDistance] = useState(null);
+  const [criteria_walk_step, setCriteria_walk_step] = useState(true);
+  const [walk_step, setWalk_step] = useState(null);
+
+  // error  ส่วนเก็บข้อมูล  criteria ,เกณฑ์
+  const [errorActivityType, setErrorActivityType] = useState(""); // ชื่อกิจกรรม
+  const [errorLimitedNumber, setErrorLimitedNumber] = useState(null);
+  const [errorDistance, setErrorDistance] = useState(null);
+  const [errorWalk_step, setErrorWalk_step] = useState(null);
+
   const [rewards, setRewards] = useState([
     { number: 1, name: "", image: "", quantity: "" },
     { number: 2, name: "", image: "", quantity: "" },
@@ -81,20 +108,103 @@ const CreateNewActivity = () => {
     console.log("Selected file:", selectedFile);
   };
 
+  const validateActivity = () => {
+    let isValid = true;
+    setErrorEvent_name("");
+    setErrorEvent_detail("");
+    setErrorStartDate("");
+    setErrorEndDate("");
+    setErrorStartDateActivity("");
+    setErrorEndDateActivity("");
+    //
+    if (!event_name.trim()) {
+      setErrorEvent_name("กรุณาระบุข้อมูล");
+      isValid = false;
+    }
+    if (!event_detail.trim()) {
+      setErrorEvent_detail("กรุณาระบุข้อมูล");
+      isValid = false;
+    }
+    if (!startDate) {
+      setErrorStartDate("กรุณาระบุข้อมูล");
+      isValid = false;
+    }
+    if (!endDate) {
+      setErrorEndDate("กรุณาระบุข้อมูล");
+      isValid = false;
+    }
+
+    if (!startDateActivity) {
+      setErrorStartDateActivity("กรุณาระบุข้อมูล");
+      isValid = false;
+    }
+    if (!endDateActivity) {
+      setErrorEndDateActivity("กรุณาระบุข้อมูล");
+      isValid = false;
+    }
+
+    return isValid;
+  };
+  const validateCriteria = () => {
+    let isValid = true;
+    setErrorActivityType("");
+    setErrorLimitedNumber("");
+    setErrorDistance("");
+    setErrorWalk_step("");
+
+    //
+    if (!activityType.trim()) {
+      setErrorActivityType("กรุณาระบุข้อมูล");
+      isValid = false;
+    }
+
+    if (!limitedNumber && limited) {
+      setErrorLimitedNumber("กรุณาระบุข้อมูล");
+      isValid = false;
+    }
+    if (!distance) {
+      setErrorDistance("กรุณาระบุข้อมูล");
+      isValid = false;
+    }
+    if (!walk_step) {
+      setErrorWalk_step("กรุณาระบุข้อมูล");
+      isValid = false;
+    }
+
+    return isValid;
+  };
+
+  const handleEventChange = (event) => {
+    if (event == "activity") {
+      if (validateActivity()) {
+        setStatusCreateActivity("criteria");
+      }
+    } else if (event == "rewards") {
+      if (validateCriteria()) {
+        setStatusCreateActivity("rewards");
+      }
+    }
+  };
+
   const createActivity = () => {
     const selectedLocale = language === "th" ? th : enUS;
     return (
       <>
         <div>
           <p className={style["name-activity"]}>
-            ประเภทกิจกรรม <span>*</span>
+            ชื่อกิจกรรม <span>*</span>
           </p>
           <input
-            type="email"
+            type="text"
+            name="event_name"
+            onChange={(event) => setEvent_name(event.target.value)}
             class="form-control"
             id="exampleFormControlInput1"
             placeholder="รายละอียดกิจกรรม"
           />
+          {errorEvent_name && (
+            <div className="error-from">{errorEvent_name}</div>
+          )}
         </div>
         <div>
           <p className={style["name-activity"]}>
@@ -102,9 +212,14 @@ const CreateNewActivity = () => {
           </p>
           <textarea
             class="form-control"
+            name="event_detail"
+            onChange={(event) => setEvent_detail(event.target.value)}
             id="exampleFormControlTextarea1"
             rows="5"
           ></textarea>
+          {errorEvent_detail && (
+            <div className="error-from">{errorEvent_detail}</div>
+          )}
         </div>
         <p className={style["period"]}>
           ระยะเวลาการแสดงผล <span>*</span>
@@ -128,7 +243,11 @@ const CreateNewActivity = () => {
               className={style["calendar"]}
               /*   onClick={onClick} */
             />
+            {errorStartDate && (
+              <div className="error-from">{errorStartDate}</div>
+            )}
           </div>
+
           <span>&nbsp;&nbsp;{" - "}&nbsp;&nbsp;</span>
           <div className={style["date-picker"]}>
             <DatePicker
@@ -148,6 +267,7 @@ const CreateNewActivity = () => {
               alt="calendar"
               className={style["calendar"]}
             />
+            {errorEndDate && <div className="error-from">{errorEndDate}</div>}
           </div>
         </div>
         <p className={style["period"]}>
@@ -171,6 +291,9 @@ const CreateNewActivity = () => {
               alt="calendar"
               className={style["calendar"]}
             />
+            {errorStartDateActivity && (
+              <div className="error-from">{errorStartDateActivity}</div>
+            )}
           </div>
           <span>&nbsp;&nbsp;{" - "}&nbsp;&nbsp;</span>
           <div className={style["date-picker"]}>
@@ -191,6 +314,9 @@ const CreateNewActivity = () => {
               alt="calendar"
               className={style["calendar"]}
             />
+            {errorEndDateActivity && (
+              <div className="error-from">{errorEndDateActivity}</div>
+            )}
           </div>
         </div>
         <div className={style["flex-row-btn"]}>
@@ -202,7 +328,7 @@ const CreateNewActivity = () => {
           </button>
           <button
             className={style["btn-next"]}
-            onClick={() => setStatusCreateActivity("criteria")}
+            onClick={() => handleEventChange("activity")}
           >
             ถัดไป
           </button>
@@ -212,11 +338,12 @@ const CreateNewActivity = () => {
   };
 
   const createCriteria = () => {
+    console.log("criteria_walk_step", criteria_walk_step);
     return (
       <>
         <div>
           <p className={style["name-activity"]}>
-            ชื่อกิจกรรม <span>*</span>
+            ประเภทกิจกรรม <span>*</span>
           </p>
           <div className={style["flex-row-radios"]}>
             <div class="form-check">
@@ -225,6 +352,7 @@ const CreateNewActivity = () => {
                 type="radio"
                 name="activityType"
                 id="flexRadioDisabled"
+                onChange={() => setActivityType("เดี่ยว")}
               />
               <label class="form-check-label" for="flexRadioDisabled">
                 เดี่ยว
@@ -236,6 +364,7 @@ const CreateNewActivity = () => {
                 type="radio"
                 name="activityType"
                 id="flexRadioDisabled"
+                onChange={() => setActivityType("เดี่ยว")}
               />
               <label class="form-check-label" for="flexRadioDisabled">
                 กลุ่ม
@@ -247,12 +376,16 @@ const CreateNewActivity = () => {
                 type="radio"
                 name="activityType"
                 id="flexRadioDisabled"
+                onChange={() => setActivityType("กำหนดเอง")}
               />
               <label class="form-check-label" for="flexRadioDisabled">
                 กำหนดเอง
               </label>
             </div>
           </div>
+          {errorActivityType && (
+            <div className="error-from">{errorActivityType}</div>
+          )}
           <p className={style["name-activity"]}>
             จำกัดผู้เข้าร่วม <span>*</span>
           </p>
@@ -290,12 +423,17 @@ const CreateNewActivity = () => {
                   type="text"
                   class="form-control "
                   id="exampleFormControlInput1"
+                  onChange={(event) => setLimitedNumber(event.target.value)}
                   placeholder="จำนวนผู้เข้าร่วม"
+                  checked={limited}
                 />
                 <div className={style["person"]}>คน</div>
               </div>
             )}
           </div>
+          {errorLimitedNumber && (
+            <div className="error-from">{errorLimitedNumber}</div>
+          )}
           <p className={style["name-activity"]}>
             เป้าหมาย ระยะทาง <span>*</span>
           </p>
@@ -304,40 +442,46 @@ const CreateNewActivity = () => {
               <div class="form-check">
                 <input
                   class="form-check-input"
-                  type="checkbox"
-                  value=""
+                  type="radio"
+                  name="criteria_walk_step"
                   id="flexCheckDefault"
+                  onChange={() => setCriteria_walk_step(true)}
+                  checked={criteria_walk_step}
                 />
                 <label class="form-check-label" for="flexCheckDefault">
                   ครบระยะทางที่กำหนด{" "}
                   <span className={style["span-red"]}>*</span>
                 </label>
               </div>
-              <div class="form-check">
+              {/* <div class="form-check">
                 <input
                   class="form-check-input"
-                  type="checkbox"
-                  value=""
+                  type="radio"
+                  name="criteria_walk_step"
                   id="flexCheckChecked"
+                  onChange={() => setCriteria_walk_step(false)}
                 />
                 <label class="form-check-label" for="flexCheckChecked">
                   ผู้ที่ได้ระยะทางสูงสุด{" "}
                   <span className={style["span-red"]}>*</span>
                 </label>
-              </div>
+              </div> */}
             </div>
             <div>
               <div className={`${style["box-person"]} ${style["ml"]}`}>
                 <input
-                  type="text"
+                  type="number"
                   class="form-control "
                   id="exampleFormControlInput1"
                   placeholder="จำนวนระยะทาง"
+                  min={0}
+                  onChange={(event) => setDistance(event.target.value)}
                 />
                 <div className={style["person"]}>กิโลเมตร</div>
               </div>
             </div>
           </div>
+          {errorDistance && <div className="error-from">{errorDistance}</div>}
           <p className={style["name-activity"]}>
             เป้าหมาย ก้าวเดิน <span>*</span>
           </p>
@@ -346,16 +490,17 @@ const CreateNewActivity = () => {
               <div class="form-check">
                 <input
                   class="form-check-input"
-                  type="checkbox"
-                  value=""
+                  type="radio"
                   id="flexCheckDefault"
+                  checked={criteria_distance}
+                  /*  disabled={criteria_walk_step} */
                 />
                 <label class="form-check-label" for="flexCheckDefault">
                   ครบระยะทางที่กำหนด{" "}
                   <span className={style["span-red"]}>*</span>
                 </label>
               </div>
-              <div class="form-check">
+              {/* <div class="form-check">
                 <input
                   class="form-check-input"
                   type="checkbox"
@@ -366,28 +511,36 @@ const CreateNewActivity = () => {
                   ผู้ที่ได้ระยะทางสูงสุด{" "}
                   <span className={style["span-red"]}>*</span>
                 </label>
-              </div>
+              </div> */}
             </div>
             <div>
               <div className={`${style["box-person"]} ${style["ml"]}`}>
                 <input
-                  type="text"
+                  type="number"
                   class="form-control "
                   id="exampleFormControlInput1"
-                  placeholder="จำนวนระยะทาง"
+                  placeholder="จำนวนก้าวเดิน"
+                  min={0}
+                  onChange={(event) => setWalk_step(event.target.value)}
                 />
-                <div className={style["person"]}>กิโลเมตร</div>
+                <div className={style["person"]}>ก้าว</div>
               </div>
             </div>
           </div>
+          {errorWalk_step && <div className="error-from">{errorWalk_step}</div>}
         </div>
         <div className={style["flex-row-btn-ml"]}>
-          <button className={style["btn-cancel"]}>ยกเลิก</button>
+          <button
+            className={style["btn-cancel"]}
+            onClick={() => setStatusCreateActivity("activity")}
+          >
+            ยกเลิก
+          </button>
           <button
             className={style["btn-next"]}
-            onClick={() => setStatusCreateActivity("rewards")}
+            onClick={() => handleEventChange("rewards")}
           >
-            ถัดไป 555
+            ถัดไป
           </button>
         </div>
       </>
@@ -492,7 +645,12 @@ const CreateNewActivity = () => {
             );
           })}
         <div className={style["flex-row-btn-ml"]}>
-          <button className={style["btn-cancel"]}>ยกเลิก</button>
+          <button
+            className={style["btn-cancel"]}
+            onClick={() => setStatusCreateActivity("criteria")}
+          >
+            ยกเลิก
+          </button>
           <button
             className={style["btn-next"]}
             onClick={() => setStatusCreateActivity("rewards")}
