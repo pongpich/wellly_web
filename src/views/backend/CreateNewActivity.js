@@ -52,10 +52,12 @@ const CreateNewActivity = () => {
     { number: 2, name: "", image: "", quantity: "" },
   ]);
 
+  // error  ส่วนเก็บข้อมูล    Rewards รางวัล
   const [errorRewards, setErrorRewards] = useState([
     { number: 1, name: "", image: "", quantity: "" },
     { number: 2, name: "", image: "", quantity: "" },
   ]);
+  const [errorNumber, setErrorNumber] = useState(false);
 
   const addReward = () => {
     const newReward = {
@@ -182,18 +184,54 @@ const CreateNewActivity = () => {
   };
   const validationRewards = () => {
     let isValid = true;
+    setErrorNumber(false);
 
     // ทำการตรวจสอบ errorRewards ทุกรายการ
+    const validatedRewards = errorRewards.map((errorReward) => {
+      // ตรวจสอบตามเงื่อนไขที่คุณต้องการ
+      const hasError =
+        errorReward.name.trim() === "" ||
+        errorReward.image.trim() === "" ||
+        errorReward.quantity.trim() === "";
 
-    rewards &&
-      rewards.map((reward, index) => {
-        errorRewards &&
-          errorRewards.map((errorReward, indexError) => {
-            if (indexError + 1 === index + 1) {
-              console.log("ss", errorReward);
-            }
-          });
+      // ในกรณีมีข้อผิดพลาด
+      if (hasError) {
+        isValid = false;
+
+        // ให้เอาค่าจาก errorReward ไปใส่ใน rewards
+        const newReward = rewards.find(
+          (reward) => reward.number === errorReward.number
+        );
+
+        // แสดงค่า reward.number ใน console.log
+        if (newReward) {
+          console.log(`Number ${newReward.number} มีข้อมูลไม่ถูกต้อง`);
+        }
+
+        // นำ newReward มาใส่ใน validatedRewards
+        return newReward || errorReward;
+      }
+
+      return errorReward;
+    });
+
+    // ทำการอัพเดท state หรือดำเนินการต่อไปตามที่คุณต้องการ
+    setErrorRewards(validatedRewards);
+    setErrorNumber(true);
+
+    // สามารถใช้ isValid เพื่อทำสิ่งที่ต้องการในกรณีที่ค่าไม่ถูกต้อง
+    if (!isValid) {
+      // ทำสิ่งที่คุณต้องการ เช่น แสดงข้อความผิดพลาด
+      console.log("มีข้อมูลไม่ถูกต้อง");
+
+      // แสดงข้อมูล rewards ที่มีข้อผิดพลาด
+      validatedRewards.forEach((reward, index) => {
+        if (reward.hasError) {
+          console.log(`Number ${reward.number} มีข้อมูลไม่ถูกต้อง`);
+          console.log("Replaced rewards:", reward);
+        }
       });
+    }
 
     return isValid;
   };
@@ -579,6 +617,7 @@ const CreateNewActivity = () => {
   };
 
   const createRewards = () => {
+    console.log("errorNumber", errorNumber);
     return (
       <>
         <div className={style["overflow-x"]}>
@@ -637,9 +676,11 @@ const CreateNewActivity = () => {
                       )
                     }
                   ></textarea>
-                  {errorRewards.name && (
-                    <div className="error-from">{errorRewards.name}</div>
-                  )}
+                  {errorNumber &&
+                    errorRewards[rewardsNumber - 1].name == "" && (
+                      <div className="error-from">กรุณาระบุข้อมูล</div>
+                    )}
+
                   <p className={style["name-activity"]}>
                     อัพโหลดรูปของรางวัล <span>*</span>
                   </p>
@@ -649,6 +690,10 @@ const CreateNewActivity = () => {
                     className={style["group7728"]}
                     onClick={() => handleImageClick(reward.number)}
                   />
+                  {errorNumber &&
+                    errorRewards[rewardsNumber - 1].image == "" && (
+                      <div className="error-from">กรุณาระบุข้อมูล</div>
+                    )}
                   <input
                     type="file"
                     ref={fileInputRef}
@@ -673,6 +718,10 @@ const CreateNewActivity = () => {
                       )
                     }
                   />
+                  {errorNumber &&
+                    errorRewards[rewardsNumber - 1].quantity == "" && (
+                      <div className="error-from">กรุณาระบุข้อมูล</div>
+                    )}
                 </div>
               )
             );
