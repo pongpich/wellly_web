@@ -22,6 +22,7 @@ import Scoreboard from "./views/Scoreboard";
 import ScoreboardSucceed from "./views/ScoreboardSucceed";
 import Login from "./views/backend/Login";
 import CreateNewActivity from "./views/backend/CreateNewActivity";
+import EventActivity from "./views/backend/EventActivity";
 
 Amplify.configure(awsConfig);
 
@@ -48,6 +49,7 @@ const App = () => {
       {/*  backend */}
       <Route path="/login" element={<Login />} />
       <Route path="/create-new-activity" element={<CreateNewActivity />} />
+      <Route path="/event-activity" element={<EventActivity />} />
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
   );

@@ -1,0 +1,407 @@
+.flex-row {
+    display: flex;
+    flex-direction: row;
+}
+
+.flex-row-criteria {
+    display: flex;
+    flex-direction: row;
+    font-size: 20px;
+    font-family: Regular;
+    color: var(--black);
+}
+
+.flex-row-criteria>div {
+    margin-top: 24px;
+    margin-right: 36px;
+}
+
+/* หรือถ้าไม่ต้องการให้ลงทุนทางขวาของ Flex Item สุดท้าย */
+.flex-row-criteria>div:last-child {
+    margin-right: 0;
+}
+
+.box-challenge {
+    padding-top: 104px;
+    width: 223px;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    background-color: #D9D9D9;
+    overflow-y: auto;
+
+
+}
+
+.challenge {
+    width: 100%;
+    min-height: 100vh;
+    background-color: var(--white);
+    padding: 0px 16px;
+    flex: 1;
+    /* เพิ่ม flex เพื่อให้ .challenge ขยายขนาดตามขนาดของ .box-challenge */
+}
+
+.box-new-activity {
+    margin-top: 5px;
+    padding: 0px 24px;
+    background-color: #858585;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    color: var(--white);
+    font-size: 24px;
+    font-family: bold;
+
+}
+
+.hr {
+    background-color: var(--black);
+    width: 69px;
+    height: 5px;
+    border-radius: 5px;
+}
+
+.name-activity {
+    margin-top: 20px !important;
+    /* margin: 0px  !important; */
+    font-size: 18px;
+    font-family: bold;
+    color: var(--black);
+}
+
+.name-status {
+    margin-top: 20px !important;
+    /* margin: 0px  !important; */
+    font-size: 18px;
+    font-family: bold;
+    color: var(--black);
+    text-align: left;
+}
+
+.name-activity>span {
+    color: var(--red);
+}
+
+.date-picker1 {
+    margin-top: -25px !important;
+    margin-left: -50px !important;
+    position: relative;
+}
+.date-picker2 {
+    margin-top: 38px !important;
+    margin-left: -50px !important;
+
+    position: relative;
+}
+
+.calendar {
+    margin-top: -32px;
+    margin-left: 220px;
+    position: absolute;
+    display: flex;
+    /* right: 16px; */
+    width: 24px;
+    height: 24px;
+}
+
+.period {
+    margin-top: 24px !important;
+    font-size: 18px;
+    font-family: bold;
+    color: var(--black);
+}
+
+.period>span {
+    color: var(--red);
+}
+
+.btn-next {
+    /* width: auto; */
+    /* height: auto; */
+    margin-top: 45px;
+    padding: 8px 20px;
+    /* display: flex; */
+    align-items: center;
+    justify-content: center;
+    border-radius: 5px;
+    border: 2px ;
+    background-color: #000000;
+    color: var(--white);
+    font-size: 15px;
+    /* font-family: bold; */
+
+}
+
+.btn-create {
+    /* width: auto; */
+    /* height: auto; */
+    float: right;
+    margin-top: 45px;
+    padding: 8px 20px;
+    /* display: flex; */
+    align-items: center;
+    justify-content: center;
+    border-radius: 5px;
+    border: 2px ;
+    background-color: #000000;
+    color: var(--white);
+    font-size: 15px;
+    /* font-family: bold; */
+
+}
+.btn-cancel {
+    width: auto;
+    height: auto;
+    padding: 12px 46px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    border: 2px solid var(--persianBlue);
+    background-color: var(--white);
+    color: var(--persianBlue);
+    font-size: 18px;
+    font-family: bold;
+
+}
+
+
+
+.flex-row-btn {
+    display: flex;
+    flex-direction: row;
+    display: flex;
+    justify-content: flex-end;
+    /* จัดตำแหน่งไปทางขวา */
+}
+
+.flex-row-btn>button {
+
+    margin-top: 48px;
+    margin-right: 19px;
+    margin-bottom: 64px;
+
+}
+
+/* หรือถ้าไม่ต้องการให้ลงทุนทางขวาของ Flex Item สุดท้าย */
+.flex-row-btn>button:last-child {
+    margin-right: 0;
+}
+
+.flex-row-btn-ml {
+    display: flex;
+    flex-direction: row;
+    display: flex;
+    justify-content: start;
+    /* จัดตำแหน่งไปทางขวา */
+}
+
+.flex-row-btn-ml>button {
+
+    margin-top: 48px;
+    margin-right: 19px;
+    margin-bottom: 64px;
+
+}
+
+/* หรือถ้าไม่ต้องการให้ลงทุนทางขวาของ Flex Item สุดท้าย */
+.flex-row-btn-ml>button:last-child {
+    margin-right: 0;
+}
+
+.flex-row-radios {
+    display: flex;
+    flex-direction: row;
+    font-size: 18px;
+    font-family: Regular;
+    color: var(--black);
+}
+
+.flex-row-radios>div {
+    margin-right: 8%;
+}
+
+/* หรือถ้าไม่ต้องการให้ลงทุนทางขวาของ Flex Item สุดท้าย */
+.flex-row-radios>div:last-child {
+    margin-right: 0;
+}
+
+.box-person {
+    position: relative;
+}
+
+.person {
+    margin-top: -32px;
+    position: absolute;
+    right: 16px;
+}
+
+.span-red {
+    color: red;
+}
+
+.ml {
+    margin-left: 64px;
+}
+
+.box-rewards {
+    margin-top: 40px !important;
+
+
+
+
+}
+
+.overflow-x {
+    overflow-x: auto;
+}
+
+.box-rewards>div {
+    margin-right: 16px;
+}
+
+/* หรือถ้าไม่ต้องการให้ลงทุนทางขวาของ Flex Item สุดท้าย */
+.box-rewards>div:last-child {
+    margin-right: 0;
+}
+
+.rewards-active {
+    width: 111px;
+    height: 47px;
+    background-color: var(--persianBlue);
+    color: var(--white);
+    font-size: 18px;
+    font-family: Regular;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 5px;
+}
+
+.rewards {
+    width: 111px;
+    height: 47px;
+    background-color: var(--white);
+    color: var(--persianBlue);
+    font-size: 18px;
+    font-family: Regular;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.add-rewards {
+    width: 157px !important;
+    height: 47px;
+    background-color: var(--white);
+    color: var(--persianBlue);
+    font-size: 18px;
+    font-family: Regular;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 5px;
+    cursor: pointer;
+    border: 2px solid var(--persianBlue);
+
+}
+
+.group7728 {
+    width: 202px;
+    height: 202px;
+    cursor: pointer;
+}
+
+.challenge-title {
+    font-weight: bold;
+    font-size: 27px;
+    margin-top: 30px;
+}
+
+
+.group7878 {
+
+    width: 46px;
+    height: 68px;
+    /* cursor: pointer; */
+}
+
+.grid-container {
+    display: grid;
+    grid-template-columns: 1fr 12fr;
+    /* padding: 10px; */
+}
+.grid-container2 {
+    margin-left: 20px;
+    margin-bottom: 10px;
+    display: grid;
+    gap: 20px;
+    grid-template-columns: 2fr 1fr 1.5fr 1.5fr 1fr 1fr ;
+    /* padding: 10px; */
+}
+
+.grid-item1 {
+    background-color: #858585;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+    /* border: 1px solid rgba(0, 0, 0, 0.8); */
+    padding: 8px;
+    font-size: 30px;
+    text-align: center;
+    margin-right:2px ;
+}
+
+.grid-item2 {
+    background-color: #858585;
+    /* border: 1px solid rgba(0, 0, 0, 0.8); */
+    /* padding: 8px; */
+    font-size: 30px;
+    text-align: center;
+}
+
+.input-name {
+    margin-top: -15px !important;
+    display: block;
+    width: 100%;
+    padding: 0.375rem 0.75rem;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: var(--bs-body-color);
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background-color: var(--bs-body-bg);
+    background-clip: padding-box;
+    border: var(--bs-border-width) solid var(--bs-border-color);
+    border-radius: var(--bs-border-radius);
+}
+
+.input-status {
+    margin-top: -15px !important;
+    display: block;
+    width: 100%;
+    padding: 0.375rem 0.75rem;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: var(--bs-body-color);
+    /* -webkit-appearance: none;
+    -moz-appearance: none; */
+    /* appearance: none; */
+    background-color: var(--bs-body-bg);
+    background-clip: padding-box;
+    border: var(--bs-border-width) solid var(--bs-border-color);
+    border-radius: var(--bs-border-radius);
+}
+
+.filter-logo{
+    margin-top: 5px;
+}
+
+.table{
+    margin-top: 50px;
+}
