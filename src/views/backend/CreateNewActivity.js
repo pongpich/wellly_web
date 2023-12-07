@@ -489,12 +489,12 @@ const CreateNewActivity = () => {
             {limited && (
               <div className={style["box-person"]}>
                 <input
-                  type="text"
+                  type="number"
                   class="form-control "
                   id="exampleFormControlInput1"
                   onChange={(event) => setLimitedNumber(event.target.value)}
                   placeholder="จำนวนผู้เข้าร่วม"
-                  checked={limited}
+                  min={0}
                 />
                 <div className={style["person"]}>คน</div>
               </div>
