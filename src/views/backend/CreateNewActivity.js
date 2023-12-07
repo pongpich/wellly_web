@@ -53,11 +53,7 @@ const CreateNewActivity = () => {
   ]);
 
   // error  ส่วนเก็บข้อมูล    Rewards รางวัล
-  const [errorRewards, setErrorRewards] = useState([
-    { number: 1, name: "", image: "", quantity: "" },
-    { number: 2, name: "", image: "", quantity: "" },
-  ]);
-  const [errorNumber, setErrorNumber] = useState(false);
+  const [errorRewards, setErrorRewards] = useState(true);
 
   const addReward = () => {
     const newReward = {
@@ -68,7 +64,6 @@ const CreateNewActivity = () => {
     };
 
     setRewards((prevRewards) => [...prevRewards, newReward]);
-    setErrorRewards((prevRewards) => [...prevRewards, newReward]);
   };
   const handleStartDateChange = (date, event) => {
     if (event == "activity") {
@@ -181,40 +176,30 @@ const CreateNewActivity = () => {
 
     return isValid;
   };
-  const reward = () => {
+  const validationRewards = () => {
     let isValid = true;
-    setErrorNumber(false);
 
     // ทำการตรวจสอบ errorRewards ทุกรายการ
-    const validatedRewards = rewards.map((errorReward) => {
+    const validatedRewards = rewards.map((reward) => {
       // ตรวจสอบตามเงื่อนไขที่คุณต้องการ
-      const hasError =
-        errorReward.name.trim() === "" ||
-        errorReward.image.trim() === "" ||
-        errorReward.quantity.trim() === "";
+      const hasError = !reward.name || !reward.image || !reward.quantity;
 
-      console.log("hasError", hasError);
       // ในกรณีมีข้อผิดพลาด
       if (hasError) {
-        /*  isValid = false; */
-
-        // ให้เอาค่าจาก errorReward ไปใส่ใน rewards
-        const newReward = rewards.find(
-          (reward) => reward.number === errorReward.number
-        );
-
-        // นำ newReward มาใส่ใน validatedRewards
-        return newReward || errorReward;
+        isValid = false;
       }
 
-      return errorReward;
+      return {
+        ...reward,
+        hasError,
+      };
     });
-
-    // ทำการอัพเดท state หรือดำเนินการต่อไปตามที่คุณต้องการ
-    setErrorRewards(validatedRewards);
-    setErrorNumber(true);
-    console.log("isValid", isValid);
+    setErrorRewards(isValid);
     // สามารถใช้ isValid เพื่อทำสิ่งที่ต้องการในกรณีที่ค่าไม่ถูกต้อง
+    if (!isValid) {
+      // ทำสิ่งที่คุณต้องการ เช่น แสดงข้อความผิดพลาด
+      console.log("มีข้อมูลไม่ถูกต้อง");
+    }
 
     return isValid;
   };
@@ -229,6 +214,7 @@ const CreateNewActivity = () => {
         setStatusCreateActivity("rewards");
       }
     } else {
+      console.log("validationRewards()", validationRewards());
       if (validationRewards()) {
         console.log("zjko");
         /*  setStatusCreateActivity("rewards"); */
@@ -655,10 +641,9 @@ const CreateNewActivity = () => {
                       )
                     }
                   ></textarea>
-                  {errorNumber &&
-                    errorRewards[rewardsNumber - 1].name == "" && (
-                      <div className="error-from">กรุณาระบุข้อมูล</div>
-                    )}
+                  {!errorRewards && rewards[rewardsNumber - 1].name == "" && (
+                    <div className="error-from">กรุณาระบุข้อมูล</div>
+                  )}
 
                   <p className={style["name-activity"]}>
                     อัพโหลดรูปของรางวัล <span>*</span>
@@ -669,10 +654,9 @@ const CreateNewActivity = () => {
                     className={style["group7728"]}
                     onClick={() => handleImageClick(reward.number)}
                   />
-                  {errorNumber &&
-                    errorRewards[rewardsNumber - 1].image == "" && (
-                      <div className="error-from">กรุณาระบุข้อมูล</div>
-                    )}
+                  {!errorRewards && rewards[rewardsNumber - 1].image == "" && (
+                    <div className="error-from">กรุณาระบุข้อมูล</div>
+                  )}
                   <input
                     type="file"
                     ref={fileInputRef}
@@ -697,8 +681,8 @@ const CreateNewActivity = () => {
                       )
                     }
                   />
-                  {errorNumber &&
-                    errorRewards[rewardsNumber - 1].quantity == "" && (
+                  {!errorRewards &&
+                    rewards[rewardsNumber - 1].quantity == "" && (
                       <div className="error-from">กรุณาระบุข้อมูล</div>
                     )}
                 </div>
