@@ -114,7 +114,6 @@ const CreateNewActivity = () => {
           : reward
       )
     );
-    console.log("Selected file:", selectedFile);
   };
 
   const validateActivity = () => {
@@ -182,31 +181,27 @@ const CreateNewActivity = () => {
 
     return isValid;
   };
-  const validationRewards = () => {
+  const reward = () => {
     let isValid = true;
     setErrorNumber(false);
 
     // ทำการตรวจสอบ errorRewards ทุกรายการ
-    const validatedRewards = errorRewards.map((errorReward) => {
+    const validatedRewards = rewards.map((errorReward) => {
       // ตรวจสอบตามเงื่อนไขที่คุณต้องการ
       const hasError =
         errorReward.name.trim() === "" ||
         errorReward.image.trim() === "" ||
         errorReward.quantity.trim() === "";
 
+      console.log("hasError", hasError);
       // ในกรณีมีข้อผิดพลาด
       if (hasError) {
-        isValid = false;
+        /*  isValid = false; */
 
         // ให้เอาค่าจาก errorReward ไปใส่ใน rewards
         const newReward = rewards.find(
           (reward) => reward.number === errorReward.number
         );
-
-        // แสดงค่า reward.number ใน console.log
-        if (newReward) {
-          console.log(`Number ${newReward.number} มีข้อมูลไม่ถูกต้อง`);
-        }
 
         // นำ newReward มาใส่ใน validatedRewards
         return newReward || errorReward;
@@ -218,27 +213,13 @@ const CreateNewActivity = () => {
     // ทำการอัพเดท state หรือดำเนินการต่อไปตามที่คุณต้องการ
     setErrorRewards(validatedRewards);
     setErrorNumber(true);
-
+    console.log("isValid", isValid);
     // สามารถใช้ isValid เพื่อทำสิ่งที่ต้องการในกรณีที่ค่าไม่ถูกต้อง
-    if (!isValid) {
-      // ทำสิ่งที่คุณต้องการ เช่น แสดงข้อความผิดพลาด
-      console.log("มีข้อมูลไม่ถูกต้อง");
-
-      // แสดงข้อมูล rewards ที่มีข้อผิดพลาด
-      validatedRewards.forEach((reward, index) => {
-        if (reward.hasError) {
-          console.log(`Number ${reward.number} มีข้อมูลไม่ถูกต้อง`);
-          console.log("Replaced rewards:", reward);
-        }
-      });
-    }
 
     return isValid;
   };
 
-  console.log("rewards", rewards);
   const handleEventChange = (event) => {
-    console.log("event", event);
     if (event == "activity") {
       if (validateActivity()) {
         setStatusCreateActivity("criteria");
@@ -249,12 +230,11 @@ const CreateNewActivity = () => {
       }
     } else {
       if (validationRewards()) {
+        console.log("zjko");
         /*  setStatusCreateActivity("rewards"); */
       }
     }
   };
-
-  console.log("errorRewards", errorRewards);
 
   const createActivity = () => {
     const selectedLocale = language === "th" ? th : enUS;
@@ -268,7 +248,7 @@ const CreateNewActivity = () => {
             type="text"
             name="event_name"
             onChange={(event) => setEvent_name(event.target.value)}
-            class="form-control"
+            className="form-control"
             id="exampleFormControlInput1"
             placeholder="รายละอียดกิจกรรม"
           />
@@ -281,7 +261,7 @@ const CreateNewActivity = () => {
             รายละเอียด/เงื่อนไขกิจกรรม <span>*</span>
           </p>
           <textarea
-            class="form-control"
+            className="form-control"
             name="event_detail"
             onChange={(event) => setEvent_detail(event.target.value)}
             id="exampleFormControlTextarea1"
@@ -415,39 +395,39 @@ const CreateNewActivity = () => {
             ประเภทกิจกรรม <span>*</span>
           </p>
           <div className={style["flex-row-radios"]}>
-            <div class="form-check">
+            <div className="form-check">
               <input
-                class="form-check-input"
+                className="form-check-input"
                 type="radio"
                 name="activityType"
                 id="flexRadioDisabled"
                 onChange={() => setActivityType("เดี่ยว")}
               />
-              <label class="form-check-label" for="flexRadioDisabled">
+              <label className="form-check-label" for="flexRadioDisabled">
                 เดี่ยว
               </label>
             </div>
-            <div class="form-check">
+            <div className="form-check">
               <input
-                class="form-check-input"
+                className="form-check-input"
                 type="radio"
                 name="activityType"
                 id="flexRadioDisabled"
                 onChange={() => setActivityType("เดี่ยว")}
               />
-              <label class="form-check-label" for="flexRadioDisabled">
+              <label className="form-check-label" for="flexRadioDisabled">
                 กลุ่ม
               </label>
             </div>
-            <div class="form-check">
+            <div className="form-check">
               <input
-                class="form-check-input"
+                className="form-check-input"
                 type="radio"
                 name="activityType"
                 id="flexRadioDisabled"
                 onChange={() => setActivityType("กำหนดเอง")}
               />
-              <label class="form-check-label" for="flexRadioDisabled">
+              <label className="form-check-label" for="flexRadioDisabled">
                 กำหนดเอง
               </label>
             </div>
@@ -459,28 +439,28 @@ const CreateNewActivity = () => {
             จำกัดผู้เข้าร่วม <span>*</span>
           </p>
           <div className={style["flex-row-radios"]}>
-            <div class="form-check">
+            <div className="form-check">
               <input
-                class="form-check-input"
+                className="form-check-input"
                 type="radio"
                 name="limited"
                 id="flexRadioDisabled"
                 onClick={() => setLimited(true)}
                 checked={limited}
               />
-              <label class="form-check-label" for="flexRadioDisabled">
+              <label className="form-check-label" for="flexRadioDisabled">
                 จำกัด
               </label>
             </div>
-            <div class="form-check">
+            <div className="form-check">
               <input
-                class="form-check-input"
+                className="form-check-input"
                 type="radio"
                 name="limited"
                 id="flexRadioDisabled"
                 onClick={() => setLimited(false)}
               />
-              <label class="form-check-label" for="flexRadioDisabled">
+              <label className="form-check-label" for="flexRadioDisabled">
                 ไม่จำกัด
               </label>
             </div>
@@ -490,7 +470,7 @@ const CreateNewActivity = () => {
               <div className={style["box-person"]}>
                 <input
                   type="number"
-                  class="form-control "
+                  className="form-control "
                   id="exampleFormControlInput1"
                   onChange={(event) => setLimitedNumber(event.target.value)}
                   placeholder="จำนวนผู้เข้าร่วม"
@@ -508,29 +488,29 @@ const CreateNewActivity = () => {
           </p>
           <div className={style["flex-row"]}>
             <div>
-              <div class="form-check">
+              <div className="form-check">
                 <input
-                  class="form-check-input"
+                  className="form-check-input"
                   type="radio"
                   name="criteria_walk_step"
                   id="flexCheckDefault"
                   onChange={() => setCriteria_walk_step(true)}
                   checked={criteria_walk_step}
                 />
-                <label class="form-check-label" for="flexCheckDefault">
+                <label className="form-check-label" for="flexCheckDefault">
                   ครบระยะทางที่กำหนด{" "}
                   <span className={style["span-red"]}>*</span>
                 </label>
               </div>
-              {/* <div class="form-check">
+              {/* <div className="form-check">
                 <input
-                  class="form-check-input"
+                  className="form-check-input"
                   type="radio"
                   name="criteria_walk_step"
                   id="flexCheckChecked"
                   onChange={() => setCriteria_walk_step(false)}
                 />
-                <label class="form-check-label" for="flexCheckChecked">
+                <label className="form-check-label" for="flexCheckChecked">
                   ผู้ที่ได้ระยะทางสูงสุด{" "}
                   <span className={style["span-red"]}>*</span>
                 </label>
@@ -540,7 +520,7 @@ const CreateNewActivity = () => {
               <div className={`${style["box-person"]} ${style["ml"]}`}>
                 <input
                   type="number"
-                  class="form-control "
+                  className="form-control "
                   id="exampleFormControlInput1"
                   placeholder="จำนวนระยะทาง"
                   min={0}
@@ -556,27 +536,27 @@ const CreateNewActivity = () => {
           </p>
           <div className={style["flex-row"]}>
             <div>
-              <div class="form-check">
+              <div className="form-check">
                 <input
-                  class="form-check-input"
+                  className="form-check-input"
                   type="radio"
                   id="flexCheckDefault"
                   checked={criteria_distance}
                   /*  disabled={criteria_walk_step} */
                 />
-                <label class="form-check-label" for="flexCheckDefault">
+                <label className="form-check-label" for="flexCheckDefault">
                   ครบระยะทางที่กำหนด{" "}
                   <span className={style["span-red"]}>*</span>
                 </label>
               </div>
-              {/* <div class="form-check">
+              {/* <div className="form-check">
                 <input
-                  class="form-check-input"
+                  className="form-check-input"
                   type="checkbox"
                   value=""
                   id="flexCheckChecked"
                 />
-                <label class="form-check-label" for="flexCheckChecked">
+                <label className="form-check-label" for="flexCheckChecked">
                   ผู้ที่ได้ระยะทางสูงสุด{" "}
                   <span className={style["span-red"]}>*</span>
                 </label>
@@ -586,7 +566,7 @@ const CreateNewActivity = () => {
               <div className={`${style["box-person"]} ${style["ml"]}`}>
                 <input
                   type="number"
-                  class="form-control "
+                  className="form-control "
                   id="exampleFormControlInput1"
                   placeholder="จำนวนก้าวเดิน"
                   min={0}
@@ -617,7 +597,6 @@ const CreateNewActivity = () => {
   };
 
   const createRewards = () => {
-    console.log("errorNumber", errorNumber);
     return (
       <>
         <div className={style["overflow-x"]}>
