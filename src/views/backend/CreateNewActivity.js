@@ -31,7 +31,7 @@ const CreateNewActivity = () => {
   const [errorStartDateActivity, setErrorStartDateActivity] = useState(null); //ระยะเวลากิจกรรม start
   const [errorEndDateActivity, setErrorEndDateActivity] = useState(null); //ระยะเวลากิจกรรม * end
 
-  //  error  ส่วนเก็บข้อมูล   เกณฑ์  activityType
+  //   ส่วนเก็บข้อมูล   เกณฑ์  activityType
   const [activityType, setActivityType] = useState(""); // ชื่อกิจกรรม
   const [limited, setLimited] = useState(true);
   const [limitedNumber, setLimitedNumber] = useState(null);
@@ -46,7 +46,13 @@ const CreateNewActivity = () => {
   const [errorDistance, setErrorDistance] = useState(null);
   const [errorWalk_step, setErrorWalk_step] = useState(null);
 
+  //   ส่วนเก็บข้อมูล   Rewards รางวัล
   const [rewards, setRewards] = useState([
+    { number: 1, name: "", image: "", quantity: "" },
+    { number: 2, name: "", image: "", quantity: "" },
+  ]);
+
+  const [errorRewards, setErrorRewards] = useState([
     { number: 1, name: "", image: "", quantity: "" },
     { number: 2, name: "", image: "", quantity: "" },
   ]);
@@ -60,6 +66,7 @@ const CreateNewActivity = () => {
     };
 
     setRewards((prevRewards) => [...prevRewards, newReward]);
+    setErrorRewards((prevRewards) => [...prevRewards, newReward]);
   };
   const handleStartDateChange = (date, event) => {
     if (event == "activity") {
@@ -173,18 +180,43 @@ const CreateNewActivity = () => {
 
     return isValid;
   };
+  const validationRewards = () => {
+    let isValid = true;
 
+    // ทำการตรวจสอบ errorRewards ทุกรายการ
+
+    rewards &&
+      rewards.map((reward, index) => {
+        errorRewards &&
+          errorRewards.map((errorReward, indexError) => {
+            if (indexError + 1 === index + 1) {
+              console.log("ss", errorReward);
+            }
+          });
+      });
+
+    return isValid;
+  };
+
+  console.log("rewards", rewards);
   const handleEventChange = (event) => {
+    console.log("event", event);
     if (event == "activity") {
       if (validateActivity()) {
         setStatusCreateActivity("criteria");
       }
-    } else if (event == "rewards") {
+    } else if (event == "criteria") {
       if (validateCriteria()) {
         setStatusCreateActivity("rewards");
       }
+    } else {
+      if (validationRewards()) {
+        /*  setStatusCreateActivity("rewards"); */
+      }
     }
   };
+
+  console.log("errorRewards", errorRewards);
 
   const createActivity = () => {
     const selectedLocale = language === "th" ? th : enUS;
@@ -338,7 +370,6 @@ const CreateNewActivity = () => {
   };
 
   const createCriteria = () => {
-    console.log("criteria_walk_step", criteria_walk_step);
     return (
       <>
         <div>
@@ -538,7 +569,7 @@ const CreateNewActivity = () => {
           </button>
           <button
             className={style["btn-next"]}
-            onClick={() => handleEventChange("rewards")}
+            onClick={() => handleEventChange("criteria")}
           >
             ถัดไป
           </button>
@@ -548,7 +579,6 @@ const CreateNewActivity = () => {
   };
 
   const createRewards = () => {
-    console.log("rewards", rewards);
     return (
       <>
         <div className={style["overflow-x"]}>
@@ -607,6 +637,9 @@ const CreateNewActivity = () => {
                       )
                     }
                   ></textarea>
+                  {errorRewards.name && (
+                    <div className="error-from">{errorRewards.name}</div>
+                  )}
                   <p className={style["name-activity"]}>
                     อัพโหลดรูปของรางวัล <span>*</span>
                   </p>
@@ -653,7 +686,7 @@ const CreateNewActivity = () => {
           </button>
           <button
             className={style["btn-next"]}
-            onClick={() => setStatusCreateActivity("rewards")}
+            onClick={() => handleEventChange("rewards")}
           >
             ถัดไป
           </button>
