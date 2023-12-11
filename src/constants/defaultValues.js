@@ -23,18 +23,8 @@ const dev = {
   API: {
     endpoints: [
       {
-        name: "bebe_platform",
+        name: "wellly",
         endpoint: "http://localhost:3003",
-        region: "ap-southeast-1",
-      },
-      {
-        name: "bebe_stay_fit",
-        endpoint: "http://localhost:3004",
-        region: "ap-southeast-1",
-      },
-      {
-        name: "pynk",
-        endpoint: "http://localhost:3005",
         region: "ap-southeast-1",
       },
     ],
@@ -57,18 +47,8 @@ const prod = {
   API: {
     endpoints: [
       {
-        name: "bebe_platform",
-        endpoint: "https://api.planforfit.com/bebe",
-        region: "ap-southeast-1",
-      },
-      {
-        name: "bebe_stay_fit",
-        endpoint: "https://api.planforfit.com/bebefit",
-        region: "ap-southeast-1",
-      },
-      {
-        name: "pynk",
-        endpoint: "https://api.planforfit.com/pynk",
+        name: "wellly",
+        endpoint: "https://api.planforfit.com/wellly",
         region: "ap-southeast-1",
       },
     ],

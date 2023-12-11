@@ -221,6 +221,7 @@ const CreateNewActivity = () => {
         console.log("888");
         const qty = "150";
         const creator = "thanet";
+
         dispatch(
           createEventActivity(
             event_name,

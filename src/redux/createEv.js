@@ -65,7 +65,7 @@ const createEventActivitySagaAsync = async (
   creator
 ) => {
   try {
-    const apiResult = await API.post("planforfit", "/create_event_activity", {
+    const apiResult = await API.post("wellly", "/create_event_activity", {
       body: {
         event_name,
         event_detail,
