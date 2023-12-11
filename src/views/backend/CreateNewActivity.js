@@ -208,6 +208,38 @@ const CreateNewActivity = () => {
   };
 
   const handleEventChange = (event) => {
+    dispatch(
+      createEventActivity(
+        "5555",
+        "444",
+        "12-12-2566",
+        "12-12-2566",
+        "12-12-2566",
+        "12-12-2566",
+        "1",
+        "100",
+        "113",
+        "555",
+        "asdasd",
+        "9999",
+        "assd",
+        [
+          {
+            "number": 1,
+            "name": "aa",
+            "image": "ddd",
+            "quantity": "fff"
+          },
+          {
+            "number": 2,
+            "name": "bb",
+            "image": "wss",
+            "quantity": "eeee"
+          }
+        ],
+        "aaaa"
+      )
+    );
     if (event == "activity") {
       if (validateActivity()) {
         setStatusCreateActivity("criteria");
@@ -224,21 +256,34 @@ const CreateNewActivity = () => {
 
         dispatch(
           createEventActivity(
-            event_name,
-            event_detail,
-            startDate,
-            endDate,
-            startDateActivity,
-            endDateActivity,
-            activityType,
-            qty,
-            limitedNumber,
-            criteria_distance,
-            distance,
-            criteria_walk_step,
-            walk_step,
-            rewards,
-            creator
+            "5555",
+            "444",
+            "12-12-2566",
+            "12-12-2566",
+            "12-12-2566",
+            "12-12-2566",
+            "1",
+            "100",
+            "113",
+            "555",
+            "asdasd",
+            "9999",
+            "assd",
+            [
+              {
+                "number": 1,
+                "name": "aa",
+                "image": "ddd",
+                "quantity": "fff"
+              },
+              {
+                "number": 2,
+                "name": "bb",
+                "image": "wss",
+                "quantity": "eeee"
+              }
+            ],
+            "aaaa"
           )
         );
         //createEventActivity
@@ -301,7 +346,7 @@ const CreateNewActivity = () => {
               src={calendarIcon}
               alt="calendar"
               className={style["calendar"]}
-              /*   onClick={onClick} */
+            /*   onClick={onClick} */
             />
             {errorStartDate && (
               <div className="error-from">{errorStartDate}</div>
@@ -552,7 +597,7 @@ const CreateNewActivity = () => {
                   type="radio"
                   id="flexCheckDefault"
                   checked={criteria_distance}
-                  /*  disabled={criteria_walk_step} */
+                /*  disabled={criteria_walk_step} */
                 />
                 <label className="form-check-label" for="flexCheckDefault">
                   ครบระยะทางที่กำหนด{" "}
@@ -766,8 +811,8 @@ const CreateNewActivity = () => {
           {statusCreateActivity == "activity"
             ? createActivity()
             : statusCreateActivity == "criteria"
-            ? createCriteria()
-            : createRewards()}
+              ? createCriteria()
+              : createRewards()}
         </div>
       </div>
     </>

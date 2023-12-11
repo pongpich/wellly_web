@@ -26,21 +26,23 @@ export const createEventActivity = (
   creator
 ) => ({
   type: types.CREATE_EVENT_ACTIVITY,
-  payload: event_name,
-  event_detail,
-  startDate,
-  endDate,
-  startDateActivity,
-  endDateActivity,
-  activityType,
-  qty,
-  limitedNumber,
-  criteria_distance,
-  distance,
-  criteria_walk_step,
-  walk_step,
-  rewards,
-  creator,
+  payload: {
+    event_name,
+    event_detail,
+    startDate,
+    endDate,
+    startDateActivity,
+    endDateActivity,
+    activityType,
+    qty,
+    limitedNumber,
+    criteria_distance,
+    distance,
+    criteria_walk_step,
+    walk_step,
+    rewards,
+    creator
+  }
 });
 
 /* END OF ACTION Section */
