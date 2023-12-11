@@ -1,5 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import style from "../../assets/css/createNewActivity.module.css";
+import { createEventActivity } from "../../../redux/create";
+import { useSelector, useDispatch } from "react-redux";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import th from "date-fns/locale/th"; // import locale ภาษาไทย
@@ -9,6 +11,7 @@ import calendarIcon from "../../assets/image/icon/date.png"; // ปรับเ�
 import Group7728 from "../../assets/image/icon/Group7728.png"; // ปรับเปลี่ยนที่อยู่ของไฟล์รูปภาพปฏิทิน
 
 const CreateNewActivity = () => {
+  const dispatch = useDispatch();
   const [statusCreateActivity, setStatusCreateActivity] = useState("activity"); //activity = กิจกรรม, criteria = เกณฑ์ ,Rewards = ของรางวัล,badge = ตราสัญลักษณ์
 
   const [language, setLanguage] = useState("th");
@@ -33,8 +36,8 @@ const CreateNewActivity = () => {
 
   //   ส่วนเก็บข้อมูล   เกณฑ์  activityType
   const [activityType, setActivityType] = useState(""); // ชื่อกิจกรรม
-  const [limited, setLimited] = useState(true);
-  const [limitedNumber, setLimitedNumber] = useState(null);
+  const [limited, setLimited] = useState(true); //จำกัดผู้เข้าร่วม
+  const [limitedNumber, setLimitedNumber] = useState(0); //จำนวนผู้เข้าร่วม
   const [criteria_distance, setCriteria_distance] = useState(true);
   const [distance, setDistance] = useState(null);
   const [criteria_walk_step, setCriteria_walk_step] = useState(true);
@@ -161,7 +164,7 @@ const CreateNewActivity = () => {
       isValid = false;
     }
 
-    if (!limitedNumber && limited) {
+    if (limitedNumber.length > 0 && limited) {
       setErrorLimitedNumber("กรุณาระบุข้อมูล");
       isValid = false;
     }
@@ -214,10 +217,29 @@ const CreateNewActivity = () => {
         setStatusCreateActivity("rewards");
       }
     } else {
-      console.log("validationRewards()", validationRewards());
       if (validationRewards()) {
-        console.log("zjko");
-        /*  setStatusCreateActivity("rewards"); */
+        const qty = "150";
+        const creator = "thanet";
+        dispatch(
+          createEventActivity(
+            event_name,
+            event_detail,
+            startDate,
+            endDate,
+            startDateActivity,
+            endDateActivity,
+            activityType,
+            qty,
+            limitedNumber,
+            criteria_distance,
+            distance,
+            criteria_walk_step,
+            walk_step,
+            rewards,
+            creator
+          )
+        );
+        //createEventActivity
       }
     }
   };

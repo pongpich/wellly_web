@@ -7,6 +7,7 @@ import settings from "./settings/reducer";
 
 //ของ Pynk
 import { reducer as auth } from "./auth";
+import { reducer as create } from "./create";
 
 const persistConfig = {
   key: "root",
@@ -17,6 +18,7 @@ const persistConfig = {
 const reducers = combineReducers({
   //ของ Bebe Stay Fit
   auth,
+  create,
 });
 
 const persistedReducer = persistReducer(persistConfig, reducers);
