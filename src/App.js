@@ -17,6 +17,7 @@ import Detail from "../src/views/Detail";
 import DetailRegister from "../src/views/DetailRegister";
 import DetailTimer from "../src/views/DetailTimer";
 import DetailSucceed from "../src/views/DetailSucceed";
+import GoogleAuth from "../src/views/GoogleAuth";
 import AllTest from "./views/AllTest";
 import Scoreboard from "./views/Scoreboard";
 import ScoreboardSucceed from "./views/ScoreboardSucceed";
@@ -45,6 +46,7 @@ const App = () => {
       <Route path="/detailTimer" element={<DetailTimer />} />
       <Route path="/scoreboard" element={<Scoreboard />} />
       <Route path="/scoreboardSucceed" element={<ScoreboardSucceed />} />
+      <Route path="/googleAuth" element={<GoogleAuth />} />
 
       {/*  backend */}
       <Route path="/login" element={<Login />} />
