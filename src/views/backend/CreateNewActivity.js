@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import style from "../../assets/css/createNewActivity.module.css";
-import { createEventActivity } from "../../redux/create";
+import { createEventActivity } from "../../redux/createEv";
 import { useSelector, useDispatch } from "react-redux";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
@@ -164,7 +164,7 @@ const CreateNewActivity = () => {
       isValid = false;
     }
 
-    if (limitedNumber.length > 0 && limited) {
+    if (limitedNumber.length < 1 && limited) {
       setErrorLimitedNumber("กรุณาระบุข้อมูล");
       isValid = false;
     }
@@ -218,6 +218,7 @@ const CreateNewActivity = () => {
       }
     } else {
       if (validationRewards()) {
+        console.log("888");
         const qty = "150";
         const creator = "thanet";
         dispatch(

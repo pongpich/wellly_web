@@ -65,7 +65,7 @@ const createEventActivitySagaAsync = async (
   creator
 ) => {
   try {
-    const apiResult = await API.post("pynk", "/create_event_activity", {
+    const apiResult = await API.post("planforfit", "/create_event_activity", {
       body: {
         event_name,
         event_detail,
@@ -84,7 +84,7 @@ const createEventActivitySagaAsync = async (
         creator,
       },
     });
-    console.log("create_order apiResult", apiResult);
+    console.log("create_event_activity apiResult", apiResult);
     return apiResult;
   } catch (error) {
     return { error, messsage: error.message };
@@ -137,7 +137,7 @@ function* createEventActivitySaga({ payload }) {
       });
     }
   } catch (error) {
-    console.log("error from createOrderSaga :", error);
+    console.log("error from event_activity :", error);
   }
 }
 
@@ -146,9 +146,7 @@ export function* watchCreateEventActivity() {
 }
 
 export function* saga() {
-  yield all([
-    fork(watchCreateEventActivity),
-  ]);
+  yield all([fork(watchCreateEventActivity)]);
 }
 
 /* REDUCER Section */
