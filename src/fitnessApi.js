@@ -1,13 +1,13 @@
 import { getToken } from "./tokens";
 
 export const getMyGoogleFit = async () => {
-  try {
-    const token = await getToken();
-    console.log(
-      "fitnessApi.js 49 | getting steps data with token",
-      token
-    );
-    const dataTypeName = 'com.google.step_count.delta';
+	try {
+		const token = await getToken();
+		console.log(
+			"fitnessApi.js 49 | getting steps data with token",
+			token
+		);
+		const dataTypeName = 'com.google.step_count.delta';
 		const dataSourceId = 'derived:com.google.step_count.delta:com.google.android.gms:estimated_steps';
 		const query = {
 			aggregateBy: [{ dataTypeName, dataSourceId }],
@@ -25,12 +25,12 @@ export const getMyGoogleFit = async () => {
 			body: JSON.stringify(query)
 		});
 
-    const data = await response.json();
-    console.log("fitnessApi.js 24 | got steps data", data);
+		const data = await response.json();
+		console.log("fitnessApi.js 24 | got steps data", data);
 
-    return data;
-  } catch (error) {
-    console.log("fitnessApi.js 35 | error getting steps data", error);
-    return error.message;
-  }
+		return data;
+	} catch (error) {
+		console.log("fitnessApi.js 35 | error getting steps data", error);
+		return error.message;
+	}
 };

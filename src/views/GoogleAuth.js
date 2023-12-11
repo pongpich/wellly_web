@@ -18,7 +18,6 @@ function GoogleAuth() {
                 method: "GET"
             });
             const response = await request.json();
-            console.log("response.url :", response.url);
             window.location.href = response.url;
         } catch (error) {
             console.log("home.js 12 | error", error);
@@ -28,19 +27,13 @@ function GoogleAuth() {
     };
 
     const handleTokenFromQueryParams = () => {
-        console.log("window.location.search :", window.location.hash.substring(window.location.hash.indexOf('?')));
         const query = new URLSearchParams(window.location.hash.substring(window.location.hash.indexOf('?')));
         const accessToken = query.get("accessToken");
         const refreshToken = query.get("refreshToken");
-        console.log("query :", query);
-        console.log("accessToken :", accessToken);
-        console.log("refreshToken :", refreshToken);
         const expirationDate = newExpirationDate();
         console.log("App.js 30 | expiration Date", expirationDate);
 
         if (accessToken && refreshToken) {
-            console.log("accessToken :", accessToken);
-            console.log("refreshToken :", refreshToken);
             storeTokenData(accessToken, refreshToken, expirationDate);
             setIsLoggedIn(true);
         }
