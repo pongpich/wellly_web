@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import style from "../../assets/css/createNewActivity.module.css";
-import { createEventActivity } from "../../../redux/create";
+import { createEventActivity } from "../../redux/create";
 import { useSelector, useDispatch } from "react-redux";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";

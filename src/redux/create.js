@@ -145,6 +145,12 @@ export function* watchCreateEventActivity() {
   yield takeEvery(types.CREATE_EVENT_ACTIVITY, createEventActivitySaga);
 }
 
+export function* saga() {
+  yield all([
+    fork(watchCreateEventActivity),
+  ]);
+}
+
 /* REDUCER Section */
 
 const INIT_STATE = {
