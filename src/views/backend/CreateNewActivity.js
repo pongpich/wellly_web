@@ -6,6 +6,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import th from "date-fns/locale/th"; // import locale ภาษาไทย
 import enUS from "date-fns/locale/en-US"; // import locale ภาษาอังกฤษ
+import { format } from "date-fns";
 
 import calendarIcon from "../../assets/image/icon/date.png"; // ปรับเปลี่ยนที่อยู่ของไฟล์รูปภาพปฏิทิน
 import Group7728 from "../../assets/image/icon/Group7728.png"; // ปรับเปลี่ยนที่อยู่ของไฟล์รูปภาพปฏิทิน
@@ -19,16 +20,16 @@ const CreateNewActivity = () => {
   const fileInputRef = useRef(null);
 
   // ส่วนเก็บข้อมูล  กิจกรรม, nameActivity
-  const [event_name, setEvent_name] = useState(""); // ชื่อกิจกรรม
-  const [event_detail, setEvent_detail] = useState(""); //รายละเอียด กิจกรรม
+  const [eventName, setEventName] = useState(""); // ชื่อกิจกรรม
+  const [eventDetail, setEventDetail] = useState(""); //รายละเอียด กิจกรรม
   const [startDate, setStartDate] = useState(null); //ระยะเวลาการแสดงผล start
   const [endDate, setEndDate] = useState(null); //ระยะเวลาการแสดงผล end
   const [startDateActivity, setStartDateActivity] = useState(null); //ระยะเวลากิจกรรม start
   const [endDateActivity, setEndDateActivity] = useState(null); //ระยะเวลากิจกรรม * end
 
   // error  ส่วนเก็บข้อมูล กิจกรรม
-  const [errorEvent_name, setErrorEvent_name] = useState(""); // ชื่อกิจกรรม
-  const [errorEvent_detail, setErrorEvent_detail] = useState(""); //รายละเอียด กิจกรรม
+  const [errorEventName, setErrorEventName] = useState(""); // ชื่อกิจกรรม
+  const [errorEventDetail, setErrorEventDetail] = useState(""); //รายละเอียด กิจกรรม
   const [errorStartDate, setErrorStartDate] = useState(null); //ระยะเวลาการแสดงผล
   const [errorEndDate, setErrorEndDate] = useState(null); //ระยะเวลากิจกรรม
   const [errorStartDateActivity, setErrorStartDateActivity] = useState(null); //ระยะเวลากิจกรรม start
@@ -116,19 +117,19 @@ const CreateNewActivity = () => {
 
   const validateActivity = () => {
     let isValid = true;
-    setErrorEvent_name("");
-    setErrorEvent_detail("");
+    setErrorEventName("");
+    setErrorEventDetail("");
     setErrorStartDate("");
     setErrorEndDate("");
     setErrorStartDateActivity("");
     setErrorEndDateActivity("");
     //
-    if (!event_name.trim()) {
-      setErrorEvent_name("กรุณาระบุข้อมูล");
+    if (!eventName.trim()) {
+      setErrorEventName("กรุณาระบุข้อมูล");
       isValid = false;
     }
-    if (!event_detail.trim()) {
-      setErrorEvent_detail("กรุณาระบุข้อมูล");
+    if (!eventDetail.trim()) {
+      setErrorEventDetail("กรุณาระบุข้อมูล");
       isValid = false;
     }
     if (!startDate) {
@@ -208,7 +209,8 @@ const CreateNewActivity = () => {
   };
 
   const handleEventChange = (event) => {
-    dispatch(
+    console.log("888", eventName);
+    /*  dispatch(
       createEventActivity(
         "5555",
         "444",
@@ -225,21 +227,21 @@ const CreateNewActivity = () => {
         "assd",
         [
           {
-            "number": 1,
-            "name": "aa",
-            "image": "ddd",
-            "quantity": "fff"
+            number: 1,
+            name: "aa",
+            image: "ddd",
+            quantity: "fff",
           },
           {
-            "number": 2,
-            "name": "bb",
-            "image": "wss",
-            "quantity": "eeee"
-          }
+            number: 2,
+            name: "bb",
+            image: "wss",
+            quantity: "eeee",
+          },
         ],
         "aaaa"
       )
-    );
+    ); */
     if (event == "activity") {
       if (validateActivity()) {
         setStatusCreateActivity("criteria");
@@ -250,42 +252,30 @@ const CreateNewActivity = () => {
       }
     } else {
       if (validationRewards()) {
-        console.log("888");
+        console.log("888", eventName);
         const qty = "150";
         const creator = "thanet";
 
         dispatch(
           createEventActivity(
-            "5555",
-            "444",
-            "12-12-2566",
-            "12-12-2566",
-            "12-12-2566",
-            "12-12-2566",
-            "1",
-            "100",
-            "113",
-            "555",
-            "asdasd",
-            "9999",
-            "assd",
-            [
-              {
-                "number": 1,
-                "name": "aa",
-                "image": "ddd",
-                "quantity": "fff"
-              },
-              {
-                "number": 2,
-                "name": "bb",
-                "image": "wss",
-                "quantity": "eeee"
-              }
-            ],
-            "aaaa"
+            eventName,
+            eventDetail,
+            format(startDate, "dd-MM-yyyy"),
+            format(endDate, "dd-MM-yyyy"),
+            format(startDateActivity, "dd-MM-yyyy"),
+            format(endDateActivity, "dd-MM-yyyy"),
+            activityType,
+            qty,
+            limitedNumber,
+            criteria_distance,
+            distance,
+            criteria_walk_step,
+            walk_step,
+            rewards,
+            creator
           )
         );
+
         //createEventActivity
       }
     }
@@ -293,6 +283,7 @@ const CreateNewActivity = () => {
 
   const createActivity = () => {
     const selectedLocale = language === "th" ? th : enUS;
+
     return (
       <>
         <div>
@@ -301,15 +292,13 @@ const CreateNewActivity = () => {
           </p>
           <input
             type="text"
-            name="event_name"
-            onChange={(event) => setEvent_name(event.target.value)}
+            name="eventName"
+            onChange={(event) => setEventName(event.target.value)}
             className="form-control"
             id="exampleFormControlInput1"
             placeholder="รายละอียดกิจกรรม"
           />
-          {errorEvent_name && (
-            <div className="error-from">{errorEvent_name}</div>
-          )}
+          {errorEventName && <div className="error-from">{errorEventName}</div>}
         </div>
         <div>
           <p className={style["name-activity"]}>
@@ -317,13 +306,13 @@ const CreateNewActivity = () => {
           </p>
           <textarea
             className="form-control"
-            name="event_detail"
-            onChange={(event) => setEvent_detail(event.target.value)}
+            name="eventDetail"
+            onChange={(event) => setEventDetail(event.target.value)}
             id="exampleFormControlTextarea1"
             rows="5"
           ></textarea>
-          {errorEvent_detail && (
-            <div className="error-from">{errorEvent_detail}</div>
+          {errorEventDetail && (
+            <div className="error-from">{errorEventDetail}</div>
           )}
         </div>
         <p className={style["period"]}>
@@ -346,7 +335,7 @@ const CreateNewActivity = () => {
               src={calendarIcon}
               alt="calendar"
               className={style["calendar"]}
-            /*   onClick={onClick} */
+              /*   onClick={onClick} */
             />
             {errorStartDate && (
               <div className="error-from">{errorStartDate}</div>
@@ -597,7 +586,7 @@ const CreateNewActivity = () => {
                   type="radio"
                   id="flexCheckDefault"
                   checked={criteria_distance}
-                /*  disabled={criteria_walk_step} */
+                  /*  disabled={criteria_walk_step} */
                 />
                 <label className="form-check-label" for="flexCheckDefault">
                   ครบระยะทางที่กำหนด{" "}
@@ -811,8 +800,8 @@ const CreateNewActivity = () => {
           {statusCreateActivity == "activity"
             ? createActivity()
             : statusCreateActivity == "criteria"
-              ? createCriteria()
-              : createRewards()}
+            ? createCriteria()
+            : createRewards()}
         </div>
       </div>
     </>

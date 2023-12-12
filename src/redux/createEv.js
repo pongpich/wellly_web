@@ -9,8 +9,8 @@ export const types = {
 
 /* ACTION Section */
 export const createEventActivity = (
-  event_name,
-  event_detail,
+  eventName,
+  eventDetail,
   startDate,
   endDate,
   startDateActivity,
@@ -27,8 +27,8 @@ export const createEventActivity = (
 ) => ({
   type: types.CREATE_EVENT_ACTIVITY,
   payload: {
-    event_name,
-    event_detail,
+    eventName,
+    eventDetail,
     startDate,
     endDate,
     startDateActivity,
@@ -41,8 +41,8 @@ export const createEventActivity = (
     criteria_walk_step,
     walk_step,
     rewards,
-    creator
-  }
+    creator,
+  },
 });
 
 /* END OF ACTION Section */
@@ -50,8 +50,8 @@ export const createEventActivity = (
 /* SAGA Section */
 
 const createEventActivitySagaAsync = async (
-  event_name,
-  event_detail,
+  eventName,
+  eventDetail,
   startDate,
   endDate,
   startDateActivity,
@@ -69,8 +69,8 @@ const createEventActivitySagaAsync = async (
   try {
     const apiResult = await API.post("wellly", "/create_event_activity", {
       body: {
-        event_name,
-        event_detail,
+        eventName,
+        eventDetail,
         startDate,
         endDate,
         startDateActivity,
@@ -95,8 +95,8 @@ const createEventActivitySagaAsync = async (
 
 function* createEventActivitySaga({ payload }) {
   const {
-    event_name,
-    event_detail,
+    eventName,
+    eventDetail,
     startDate,
     endDate,
     startDateActivity,
@@ -115,8 +115,8 @@ function* createEventActivitySaga({ payload }) {
   try {
     const apiResult = yield call(
       createEventActivitySagaAsync,
-      event_name,
-      event_detail,
+      eventName,
+      eventDetail,
       startDate,
       endDate,
       startDateActivity,
