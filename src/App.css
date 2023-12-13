@@ -294,3 +294,7 @@ p {
   font-family: Regular;
   color: var(--grey3);
 }
+
+.pointer {
+  cursor: pointer;
+}

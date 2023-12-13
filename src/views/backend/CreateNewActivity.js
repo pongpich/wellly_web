@@ -12,14 +12,16 @@ import ReactQuill from "react-quill";
 
 import calendarIcon from "../../assets/image/icon/Calendar.png"; // ปรับเปลี่ยนที่อยู่ของไฟล์รูปภาพปฏิทิน
 import Group7728 from "../../assets/image/icon/Upload.png"; // ปรับเปลี่ยนที่อยู่ของไฟล์รูปภาพปฏิทิน
-import User from "../../assets/image/icon/User.png"; // ปรับเปลี่ยนที่อยู่ของไฟล์รูปภาพปฏิทิน
 import Col1 from "../../assets/image/icon/Col1.png"; // ปรับเปลี่ยนที่อยู่ของไฟล์รูปภาพปฏิทิน
 import Col2 from "../../assets/image/icon/Col2.png"; // ปรับเปลี่ยนที่อยู่ของไฟล์รูปภาพปฏิทิน
 import Col3 from "../../assets/image/icon/Col3.png"; // ปรับเปลี่ยนที่อยู่ของไฟล์รูปภาพปฏิทิน
 import Logo_web from "../../assets/image/img/Logo_web.png"; // ปรับเปลี่ยนที่อยู่ของไฟล์รูปภาพปฏิทิน
 
+import NavBackend from "./NavBackend";
+
 const CreateNewActivity = () => {
   const dispatch = useDispatch();
+  const user = useSelector(({ auth }) => (auth ? auth.user : ""));
   const [statusCreateActivity, setStatusCreateActivity] = useState("activity"); //activity = กิจกรรม, criteria = เกณฑ์ ,Rewards = ของรางวัล,badge = ตราสัญลักษณ์
 
   const [language, setLanguage] = useState("th");
@@ -186,47 +188,12 @@ const CreateNewActivity = () => {
   };
 
   const handleEventChange = (event) => {
-    console.log("888", eventName);
-    /*  dispatch(
-      createEventActivity(
-        "5555",
-        "444",
-        "12-12-2566",
-        "12-12-2566",
-        "12-12-2566",
-        "12-12-2566",
-        "1",
-        "100",
-        "113",
-        "555",
-        "asdasd",
-        "9999",
-        "assd",
-        [
-          {
-            number: 1,
-            name: "aa",
-            image: "ddd",
-            quantity: "fff",
-          },
-          {
-            number: 2,
-            name: "bb",
-            image: "wss",
-            quantity: "eeee",
-          },
-        ],
-        "aaaa"
-      )
-    ); */
     if (event == "activity") {
       setStatusCreateActivity("criteria");
     } else if (event == "criteria") {
       setStatusCreateActivity("rewards");
     } else {
-      console.log("888", eventName);
-      const qty = "150";
-      const creator = "thanet";
+      const creator = user ? user.display_name : "";
 
       dispatch(
         createEventActivity(
@@ -277,6 +244,15 @@ const CreateNewActivity = () => {
       return Object.values(reward).every((value) => value !== "");
     });
   };
+
+  useEffect(() => {
+    /* const isLogged = !!sessionStorage.getItem("login_status"); */
+    console.log("isLogged", user);
+
+    /*    if (!isLogged) {
+      navigate("/login");
+    } */
+  }, []);
 
   const createActivity = () => {
     const selectedLocale = language === "th" ? th : enUS;
@@ -685,13 +661,7 @@ const CreateNewActivity = () => {
 
   return (
     <>
-      <div className={style["nav-logo"]}>
-        <img src={Logo_web} className={style["img-Logo_web"]} />
-        <div className={style["flex-row"]}>
-          <span className={style["user-name"]}>Vudhinond Pri.</span>
-          <img src={User} className={style["img-User"]} />
-        </div>
-      </div>
+      <NavBackend />
       <div className={style["flex-row"]}>
         <div className={style["challenge"]}>
           <div className={style["box-new-activity"]}>

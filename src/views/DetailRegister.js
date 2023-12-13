@@ -16,6 +16,7 @@ import Distance from "../assets/image/icon/Distance.png";
 import Frame13 from "../assets/image/icon/Frame13754.png";
 
 const Detail = () => {
+
   const navigate = useNavigate();
   const [statusManu, setStatusManu] = useState("score");
   const [statusProgressBar, setStatusProgressBar] = useState(true);
