@@ -20,7 +20,7 @@ import Logo_web from "../../assets/image/img/Logo_web.png"; // ปรับเ�
 
 const CreateNewActivity = () => {
   const dispatch = useDispatch();
-  const [statusCreateActivity, setStatusCreateActivity] = useState("badge"); //activity = กิจกรรม, criteria = เกณฑ์ ,Rewards = ของรางวัล,badge = ตราสัญลักษณ์
+  const [statusCreateActivity, setStatusCreateActivity] = useState("activity"); //activity = กิจกรรม, criteria = เกณฑ์ ,Rewards = ของรางวัล,badge = ตราสัญลักษณ์
 
   const [language, setLanguage] = useState("th");
   const [rewardsNumber, setRewardsNumber] = useState(1);
@@ -228,22 +228,22 @@ const CreateNewActivity = () => {
       const qty = "150";
       const creator = "thanet";
 
-            dispatch(
-          createEventActivity(
-            eventName,
-            eventDetail,
-            format(startDate, "dd-MM-yyyy"),
-            format(endDate, "dd-MM-yyyy"),
-            format(startDateActivity, "dd-MM-yyyy"),
-            format(endDateActivity, "dd-MM-yyyy"),           
-            criteria_distance,
-            distance,
-            criteria_walk_step,
-            walk_step,
-            rewards,
-            creator
-          )
-        );
+      dispatch(
+        createEventActivity(
+          eventName,
+          eventDetail,
+          format(startDate, "dd-MM-yyyy"),
+          format(endDate, "dd-MM-yyyy"),
+          format(startDateActivity, "dd-MM-yyyy"),
+          format(endDateActivity, "dd-MM-yyyy"),
+          criteria_distance,
+          distance,
+          criteria_walk_step,
+          walk_step,
+          rewards,
+          creator
+        )
+      );
 
       //createEventActivity
     }
