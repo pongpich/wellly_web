@@ -22,6 +22,8 @@ import AllTest from "./views/AllTest";
 import Scoreboard from "./views/Scoreboard";
 import ScoreboardSucceed from "./views/ScoreboardSucceed";
 import Login from "./views/backend/Login";
+import ForgotPassword from "./views/backend/ForgotPassword";
+import Contact from "./views/backend/Contact";
 import CreateNewActivity from "./views/backend/CreateNewActivity";
 import EventActivity from "./views/backend/EventActivity";
 
@@ -50,6 +52,9 @@ const App = () => {
 
       {/*  backend */}
       <Route path="/login" element={<Login />} />
+      <Route path="/forgot_password" element={<ForgotPassword />} />
+      <Route path="/contact" element={<Contact />} />
+
       <Route path="/create-new-activity" element={<CreateNewActivity />} />
       <Route path="/event-activity" element={<EventActivity />} />
       <Route path="*" element={<Navigate to="/" replace />} />

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import style from "../../assets/css/login.module.css";
+import style from "../../assets/css/Contact.module.css";
 import { Link } from "react-router-dom";
 import Logo from "../../assets/image/icon/Logo.png";
 import Avatar from '@mui/material/Avatar';
@@ -15,7 +15,11 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import InputAdornment from '@mui/material/InputAdornment';
 import Visibility from '@mui/icons-material/Visibility';
-const Login = () => {
+import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import Key from "../../assets/image/icon/key.png";
+import Phone from "../../assets/image/icon/Phone.png";
+import Email from "../../assets/image/icon/Email.png";
+const Contact = () => {
   return (
     <>
 
@@ -40,8 +44,6 @@ const Login = () => {
             </div>
           </div>
         </div>
-
-
       </div >
 
 
@@ -53,48 +55,43 @@ const Login = () => {
           alignItems: 'center',
         }}
       >
-
+        <img src={Key} className={style["key"]} />
         <Typography component="h1" variant="h5">
-          <p className={style["event-creator"]}>Event Creator </p>
+          <p className={style["event-creator"]}>ติดต่อเรา </p>
         </Typography>
-        <Box component="form" noValidate sx={{ mt: 1 }}>
-          <TextField
-            margin="normal"
-            fullWidth
-            id="email"
-            label="อีเมล"
-            name="email"
-            autoComplete="email"
-            autoFocus
-          />
-          <TextField
-            margin="normal"
-            fullWidth
-            name="password"
-            label="รหัสผ่านอย่างน้อย 8 ตัวอักษร"
-            type="password"
-            id="password"
-            autoComplete="current-password"
-            InputProps={{
-              endAdornment: (
-                <InputAdornment position="start" >
-                  <Visibility />
-                </InputAdornment>
-              ),
-            }}
-          />
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            sx={{ mt: 3, mb: 1 , borderRadius: '25px'}}
-            style={{  height: 48 }}
-          >
-            <p className={style["login-submit"]}>เข้าสู่ระบบ </p>
-          </Button>
-          <Link to="/login">
-            <p className={style["forgot-password"]}>ลืมรหัสผ่าน ?</p>
-          </Link>
+        <Box component="section" sx={{
+          width: 327,
+          height: 74,
+          borderRadius: 1,
+          bgcolor: '#E5EEF9',
+          marginTop: 3
+        }}>
+          <Grid container spacing={2} >
+            <Grid item xs={2} >
+              <img src={Phone} className={style["phone"]} />
+            </Grid>
+            <dl className={style["detail-group"]}>
+              <p className={style["calling"]}>โทร</p>
+              <p className={style["calling_number"]}>086-899-9089</p>
+            </dl>
+          </Grid>
+        </Box>
+        <Box component="section" sx={{
+          width: 327,
+          height: 74,
+          borderRadius: 1,
+          bgcolor: '#E5EEF9',
+          marginTop: 3
+        }}>
+          <Grid container spacing={2} >
+            <Grid item xs={2} >
+              <img src={Email} className={style["phone"]} />
+            </Grid>
+            <dl className={style["detail-group"]}>
+              <p className={style["calling"]}>อีเมล</p>
+              <p className={style["calling_number"]}>support@welliness</p>
+            </dl>
+          </Grid>
         </Box>
       </Box>
 
@@ -102,4 +99,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Contact;
