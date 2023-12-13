@@ -98,7 +98,15 @@ const EventActivity = () => {
 
     useEffect(() => {
         getUser();
+        console.log(user);
+        
     }, [user]);
+
+    useEffect(() => {
+        if (!isLogged) {
+            navigate("/login")
+        }
+    });
 
     const getUser = async () => {
         const currUser = await sessionStorage.getItem("login_status");
@@ -107,6 +115,9 @@ const EventActivity = () => {
         }
     };
 
+    const isLogged = !!sessionStorage.getItem('login_status');
+
+    
     const handelLogout = async () => {
         await sessionStorage.removeItem("login_status");
         setUser(null);
