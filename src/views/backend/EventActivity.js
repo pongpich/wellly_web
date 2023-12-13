@@ -10,6 +10,9 @@ import DatePicker from "react-datepicker";
 import calendarIcon from "../../assets/image/icon/date.png"; // ปรับเปลี่ยนที่อยู่ของไฟล์รูปภาพปฏิทิน
 import DataTable from 'react-data-table-component';
 import { useNavigate } from "react-router-dom";
+import Logo from "../../assets/image/icon/Logo.png";
+import { useSelector, useDispatch } from "react-redux";
+import { logout } from "../../redux/auth"
 
 const columns = [
     {
@@ -81,7 +84,36 @@ const data = [
 ]
 
 
+
 const EventActivity = () => {
+
+    const [user_admin_name, setUserAdminName] = useState('');
+    const [user, setUser] = useState(null);
+    const dispatch = useDispatch();
+
+    // useEffect(() => {
+    //     console.log(sessionStorage.getItem('login_status'));
+    //     setUserAdminName(sessionStorage.getItem('login_status'));
+    // }, [user_admin_name]);
+
+    useEffect(() => {
+        getUser();
+    }, [user]);
+
+    const getUser = async () => {
+        const currUser = await sessionStorage.getItem("login_status");
+        if (currUser != null) {
+            setUser(currUser);
+        }
+    };
+
+    const handelLogout = async () => {
+        await sessionStorage.removeItem("login_status");
+        setUser(null);
+        dispatch(logout());
+        navigate("/login");
+    };
+
     const [startDate, setStartDate] = useState(null);
     const [endDate, setEndDate] = useState(null);
     const [startDateActivity, setStartDateActivity] = useState(null);
@@ -116,6 +148,38 @@ const EventActivity = () => {
             <div className={style["flex-row"]}>
                 <div className={style["box-challenge"]}>{">"} Challenge </div>
                 <div className={style["challenge"]}>
+                    <div className={style["grid-container1"]}>
+                        <div className={style["grid-item1"]}>
+                            <img src={Logo} className={style["Logo"]} />
+                        </div>
+                        <div className={style["grid-item2"]}>
+                            <div className={style["grid-container2"]}>
+                                <div className={style["grid-item3"]}>
+                                </div>
+                                <div className={style["grid-item3"]}>
+                                </div>
+                                <div className={style["grid-item4"]}>
+                                    {/* <span className={style["content"]}>{user}</span> */}
+                                    {user ? (
+                                        <>
+                                            <span className={style["content"]}>{user}</span>
+                                            <button onClick={handelLogout} className="logout">
+                                                Logout
+                                            </button>
+
+                                        </>
+                                    ) : (
+                                        <div>
+                                            
+                                        </div>
+
+                                    )}
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div >
                     <div className={style["challenge-title"]}>Challenge</div>
 
                     <div className={style["grid-container"]}>

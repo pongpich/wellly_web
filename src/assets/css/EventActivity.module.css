@@ -405,3 +405,43 @@
 .table{
     margin-top: 50px;
 }
+
+.grid-container1 {
+    display: grid;
+    grid-template-columns: auto auto;
+}
+
+.grid-container2 {
+    display: grid;
+    grid-template-columns: auto auto auto;
+}
+
+.grid-item1 {
+    background-color: rgba(255, 255, 255, 0.8);
+    /* border: 1px solid rgba(0, 0, 0, 0.8); */
+    padding-top: 10px;
+    padding-left: 80px;
+    font-size: 30px;
+}
+
+.grid-item2 {
+    background-color: rgba(255, 255, 255, 0.8);
+    font-size: 30px;
+}
+
+.grid-item3 {
+    background-color: rgba(255, 255, 255, 0.8);
+
+    font-size: 30px;
+    text-align: right;
+}
+.grid-item4 {
+    background-color: rgba(255, 255, 255, 0.8);
+    font-size: 30px;
+    text-align: center;
+}
+
+.Logo {
+    height: 40px;
+    float: left;
+}

@@ -5,7 +5,7 @@ import hardSet from "redux-persist/lib/stateReconciler/hardSet";
 
 import settings from "./settings/reducer";
 
-//ของ Pynk
+//ของ Welly
 import { reducer as auth } from "./auth";
 import { reducer as createEv } from "./createEv";
 
