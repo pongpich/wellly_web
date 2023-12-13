@@ -5,6 +5,7 @@ export const types = {
   CREATE_EVENT_ACTIVITY: "CREATE_EVENT_ACTIVITY",
   CREATE_EVENT_ACTIVITY_SUCCESS: "CREATE_EVENT_ACTIVITY_SUCCESS",
   CREATE_EVENT_ACTIVITY_FAIL: "CREATE_EVENT_ACTIVITY_FAIL",
+  CLEAR_STATUS: "CLEAR_STATUS",
 };
 
 /* ACTION Section */
@@ -37,6 +38,10 @@ export const createEventActivity = (
     rewards,
     creator,
   },
+});
+
+export const clear_status = () => ({
+  type: types.CLEAR_STATUS,
 });
 
 /* END OF ACTION Section */
@@ -152,6 +157,11 @@ export function reducer(state = INIT_STATE, action) {
         ...state,
         status_event_activity: "success",
         event_activity: action.payload,
+      };
+    case types.CLEAR_STATUS:
+      return {
+        ...state,
+        status_event_activity: "default",
       };
     default:
       return { ...state };

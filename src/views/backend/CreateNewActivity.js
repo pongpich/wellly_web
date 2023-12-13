@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import style from "../../assets/css/createNewActivity.module.css";
-import { createEventActivity } from "../../redux/createEv";
+import { createEventActivity, clear_status } from "../../redux/createEv";
 import { useSelector, useDispatch } from "react-redux";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
@@ -16,16 +16,23 @@ import Col1 from "../../assets/image/icon/Col1.png"; // ปรับเปลี
 import Col2 from "../../assets/image/icon/Col2.png"; // ปรับเปลี่ยนที่อยู่ของไฟล์รูปภาพปฏิทิน
 import Col3 from "../../assets/image/icon/Col3.png"; // ปรับเปลี่ยนที่อยู่ของไฟล์รูปภาพปฏิทิน
 import Logo_web from "../../assets/image/img/Logo_web.png"; // ปรับเปลี่ยนที่อยู่ของไฟล์รูปภาพปฏิทิน
-
+import { useNavigate } from "react-router-dom";
 import NavBackend from "./NavBackend";
 
 const CreateNewActivity = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const user = useSelector(({ auth }) => (auth ? auth.user : ""));
+  const { status_event_activity } = useSelector(({ createEv }) =>
+    createEv ? createEv : ""
+  );
   const [statusCreateActivity, setStatusCreateActivity] = useState("activity"); //activity = กิจกรรม, criteria = เกณฑ์ ,Rewards = ของรางวัล,badge = ตราสัญลักษณ์
 
   const [language, setLanguage] = useState("th");
   const [rewardsNumber, setRewardsNumber] = useState(1);
+  const [statusEventActivity, setStatusEventActivity] = useState(
+    status_event_activity
+  );
   const fileInputRef = useRef(null);
 
   // ส่วนเก็บข้อมูล  กิจกรรม, nameActivity
@@ -246,13 +253,16 @@ const CreateNewActivity = () => {
   };
 
   useEffect(() => {
+    setStatusEventActivity(status_event_activity);
+  }, [status_event_activity]);
+  useEffect(() => {
     /* const isLogged = !!sessionStorage.getItem("login_status"); */
     console.log("isLogged", user);
-
-    /*    if (!isLogged) {
-      navigate("/login");
-    } */
-  }, []);
+    if (status_event_activity == "success") {
+      dispatch(clear_status());
+      navigate("/event-activity");
+    }
+  }, [statusEventActivity]);
 
   const createActivity = () => {
     const selectedLocale = language === "th" ? th : enUS;
@@ -611,11 +621,14 @@ const CreateNewActivity = () => {
               })}
           </div>
         </div>
-        <div className={style["box-add-rewards"]}>
-          <div className={style["add-rewards"]} onClick={addReward}>
-            เพิ่มรางวัล
+        {rewards.length < "5" && (
+          <div className={style["box-add-rewards"]}>
+            <div className={style["add-rewards"]} onClick={addReward}>
+              เพิ่มรางวัล
+            </div>
           </div>
-        </div>
+        )}
+
         <div className={style["button-0"]}>
           <div className={style["flex-end-criteria"]}>
             <span>
