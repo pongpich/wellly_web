@@ -7,11 +7,16 @@ import "react-datepicker/dist/react-datepicker.css";
 import th from "date-fns/locale/th"; // import locale ภาษาไทย
 import enUS from "date-fns/locale/en-US"; // import locale ภาษาอังกฤษ
 import { format } from "date-fns";
-import ReactQuill from 'react-quill';
-import 'react-quill/dist/quill.snow.css';
+import "quill/dist/quill.snow.css";
+import ReactQuill from "react-quill";
 
 import calendarIcon from "../../assets/image/icon/date.png"; // ปรับเปลี่ยนที่อยู่ของไฟล์รูปภาพปฏิทิน
 import Group7728 from "../../assets/image/icon/Group7728.png"; // ปรับเปลี่ยนที่อยู่ของไฟล์รูปภาพปฏิทิน
+import User from "../../assets/image/icon/User.png"; // ปรับเปลี่ยนที่อยู่ของไฟล์รูปภาพปฏิทิน
+import Col1 from "../../assets/image/icon/Col1.png"; // ปรับเปลี่ยนที่อยู่ของไฟล์รูปภาพปฏิทิน
+import Col2 from "../../assets/image/icon/Col2.png"; // ปรับเปลี่ยนที่อยู่ของไฟล์รูปภาพปฏิทิน
+import Col3 from "../../assets/image/icon/Col3.png"; // ปรับเปลี่ยนที่อยู่ของไฟล์รูปภาพปฏิทิน
+import Logo_web from "../../assets/image/img/Logo_web.png"; // ปรับเปลี่ยนที่อยู่ของไฟล์รูปภาพปฏิทิน
 
 const CreateNewActivity = () => {
   const dispatch = useDispatch();
@@ -283,11 +288,89 @@ const CreateNewActivity = () => {
     }
   };
 
-  const [value, setValue] = useState('');
+  var modules = {
+    toolbar: [
+      [{ size: ["small", false, "large", "huge"] }],
+      ["bold", "italic", "underline", "strike", "blockquote"],
+      [{ list: "ordered" }, { list: "bullet" }],
+      ["link", "image"],
+      [
+        { list: "ordered" },
+        { list: "bullet" },
+        { indent: "-1" },
+        { indent: "+1" },
+        { align: [] },
+      ],
+      [
+        {
+          color: [
+            "#000000",
+            "#e60000",
+            "#ff9900",
+            "#ffff00",
+            "#008a00",
+            "#0066cc",
+            "#9933ff",
+            "#ffffff",
+            "#facccc",
+            "#ffebcc",
+            "#ffffcc",
+            "#cce8cc",
+            "#cce0f5",
+            "#ebd6ff",
+            "#bbbbbb",
+            "#f06666",
+            "#ffc266",
+            "#ffff66",
+            "#66b966",
+            "#66a3e0",
+            "#c285ff",
+            "#888888",
+            "#a10000",
+            "#b26b00",
+            "#b2b200",
+            "#006100",
+            "#0047b2",
+            "#6b24b2",
+            "#444444",
+            "#5c0000",
+            "#663d00",
+            "#666600",
+            "#003700",
+            "#002966",
+            "#3d1466",
+            "custom-color",
+          ],
+        },
+      ],
+    ],
+  };
 
+  var formats = [
+    "header",
+    "height",
+    "bold",
+    "italic",
+    "underline",
+    "strike",
+    "blockquote",
+    "list",
+    "color",
+    "bullet",
+    "indent",
+    "link",
+    "image",
+    "align",
+    "size",
+  ];
+
+  const handleProcedureContentChange = (content) => {
+    setEventDetail(content);
+  };
   const createActivity = () => {
     const selectedLocale = language === "th" ? th : enUS;
 
+    console.log("EventName", eventName);
     return (
       <>
         <div>
@@ -304,23 +387,31 @@ const CreateNewActivity = () => {
           />
           {errorEventName && <div className="error-from">{errorEventName}</div>}
         </div>
-        <div>
+        <div className="mb-5">
           <p className={style["name-activity"]}>
             รายละเอียด/เงื่อนไขกิจกรรม <span>*</span>
           </p>
-          <textarea
+          {/* <textarea
             className="form-control"
             name="eventDetail"
             onChange={(event) => setEventDetail(event.target.value)}
             id="exampleFormControlTextarea1"
             rows="5"
-          ></textarea>
+          ></textarea> */}
+          <ReactQuill
+            theme="snow"
+            modules={modules}
+            formats={formats}
+            value={eventDetail}
+            onChange={handleProcedureContentChange}
+            style={{ height: "320px" }}
+          />
+
           {errorEventDetail && (
             <div className="error-from">{errorEventDetail}</div>
           )}
         </div>
-        
-        <ReactQuill theme="snow" value={value} onChange={setValue} />
+
         <p className={style["period"]}>
           ระยะเวลาการแสดงผล <span>*</span>
         </p>
@@ -337,6 +428,7 @@ const CreateNewActivity = () => {
               dateFormatCalendar="dd MMMM yyyy" // กำหนดรูปแบบวันที่ที่แสดงในปฏิทิน
               locale={selectedLocale}
             />
+
             <img
               src={calendarIcon}
               alt="calendar"
@@ -773,10 +865,53 @@ const CreateNewActivity = () => {
 
   return (
     <>
+      https://jpmshipping.com/user/trackings   {" "}
+      <div className={style["nav-logo"]}>
+        <img src={Logo_web} className={style["img-Logo_web"]} />
+        <div className={style["flex-row"]}>
+          <span className={style["user-name"]}>Vudhinond Pri.</span>
+          <img src={User} className={style["img-User"]} />
+        </div>
+      </div>
       <div className={style["flex-row"]}>
-        <div className={style["box-challenge"]}>{">"} Challenge </div>
         <div className={style["challenge"]}>
-          <div className={style["box-new-activity"]}>สร้างกิจกรรมใหม่</div>
+          <div className={style["box-new-activity"]}>
+            <p className={style["new-activity"]}>สร้างกิจกรรมใหม่</p>
+            <div className={style["flex-row"]}>
+              <img
+                src={
+                  statusCreateActivity == "activity"
+                    ? Col2
+                    : statusCreateActivity == "criteria"
+                    ? Col3
+                    : Col1
+                }
+                className={style["img-col"]}
+              />
+              <div className={style["span-col"]} />
+              <img
+                src={
+                  statusCreateActivity == "criteria"
+                    ? Col2
+                    : statusCreateActivity == "rewards"
+                    ? Col3
+                    : Col1
+                }
+                className={style["img-col"]}
+              />
+              <div className={style["span-col"]} />
+              <img
+                src={
+                  statusCreateActivity == "rewards"
+                    ? Col2
+                    : statusCreateActivity == "rewards"
+                    ? Col3
+                    : Col1
+                }
+                className={style["img-col"]}
+              />
+            </div>
+          </div>
           <div className={style["flex-row-criteria"]}>
             <div>
               <div>กิจกรรม</div>
