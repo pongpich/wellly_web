@@ -158,12 +158,15 @@ const CreateNewActivity = () => {
         reward.number === number ? { ...reward, [name]: value } : reward
       )
     );
+    areAllValuesFilled();
   };
 
-  const handleImageClick = () => {
+  const handleImageClick = (number) => {
     // เมื่อคลิกที่รูปภาพ
     // เรียก click() method ของไฟล์อินพุท
     fileInputRef.current.click();
+    setRewardsNumber(number);
+    areAllValuesFilled();
   };
 
   const handleFileChange = (e) => {
@@ -271,6 +274,14 @@ const CreateNewActivity = () => {
       setRewards([{ number: 1, name: "", image: "", quantity: "" }]);
     }
   };
+
+  const areAllValuesFilled = () => {
+    return rewards.every((reward) => {
+      return Object.values(reward).every((value) => value !== "");
+    });
+  };
+  console.log("areAllValuesFilled", areAllValuesFilled());
+
   const createActivity = () => {
     const selectedLocale = language === "th" ? th : enUS;
 
@@ -657,12 +668,12 @@ const CreateNewActivity = () => {
               <div>
                 <button
                   className={
-                    distance != "" && walk_step != ""
+                    areAllValuesFilled()
                       ? style["btn-next-active"]
                       : style["btn-next"]
                   }
                   onClick={
-                    distance != "" && walk_step != ""
+                    areAllValuesFilled()
                       ? () => handleEventChange("rewards")
                       : null
                   }
