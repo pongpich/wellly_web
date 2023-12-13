@@ -152,7 +152,6 @@
 .flex-row-btn {
     display: flex;
     flex-direction: row;
-    display: flex;
     justify-content: space-between;
     /* จัดตำแหน่งไปทางขวา */
 }
@@ -215,7 +214,7 @@
 .person {
     margin-top: -32px;
     position: absolute;
-    right: 24px;
+    right: 32px;
 }
 
 .span-red {
@@ -275,24 +274,24 @@
 }
 
 .add-rewards {
-    width: 157px !important;
-    height: 47px;
-    background-color: var(--white);
-    color: var(--persianBlue);
+    width: 120px !important;
+    height: 48px;
+    background-color: var(--persianBlue);
+    color: var(--white);
     font-size: 18px;
     font-family: Regular;
     display: flex;
     justify-content: center;
     align-items: center;
-    border-radius: 5px;
+    border-radius: 24px;
     cursor: pointer;
     border: 2px solid var(--persianBlue);
 
 }
 
 .group7728 {
-    width: 202px;
-    height: 202px;
+    width: 240px;
+    height: 240px;
     cursor: pointer;
 }
 
@@ -300,6 +299,11 @@
     width: 100%;
     height: 80px;
     background-color: var(--white);
+    display: flex;
+    justify-content: space-between;
+}
+
+.flex-between {
     display: flex;
     justify-content: space-between;
 }
@@ -339,8 +343,71 @@
 }
 
 .flex-row-date {
-
     display: flex;
     flex-direction: row;
     margin-top: 40px;
+}
+
+.box-criteria {
+    margin-top: 40px;
+    display: flex;
+    justify-content: center;
+}
+
+.flex-end-criteria {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+}
+
+.button-0 {
+
+    margin-top: 20%;
+    margin-bottom: 64px;
+}
+
+.mr-16 {
+    margin-right: 16px !important;
+}
+
+.box-rewards {
+    padding-top: 40px;
+    display: flex;
+    justify-content: center;
+
+}
+
+.box-upload {
+    width: 784px;
+    height: 324px;
+    border-radius: 16px;
+    border: 1px solid var(--grey4);
+    padding: 24px;
+    position: relative;
+    margin-bottom: 24px;
+}
+
+.rewards-number {
+    margin-bottom: 15px !important;
+    font-size: 16px;
+    font-family: bold;
+    color: var(--grey1);
+}
+
+.quantity {
+    position: relative;
+    margin-top: 24px;
+    width: 180px;
+}
+
+.quantity span {
+    position: absolute;
+    right: 26px;
+    margin-top: -30px;
+}
+
+.box-add-rewards {
+    padding-top: 24px;
+    display: flex;
+    justify-content: center;
 }

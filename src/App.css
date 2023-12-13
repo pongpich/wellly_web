@@ -287,3 +287,10 @@ p {
 .ml-3 {
   margin-left: 24px;
 }
+
+.label-end {
+  float: right;
+  font-size: 16px;
+  font-family: Regular;
+  color: var(--grey3);
+}

@@ -11,7 +11,7 @@ import "quill/dist/quill.snow.css";
 import ReactQuill from "react-quill";
 
 import calendarIcon from "../../assets/image/icon/Calendar.png"; // ปรับเปลี่ยนที่อยู่ของไฟล์รูปภาพปฏิทิน
-import Group7728 from "../../assets/image/icon/Group7728.png"; // ปรับเปลี่ยนที่อยู่ของไฟล์รูปภาพปฏิทิน
+import Group7728 from "../../assets/image/icon/Upload.png"; // ปรับเปลี่ยนที่อยู่ของไฟล์รูปภาพปฏิทิน
 import User from "../../assets/image/icon/User.png"; // ปรับเปลี่ยนที่อยู่ของไฟล์รูปภาพปฏิทิน
 import Col1 from "../../assets/image/icon/Col1.png"; // ปรับเปลี่ยนที่อยู่ของไฟล์รูปภาพปฏิทิน
 import Col2 from "../../assets/image/icon/Col2.png"; // ปรับเปลี่ยนที่อยู่ของไฟล์รูปภาพปฏิทิน
@@ -20,7 +20,7 @@ import Logo_web from "../../assets/image/img/Logo_web.png"; // ปรับเ�
 
 const CreateNewActivity = () => {
   const dispatch = useDispatch();
-  const [statusCreateActivity, setStatusCreateActivity] = useState("activity"); //activity = กิจกรรม, criteria = เกณฑ์ ,Rewards = ของรางวัล,badge = ตราสัญลักษณ์
+  const [statusCreateActivity, setStatusCreateActivity] = useState("badge"); //activity = กิจกรรม, criteria = เกณฑ์ ,Rewards = ของรางวัล,badge = ตราสัญลักษณ์
 
   const [language, setLanguage] = useState("th");
   const [rewardsNumber, setRewardsNumber] = useState(1);
@@ -35,24 +35,15 @@ const CreateNewActivity = () => {
   const [endDateActivity, setEndDateActivity] = useState(null); //ระยะเวลากิจกรรม * end
 
   //   ส่วนเก็บข้อมูล   เกณฑ์  activityType
-  const [activityType, setActivityType] = useState(""); // ชื่อกิจกรรม
-  const [limited, setLimited] = useState(true); //จำกัดผู้เข้าร่วม
-  const [limitedNumber, setLimitedNumber] = useState(0); //จำนวนผู้เข้าร่วม
-  const [criteria_distance, setCriteria_distance] = useState(true);
-  const [distance, setDistance] = useState(null);
-  const [criteria_walk_step, setCriteria_walk_step] = useState(true);
-  const [walk_step, setWalk_step] = useState(null);
 
-  // error  ส่วนเก็บข้อมูล  criteria ,เกณฑ์
-  const [errorActivityType, setErrorActivityType] = useState(""); // ชื่อกิจกรรม
-  const [errorLimitedNumber, setErrorLimitedNumber] = useState(null);
-  const [errorDistance, setErrorDistance] = useState(null);
-  const [errorWalk_step, setErrorWalk_step] = useState(null);
+  const [criteria_distance, setCriteria_distance] = useState(false);
+  const [distance, setDistance] = useState("");
+  const [criteria_walk_step, setCriteria_walk_step] = useState(false);
+  const [walk_step, setWalk_step] = useState("");
 
   //   ส่วนเก็บข้อมูล   Rewards รางวัล
   const [rewards, setRewards] = useState([
     { number: 1, name: "", image: "", quantity: "" },
-    { number: 2, name: "", image: "", quantity: "" },
   ]);
 
   // error  ส่วนเก็บข้อมูล    Rewards รางวัล
@@ -271,7 +262,13 @@ const CreateNewActivity = () => {
       setStartDateActivity(null);
       setEndDateActivity(null);
     } else if (event == "criteria") {
+      console.log("9999");
+      setCriteria_distance(false);
+      setDistance("");
+      setCriteria_walk_step(false);
+      setWalk_step("");
     } else {
+      setRewards([{ number: 1, name: "", image: "", quantity: "" }]);
     }
   };
   const createActivity = () => {
@@ -443,218 +440,240 @@ const CreateNewActivity = () => {
   };
 
   const createCriteria = () => {
+    console.log("criteria_distance", criteria_distance);
     return (
       <>
-        <div>
-          <p className={style["name-activity"]}>
-            ประเภทกิจกรรม <span>*</span>
-          </p>
-          <div className={style["flex-row-radios"]}>
-            <div className="form-check">
+        <div className={style["box-criteria"]}>
+          <div className="col-8">
+            <p
+              className={`${style["flex-row"]} ${style["flex-between"]} ${style["name-activity"]}`}
+            >
+              เป้าหมาย ระยะทาง
+              <span>
+                <div class="form-check form-switch">
+                  <input
+                    className="form-check-input"
+                    type="checkbox"
+                    role="switch"
+                    onClick={() => setCriteria_distance(!criteria_distance)}
+                    id="flexSwitchCheckDefault1"
+                    checked={criteria_distance}
+                  />
+                </div>
+              </span>
+            </p>
+            <div className={`${style["box-person"]}`}>
               <input
-                className="form-check-input"
-                type="radio"
-                name="activityType"
-                id="flexRadioDisabled"
-                onChange={() => setActivityType("เดี่ยว")}
+                type="number"
+                name="criteria_distance"
+                className="form-control"
+                id="exampleFormControlInput155"
+                placeholder="จำนวนระยะทาง"
+                min={0}
+                value={distance}
+                onChange={(event) => setDistance(event.target.value)}
               />
-              <label className="form-check-label" for="flexRadioDisabled">
-                เดี่ยว
-              </label>
+              <div className={style["person"]}>กิโลเมตร</div>
             </div>
-            <div className="form-check">
+            <p
+              className={`${style["flex-row"]} ${style["flex-between"]} ${style["name-activity"]}`}
+            >
+              เป้าหมาย ก้าวเดิน
+              <span>
+                <div class="form-check form-switch">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    role="switch"
+                    value={criteria_walk_step}
+                    onChange={() => setCriteria_walk_step(!criteria_walk_step)}
+                    id="flexSwitchCheckDefault2"
+                    checked={criteria_walk_step}
+                  />
+                </div>
+              </span>
+            </p>
+            <div className={`${style["box-person"]} `}>
               <input
-                className="form-check-input"
-                type="radio"
-                name="activityType"
-                id="flexRadioDisabled"
-                onChange={() => setActivityType("เดี่ยว")}
+                type="number"
+                className="form-control "
+                id="exampleFormControlInput1"
+                placeholder="จำนวนก้าวเดิน"
+                min={0}
+                value={walk_step}
+                onChange={(event) => setWalk_step(event.target.value)}
               />
-              <label className="form-check-label" for="flexRadioDisabled">
-                กลุ่ม
-              </label>
-            </div>
-            <div className="form-check">
-              <input
-                className="form-check-input"
-                type="radio"
-                name="activityType"
-                id="flexRadioDisabled"
-                onChange={() => setActivityType("กำหนดเอง")}
-              />
-              <label className="form-check-label" for="flexRadioDisabled">
-                กำหนดเอง
-              </label>
+              <div className={style["person"]}>ก้าว</div>
             </div>
           </div>
-          {errorActivityType && (
-            <div className="error-from">{errorActivityType}</div>
-          )}
-          <p className={style["name-activity"]}>
-            จำกัดผู้เข้าร่วม <span>*</span>
-          </p>
-          <div className={style["flex-row-radios"]}>
-            <div className="form-check">
-              <input
-                className="form-check-input"
-                type="radio"
-                name="limited"
-                id="flexRadioDisabled"
-                onClick={() => setLimited(true)}
-                checked={limited}
-              />
-              <label className="form-check-label" for="flexRadioDisabled">
-                จำกัด
-              </label>
-            </div>
-            <div className="form-check">
-              <input
-                className="form-check-input"
-                type="radio"
-                name="limited"
-                id="flexRadioDisabled"
-                onClick={() => setLimited(false)}
-              />
-              <label className="form-check-label" for="flexRadioDisabled">
-                ไม่จำกัด
-              </label>
-            </div>
-          </div>
-          <div className="mt-3 mb-3 col-4">
-            {limited && (
-              <div className={style["box-person"]}>
-                <input
-                  type="number"
-                  className="form-control "
-                  id="exampleFormControlInput1"
-                  onChange={(event) => setLimitedNumber(event.target.value)}
-                  placeholder="จำนวนผู้เข้าร่วม"
-                  min={0}
-                />
-                <div className={style["person"]}>คน</div>
-              </div>
-            )}
-          </div>
-          {errorLimitedNumber && (
-            <div className="error-from">{errorLimitedNumber}</div>
-          )}
-          <p className={style["name-activity"]}>
-            เป้าหมาย ระยะทาง <span>*</span>
-          </p>
-          <div className={style["flex-row"]}>
-            <div>
-              <div className="form-check">
-                <input
-                  className="form-check-input"
-                  type="radio"
-                  name="criteria_walk_step"
-                  id="flexCheckDefault"
-                  onChange={() => setCriteria_walk_step(true)}
-                  checked={criteria_walk_step}
-                />
-                <label className="form-check-label" for="flexCheckDefault">
-                  ครบระยะทางที่กำหนด{" "}
-                  <span className={style["span-red"]}>*</span>
-                </label>
-              </div>
-              {/* <div className="form-check">
-                <input
-                  className="form-check-input"
-                  type="radio"
-                  name="criteria_walk_step"
-                  id="flexCheckChecked"
-                  onChange={() => setCriteria_walk_step(false)}
-                />
-                <label className="form-check-label" for="flexCheckChecked">
-                  ผู้ที่ได้ระยะทางสูงสุด{" "}
-                  <span className={style["span-red"]}>*</span>
-                </label>
-              </div> */}
-            </div>
-            <div>
-              <div className={`${style["box-person"]} ${style["ml"]}`}>
-                <input
-                  type="number"
-                  className="form-control "
-                  id="exampleFormControlInput1"
-                  placeholder="จำนวนระยะทาง"
-                  min={0}
-                  onChange={(event) => setDistance(event.target.value)}
-                />
-                <div className={style["person"]}>กิโลเมตร</div>
-              </div>
-            </div>
-          </div>
-          {errorDistance && <div className="error-from">{errorDistance}</div>}
-          <p className={style["name-activity"]}>
-            เป้าหมาย ก้าวเดิน <span>*</span>
-          </p>
-          <div className={style["flex-row"]}>
-            <div>
-              <div className="form-check">
-                <input
-                  className="form-check-input"
-                  type="radio"
-                  id="flexCheckDefault"
-                  checked={criteria_distance}
-                  /*  disabled={criteria_walk_step} */
-                />
-                <label className="form-check-label" for="flexCheckDefault">
-                  ครบระยะทางที่กำหนด{" "}
-                  <span className={style["span-red"]}>*</span>
-                </label>
-              </div>
-              {/* <div className="form-check">
-                <input
-                  className="form-check-input"
-                  type="checkbox"
-                  value=""
-                  id="flexCheckChecked"
-                />
-                <label className="form-check-label" for="flexCheckChecked">
-                  ผู้ที่ได้ระยะทางสูงสุด{" "}
-                  <span className={style["span-red"]}>*</span>
-                </label>
-              </div> */}
-            </div>
-            <div>
-              <div className={`${style["box-person"]} ${style["ml"]}`}>
-                <input
-                  type="number"
-                  className="form-control "
-                  id="exampleFormControlInput1"
-                  placeholder="จำนวนก้าวเดิน"
-                  min={0}
-                  onChange={(event) => setWalk_step(event.target.value)}
-                />
-                <div className={style["person"]}>ก้าว</div>
-              </div>
-            </div>
-          </div>
-          {errorWalk_step && <div className="error-from">{errorWalk_step}</div>}
         </div>
-        <div className={style["flex-row-btn-ml"]}>
-          <button
-            className={style["btn-cancel"]}
-            onClick={() => setStatusCreateActivity("activity")}
-          >
-            ยกเลิก
-          </button>
-          <button
-            className={style["btn-next"]}
-            onClick={() => handleEventChange("criteria")}
-          >
-            ถัดไป
-          </button>
+        <div className={style["button-0"]}>
+          <div className={style["flex-end-criteria"]}>
+            <span>
+              <button
+                className={style["btn-cancel"]}
+                onClick={() => repeal("criteria")}
+              >
+                ละทิ้ง
+              </button>
+            </span>
+            <div className={style["flex-row"]}>
+              <div className={style["mr-16"]}>
+                <button
+                  className={style["btn-cancel"]}
+                  onClick={() => setStatusCreateActivity("activity")}
+                >
+                  กลับ
+                </button>
+              </div>
+
+              <div>
+                <button
+                  className={
+                    distance != "" && walk_step != ""
+                      ? style["btn-next-active"]
+                      : style["btn-next"]
+                  }
+                  onClick={
+                    distance != "" && walk_step != ""
+                      ? () => handleEventChange("criteria")
+                      : null
+                  }
+                >
+                  ถัดไป
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
       </>
     );
   };
 
   const createRewards = () => {
+    console.log("rewards", rewards);
     return (
       <>
-        <div className={style["overflow-x"]}>
+        <div className={style["box-rewards"]}>
+          <div>
+            {rewards &&
+              rewards.map((reward) => {
+                return (
+                  <div key={reward.number} className={style["box-upload"]}>
+                    <div className={style["rewards-number"]}>
+                      รางวัลที่ {reward.number}
+                    </div>
+                    <div className="row">
+                      <div className="col-4">
+                        <img
+                          src={reward.image !== "" ? reward.image : Group7728}
+                          alt="calendar"
+                          className={style["group7728"]}
+                          onClick={() => handleImageClick(reward.number)}
+                        />
+
+                        <input
+                          type="file"
+                          ref={fileInputRef}
+                          style={{ display: "none" }}
+                          onChange={handleFileChange}
+                        />
+                      </div>
+                      <div className="col-8">
+                        <div class="mb-3">
+                          <label
+                            for="exampleFormControlInput1"
+                            class="form-label label-end"
+                          >
+                            {reward.name.length}/1000 ตัวอักษร
+                          </label>
+                          <input
+                            type="text"
+                            value={reward.name}
+                            class="form-control"
+                            id="exampleFormControlInput1"
+                            placeholder="ชื่อรางวัล"
+                            name="name"
+                            onChange={(e) =>
+                              reward.name.length < 1000 &&
+                              handleTextareaChange(
+                                reward.number,
+                                e.target.value,
+                                e.target.name
+                              )
+                            }
+                          />
+                          <div className={style["quantity"]}>
+                            <input
+                              type="number"
+                              class="form-control"
+                              id="exampleFormControlInput1"
+                              placeholder="ระบุจำนวน"
+                              value={reward.quantity}
+                              name="quantity"
+                              onChange={(e) =>
+                                handleTextareaChange(
+                                  reward.number,
+                                  e.target.value,
+                                  e.target.name
+                                )
+                              }
+                            />
+                            <span>รางวัล</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
+          </div>
+        </div>
+        <div className={style["box-add-rewards"]}>
+          <div className={style["add-rewards"]} onClick={addReward}>
+            เพิ่มรางวัล
+          </div>
+        </div>
+        <div className={style["button-0"]}>
+          <div className={style["flex-end-criteria"]}>
+            <span>
+              <button
+                className={style["btn-cancel"]}
+                onClick={() => repeal("rewards")}
+              >
+                ละทิ้ง
+              </button>
+            </span>
+            <div className={style["flex-row"]}>
+              <div className={style["mr-16"]}>
+                <button
+                  className={style["btn-cancel"]}
+                  onClick={() => setStatusCreateActivity("criteria")}
+                >
+                  กลับ
+                </button>
+              </div>
+
+              <div>
+                <button
+                  className={
+                    distance != "" && walk_step != ""
+                      ? style["btn-next-active"]
+                      : style["btn-next"]
+                  }
+                  onClick={
+                    distance != "" && walk_step != ""
+                      ? () => handleEventChange("rewards")
+                      : null
+                  }
+                >
+                  ถัดไป
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        {/*   <div className={style["overflow-x"]}>
           <div className={`${style["box-rewards"]} ${style["flex-row"]}`}>
             {rewards &&
               rewards.map((reward) => (
@@ -771,7 +790,7 @@ const CreateNewActivity = () => {
           >
             ถัดไป
           </button>
-        </div>
+        </div> */}
       </>
     );
   };
