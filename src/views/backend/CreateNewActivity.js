@@ -228,17 +228,14 @@ const CreateNewActivity = () => {
       const qty = "150";
       const creator = "thanet";
 
-      /*       dispatch(
+            dispatch(
           createEventActivity(
             eventName,
             eventDetail,
             format(startDate, "dd-MM-yyyy"),
             format(endDate, "dd-MM-yyyy"),
             format(startDateActivity, "dd-MM-yyyy"),
-            format(endDateActivity, "dd-MM-yyyy"),
-            activityType,
-            qty,
-            limitedNumber,
+            format(endDateActivity, "dd-MM-yyyy"),           
             criteria_distance,
             distance,
             criteria_walk_step,
@@ -246,7 +243,7 @@ const CreateNewActivity = () => {
             rewards,
             creator
           )
-        ); */
+        );
 
       //createEventActivity
     }
@@ -280,7 +277,6 @@ const CreateNewActivity = () => {
       return Object.values(reward).every((value) => value !== "");
     });
   };
-  console.log("areAllValuesFilled", areAllValuesFilled());
 
   const createActivity = () => {
     const selectedLocale = language === "th" ? th : enUS;
@@ -562,7 +558,6 @@ const CreateNewActivity = () => {
   };
 
   const createRewards = () => {
-    console.log("rewards", rewards);
     return (
       <>
         <div className={style["box-rewards"]}>
@@ -684,124 +679,6 @@ const CreateNewActivity = () => {
             </div>
           </div>
         </div>
-        {/*   <div className={style["overflow-x"]}>
-          <div className={`${style["box-rewards"]} ${style["flex-row"]}`}>
-            {rewards &&
-              rewards.map((reward) => (
-                <div key={reward.number}>
-                  <div
-                    className={
-                      reward.number === rewardsNumber
-                        ? style["rewards-active"]
-                        : style["rewards"]
-                    }
-                    onClick={() => {
-                      setRewards((prevRewards) =>
-                        prevRewards.map((prevReward) =>
-                          prevReward.number === reward.number
-                            ? { ...prevReward }
-                            : prevReward
-                        )
-                      );
-                      setRewardsNumber(reward.number);
-                    }}
-                  >
-                    รางวัลที่ {reward.number}
-                  </div>
-                </div>
-              ))}
-            <div style={{ width: 170 }}>
-              <div className={style["add-rewards"]} onClick={addReward}>
-                +เพิ่มของรางวัล
-              </div>
-            </div>
-          </div>
-        </div>
-        {rewards &&
-          rewards.map((reward) => {
-            return (
-              rewardsNumber == reward.number && (
-                <div key={reward.number}>
-                  <p className={style["name-activity"]}>
-                    ชื่อรางวัลที่ {reward.number} (ห้ามเกิน 2 บรรทัด){" "}
-                    <span>*</span>
-                  </p>
-                  <textarea
-                    className="form-control"
-                    value={reward.name}
-                    id={`exampleFormControlTextarea${reward.number}`}
-                    rows="2"
-                    name="name"
-                    onChange={(e) =>
-                      handleTextareaChange(
-                        reward.number,
-                        e.target.value,
-                        e.target.name
-                      )
-                    }
-                  ></textarea>
-                  {!errorRewards && rewards[rewardsNumber - 1].name == "" && (
-                    <div className="error-from">กรุณาระบุข้อมูล</div>
-                  )}
-
-                  <p className={style["name-activity"]}>
-                    อัพโหลดรูปของรางวัล <span>*</span>
-                  </p>
-                  <img
-                    src={reward.image !== "" ? reward.image : Group7728}
-                    alt="calendar"
-                    className={style["group7728"]}
-                    onClick={() => handleImageClick(reward.number)}
-                  />
-                  {!errorRewards && rewards[rewardsNumber - 1].image == "" && (
-                    <div className="error-from">กรุณาระบุข้อมูล</div>
-                  )}
-                  <input
-                    type="file"
-                    ref={fileInputRef}
-                    style={{ display: "none" }}
-                    onChange={handleFileChange}
-                  />
-                  <p className={style["name-activity"]}>
-                    จำนวนของรางวัล <span>*</span>
-                  </p>
-                  <input
-                    type="text"
-                    className="form-control"
-                    id={`exampleFormControlInput${reward.number}`}
-                    placeholder="ใส่ตัวเลข"
-                    value={reward.quantity}
-                    name="quantity"
-                    onChange={(e) =>
-                      handleTextareaChange(
-                        reward.number,
-                        e.target.value,
-                        e.target.name
-                      )
-                    }
-                  />
-                  {!errorRewards &&
-                    rewards[rewardsNumber - 1].quantity == "" && (
-                      <div className="error-from">กรุณาระบุข้อมูล</div>
-                    )}
-                </div>
-              )
-            );
-          })}
-        <div className={style["flex-row-btn-ml"]}>
-          <button
-            className={style["btn-cancel"]}
-            onClick={() => setStatusCreateActivity("criteria")}
-          >
-            ยกเลิก
-          </button>
-          <button
-            className={style["btn-next"]}
-            onClick={() => handleEventChange("rewards")}
-          >
-            ถัดไป
-          </button>
-        </div> */}
       </>
     );
   };
