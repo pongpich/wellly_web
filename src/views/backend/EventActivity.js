@@ -159,17 +159,17 @@ const EventActivity = () => {
             <div className={style["flex-row"]}>
                 <div className={style["box-challenge"]}>{">"} Challenge </div>
                 <div className={style["challenge"]}>
-                    <div className={style["grid-container1"]}>
-                        <div className={style["grid-item1"]}>
+                    <div className={style["grid-container11"]}>
+                        <div className={style["grid-item11"]}>
                             <img src={Logo} className={style["Logo"]} />
                         </div>
-                        <div className={style["grid-item2"]}>
-                            <div className={style["grid-container2"]}>
-                                <div className={style["grid-item3"]}>
+                        <div className={style["grid-item22"]}>
+                            <div className={style["grid-container22"]}>
+                                <div className={style["grid-item33"]}>
                                 </div>
-                                <div className={style["grid-item3"]}>
+                                <div className={style["grid-item33"]}>
                                 </div>
-                                <div className={style["grid-item4"]}>
+                                <div className={style["grid-item44"]}>
                                     {/* <span className={style["content"]}>{user}</span> */}
                                     {user ? (
                                         <>
