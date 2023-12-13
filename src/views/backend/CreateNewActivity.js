@@ -7,6 +7,8 @@ import "react-datepicker/dist/react-datepicker.css";
 import th from "date-fns/locale/th"; // import locale ภาษาไทย
 import enUS from "date-fns/locale/en-US"; // import locale ภาษาอังกฤษ
 import { format } from "date-fns";
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
 
 import calendarIcon from "../../assets/image/icon/date.png"; // ปรับเปลี่ยนที่อยู่ของไฟล์รูปภาพปฏิทิน
 import Group7728 from "../../assets/image/icon/Group7728.png"; // ปรับเปลี่ยนที่อยู่ของไฟล์รูปภาพปฏิทิน
@@ -281,6 +283,8 @@ const CreateNewActivity = () => {
     }
   };
 
+  const [value, setValue] = useState('');
+
   const createActivity = () => {
     const selectedLocale = language === "th" ? th : enUS;
 
@@ -315,6 +319,8 @@ const CreateNewActivity = () => {
             <div className="error-from">{errorEventDetail}</div>
           )}
         </div>
+        
+        <ReactQuill theme="snow" value={value} onChange={setValue} />
         <p className={style["period"]}>
           ระยะเวลาการแสดงผล <span>*</span>
         </p>
