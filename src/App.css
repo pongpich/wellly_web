@@ -283,3 +283,7 @@ p {
   font-size: 14px;
   font-family: Regular;
 }
+
+.ml-3 {
+  margin-left: 24px;
+}
