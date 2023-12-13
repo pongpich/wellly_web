@@ -10,7 +10,7 @@ import { format } from "date-fns";
 import "quill/dist/quill.snow.css";
 import ReactQuill from "react-quill";
 
-import calendarIcon from "../../assets/image/icon/date.png"; // ปรับเปลี่ยนที่อยู่ของไฟล์รูปภาพปฏิทิน
+import calendarIcon from "../../assets/image/icon/Calendar.png"; // ปรับเปลี่ยนที่อยู่ของไฟล์รูปภาพปฏิทิน
 import Group7728 from "../../assets/image/icon/Group7728.png"; // ปรับเปลี่ยนที่อยู่ของไฟล์รูปภาพปฏิทิน
 import User from "../../assets/image/icon/User.png"; // ปรับเปลี่ยนที่อยู่ของไฟล์รูปภาพปฏิทิน
 import Col1 from "../../assets/image/icon/Col1.png"; // ปรับเปลี่ยนที่อยู่ของไฟล์รูปภาพปฏิทิน
@@ -33,14 +33,6 @@ const CreateNewActivity = () => {
   const [endDate, setEndDate] = useState(null); //ระยะเวลาการแสดงผล end
   const [startDateActivity, setStartDateActivity] = useState(null); //ระยะเวลากิจกรรม start
   const [endDateActivity, setEndDateActivity] = useState(null); //ระยะเวลากิจกรรม * end
-
-  // error  ส่วนเก็บข้อมูล กิจกรรม
-  const [errorEventName, setErrorEventName] = useState(""); // ชื่อกิจกรรม
-  const [errorEventDetail, setErrorEventDetail] = useState(""); //รายละเอียด กิจกรรม
-  const [errorStartDate, setErrorStartDate] = useState(null); //ระยะเวลาการแสดงผล
-  const [errorEndDate, setErrorEndDate] = useState(null); //ระยะเวลากิจกรรม
-  const [errorStartDateActivity, setErrorStartDateActivity] = useState(null); //ระยะเวลากิจกรรม start
-  const [errorEndDateActivity, setErrorEndDateActivity] = useState(null); //ระยะเวลากิจกรรม * end
 
   //   ส่วนเก็บข้อมูล   เกณฑ์  activityType
   const [activityType, setActivityType] = useState(""); // ชื่อกิจกรรม
@@ -75,217 +67,6 @@ const CreateNewActivity = () => {
     };
 
     setRewards((prevRewards) => [...prevRewards, newReward]);
-  };
-  const handleStartDateChange = (date, event) => {
-    if (event == "activity") {
-      setStartDateActivity(date);
-    } else {
-      setStartDate(date);
-    }
-  };
-
-  const handleEndDateChange = (date, event) => {
-    if (event == "activity") {
-      setEndDateActivity(date);
-    } else {
-      setEndDate(date);
-    }
-  };
-
-  const handleTextareaChange = (number, value, name) => {
-    setRewards((prevRewards) =>
-      prevRewards.map((reward) =>
-        reward.number === number ? { ...reward, [name]: value } : reward
-      )
-    );
-  };
-
-  const handleImageClick = () => {
-    // เมื่อคลิกที่รูปภาพ
-    // เรียก click() method ของไฟล์อินพุท
-    fileInputRef.current.click();
-  };
-
-  const handleFileChange = (e) => {
-    // เมื่อมีการเปลี่ยนแปลงในไฟล์อินพุท
-    // ทำตามต้องการ เช่น ดึงข้อมูลไฟล์, อัปโหลดไปที่เซิร์ฟเวอร์, เปลี่ยนสถานะ, ฯลฯ
-    const selectedFile = e.target.files[0];
-
-    // สร้าง URL ของไฟล์ที่ถูกเลือก
-    const imageUrl = URL.createObjectURL(selectedFile);
-    setRewards((prevRewards) =>
-      prevRewards.map((reward) =>
-        reward.number === rewardsNumber
-          ? { ...reward, image: imageUrl }
-          : reward
-      )
-    );
-  };
-
-  const validateActivity = () => {
-    let isValid = true;
-    setErrorEventName("");
-    setErrorEventDetail("");
-    setErrorStartDate("");
-    setErrorEndDate("");
-    setErrorStartDateActivity("");
-    setErrorEndDateActivity("");
-    //
-    if (!eventName.trim()) {
-      setErrorEventName("กรุณาระบุข้อมูล");
-      isValid = false;
-    }
-    if (!eventDetail.trim()) {
-      setErrorEventDetail("กรุณาระบุข้อมูล");
-      isValid = false;
-    }
-    if (!startDate) {
-      setErrorStartDate("กรุณาระบุข้อมูล");
-      isValid = false;
-    }
-    if (!endDate) {
-      setErrorEndDate("กรุณาระบุข้อมูล");
-      isValid = false;
-    }
-
-    if (!startDateActivity) {
-      setErrorStartDateActivity("กรุณาระบุข้อมูล");
-      isValid = false;
-    }
-    if (!endDateActivity) {
-      setErrorEndDateActivity("กรุณาระบุข้อมูล");
-      isValid = false;
-    }
-
-    return isValid;
-  };
-  const validateCriteria = () => {
-    let isValid = true;
-    setErrorActivityType("");
-    setErrorLimitedNumber("");
-    setErrorDistance("");
-    setErrorWalk_step("");
-
-    //
-    if (!activityType.trim()) {
-      setErrorActivityType("กรุณาระบุข้อมูล");
-      isValid = false;
-    }
-
-    if (limitedNumber.length < 1 && limited) {
-      setErrorLimitedNumber("กรุณาระบุข้อมูล");
-      isValid = false;
-    }
-    if (!distance) {
-      setErrorDistance("กรุณาระบุข้อมูล");
-      isValid = false;
-    }
-    if (!walk_step) {
-      setErrorWalk_step("กรุณาระบุข้อมูล");
-      isValid = false;
-    }
-
-    return isValid;
-  };
-  const validationRewards = () => {
-    let isValid = true;
-
-    // ทำการตรวจสอบ errorRewards ทุกรายการ
-    const validatedRewards = rewards.map((reward) => {
-      // ตรวจสอบตามเงื่อนไขที่คุณต้องการ
-      const hasError = !reward.name || !reward.image || !reward.quantity;
-
-      // ในกรณีมีข้อผิดพลาด
-      if (hasError) {
-        isValid = false;
-      }
-
-      return {
-        ...reward,
-        hasError,
-      };
-    });
-    setErrorRewards(isValid);
-    // สามารถใช้ isValid เพื่อทำสิ่งที่ต้องการในกรณีที่ค่าไม่ถูกต้อง
-    if (!isValid) {
-      // ทำสิ่งที่คุณต้องการ เช่น แสดงข้อความผิดพลาด
-      console.log("มีข้อมูลไม่ถูกต้อง");
-    }
-
-    return isValid;
-  };
-
-  const handleEventChange = (event) => {
-    console.log("888", eventName);
-    /*  dispatch(
-      createEventActivity(
-        "5555",
-        "444",
-        "12-12-2566",
-        "12-12-2566",
-        "12-12-2566",
-        "12-12-2566",
-        "1",
-        "100",
-        "113",
-        "555",
-        "asdasd",
-        "9999",
-        "assd",
-        [
-          {
-            number: 1,
-            name: "aa",
-            image: "ddd",
-            quantity: "fff",
-          },
-          {
-            number: 2,
-            name: "bb",
-            image: "wss",
-            quantity: "eeee",
-          },
-        ],
-        "aaaa"
-      )
-    ); */
-    if (event == "activity") {
-      if (validateActivity()) {
-        setStatusCreateActivity("criteria");
-      }
-    } else if (event == "criteria") {
-      if (validateCriteria()) {
-        setStatusCreateActivity("rewards");
-      }
-    } else {
-      if (validationRewards()) {
-        console.log("888", eventName);
-        const qty = "150";
-        const creator = "thanet";
-
-        dispatch(
-          createEventActivity(
-            eventName,
-            eventDetail,
-            format(startDate, "dd-MM-yyyy"),
-            format(endDate, "dd-MM-yyyy"),
-            format(startDateActivity, "dd-MM-yyyy"),
-            format(endDateActivity, "dd-MM-yyyy"),
-            activityType,
-            qty,
-            limitedNumber,
-            criteria_distance,
-            distance,
-            criteria_walk_step,
-            walk_step,
-            rewards,
-            creator
-          )
-        );
-
-        //createEventActivity
-      }
-    }
   };
 
   var modules = {
@@ -364,8 +145,134 @@ const CreateNewActivity = () => {
     "size",
   ];
 
+  const handleStartDateChange = (date, event) => {
+    if (event == "activity") {
+      setStartDateActivity(date);
+    } else {
+      setStartDate(date);
+    }
+  };
+
+  const handleEndDateChange = (date, event) => {
+    if (event == "activity") {
+      setEndDateActivity(date);
+    } else {
+      setEndDate(date);
+    }
+  };
+
+  const handleTextareaChange = (number, value, name) => {
+    setRewards((prevRewards) =>
+      prevRewards.map((reward) =>
+        reward.number === number ? { ...reward, [name]: value } : reward
+      )
+    );
+  };
+
+  const handleImageClick = () => {
+    // เมื่อคลิกที่รูปภาพ
+    // เรียก click() method ของไฟล์อินพุท
+    fileInputRef.current.click();
+  };
+
+  const handleFileChange = (e) => {
+    // เมื่อมีการเปลี่ยนแปลงในไฟล์อินพุท
+    // ทำตามต้องการ เช่น ดึงข้อมูลไฟล์, อัปโหลดไปที่เซิร์ฟเวอร์, เปลี่ยนสถานะ, ฯลฯ
+    const selectedFile = e.target.files[0];
+
+    // สร้าง URL ของไฟล์ที่ถูกเลือก
+    const imageUrl = URL.createObjectURL(selectedFile);
+    setRewards((prevRewards) =>
+      prevRewards.map((reward) =>
+        reward.number === rewardsNumber
+          ? { ...reward, image: imageUrl }
+          : reward
+      )
+    );
+  };
+
+  const handleEventChange = (event) => {
+    console.log("888", eventName);
+    /*  dispatch(
+      createEventActivity(
+        "5555",
+        "444",
+        "12-12-2566",
+        "12-12-2566",
+        "12-12-2566",
+        "12-12-2566",
+        "1",
+        "100",
+        "113",
+        "555",
+        "asdasd",
+        "9999",
+        "assd",
+        [
+          {
+            number: 1,
+            name: "aa",
+            image: "ddd",
+            quantity: "fff",
+          },
+          {
+            number: 2,
+            name: "bb",
+            image: "wss",
+            quantity: "eeee",
+          },
+        ],
+        "aaaa"
+      )
+    ); */
+    if (event == "activity") {
+      setStatusCreateActivity("criteria");
+    } else if (event == "criteria") {
+      setStatusCreateActivity("rewards");
+    } else {
+      console.log("888", eventName);
+      const qty = "150";
+      const creator = "thanet";
+
+      /*       dispatch(
+          createEventActivity(
+            eventName,
+            eventDetail,
+            format(startDate, "dd-MM-yyyy"),
+            format(endDate, "dd-MM-yyyy"),
+            format(startDateActivity, "dd-MM-yyyy"),
+            format(endDateActivity, "dd-MM-yyyy"),
+            activityType,
+            qty,
+            limitedNumber,
+            criteria_distance,
+            distance,
+            criteria_walk_step,
+            walk_step,
+            rewards,
+            creator
+          )
+        ); */
+
+      //createEventActivity
+    }
+  };
+
   const handleProcedureContentChange = (content) => {
     setEventDetail(content);
+  };
+
+  const repeal = (event) => {
+    if (event == "activity") {
+      setEventName("");
+      setEventDetail("");
+      setStartDate(null);
+      setEndDate(null);
+      setStartDateActivity(null);
+      setEndDateActivity(null);
+    } else if (event == "criteria") {
+    } else {
+    }
   };
   const createActivity = () => {
     const selectedLocale = language === "th" ? th : enUS;
@@ -373,24 +280,114 @@ const CreateNewActivity = () => {
     console.log("EventName", eventName);
     return (
       <>
-        <div>
-          <p className={style["name-activity"]}>
-            ชื่อกิจกรรม <span>*</span>
-          </p>
-          <input
-            type="text"
-            name="eventName"
-            onChange={(event) => setEventName(event.target.value)}
-            className="form-control"
-            id="exampleFormControlInput1"
-            placeholder="รายละอียดกิจกรรม"
-          />
-          {errorEventName && <div className="error-from">{errorEventName}</div>}
+        <div className={style["flex-row-date"]}>
+          <div className="col-6">
+            <p className={style["name-activity"]}>ชื่อกิจกรรม</p>
+            <input
+              type="text"
+              name="eventName"
+              value={eventName}
+              onChange={(event) => setEventName(event.target.value)}
+              className="form-control"
+              id="exampleFormControlInput1"
+              placeholder="รายละอียดกิจกรรม"
+            />
+            {/*   {errorEventName && <div className="error-from">{errorEventName}</div>} */}
+          </div>
+          <div className="col-6 ml-3">
+            <div className="col-12 ">
+              <p className={style["name-activity"]}>ระยะเวลากิจกรรม</p>
+              <div className={style["flex-row"]}>
+                <div className={style["date-picker"]}>
+                  <DatePicker
+                    selected={startDate}
+                    onChange={(date) => handleStartDateChange(date, "results")}
+                    selectsStart
+                    startDate={startDate}
+                    endDate={endDate}
+                    placeholderText="เริ่มต้น"
+                    dateFormat="dd MMMM yyyy" // กำหนดรูปแบบวันที่ที่แสดงใน input
+                    dateFormatCalendar="dd MMMM yyyy" // กำหนดรูปแบบวันที่ที่แสดงในปฏิทิน
+                    locale={selectedLocale}
+                  />
+
+                  <img
+                    src={calendarIcon}
+                    alt="calendar"
+                    className={style["calendar"]}
+                    /*   onClick={onClick} */
+                  />
+                </div>
+                <div className={`${style["date-picker"]} ${"ml-3"}`}>
+                  <DatePicker
+                    selected={endDate}
+                    onChange={(date) => handleEndDateChange(date, "results")}
+                    selectsEnd
+                    startDate={startDate}
+                    endDate={endDate}
+                    minDate={startDate}
+                    placeholderText="สิ้นสุด"
+                    dateFormat="dd MMMM yyyy" // กำหนดรูปแบบวันที่ที่แสดงใน input
+                    dateFormatCalendar="dd MMMM yyyy" // กำหนดรูปแบบวันที่ที่แสดงในปฏิทิน
+                    locale={selectedLocale}
+                  />
+                  <img
+                    src={calendarIcon}
+                    alt="calendar"
+                    className={style["calendar"]}
+                  />
+                </div>
+              </div>
+            </div>
+            <div className="col-12">
+              <p className={style["name-activity"]}>ช่วงที่แสดงผล</p>
+              <div className={style["flex-row"]}>
+                <div className={style["date-picker"]}>
+                  <DatePicker
+                    selected={startDateActivity}
+                    onChange={(date) => handleStartDateChange(date, "activity")}
+                    selectsStart
+                    startDate={startDateActivity}
+                    endDate={endDateActivity}
+                    placeholderText="เริ่มต้น"
+                    dateFormat="dd MMMM yyyy" // กำหนดรูปแบบวันที่ที่แสดงใน input
+                    dateFormatCalendar="dd MMMM yyyy" // กำหนดรูปแบบวันที่ที่แสดงในปฏิทิน
+                    locale={selectedLocale}
+                  />
+                  <img
+                    src={calendarIcon}
+                    alt="calendar"
+                    className={style["calendar"]}
+                    /*   onClick={onClick} */
+                  />
+                </div>
+                <div className={`${"ml-3"} ${style["date-picker"]}`}>
+                  <DatePicker
+                    selected={endDateActivity}
+                    onChange={(date) => handleEndDateChange(date, "activity")}
+                    selectsEnd
+                    startDate={startDateActivity}
+                    endDate={endDateActivity}
+                    minDate={startDateActivity}
+                    placeholderText="สิ้นสุด"
+                    dateFormat="dd MMMM yyyy" // กำหนดรูปแบบวันที่ที่แสดงใน input
+                    dateFormatCalendar="dd MMMM yyyy" // กำหนดรูปแบบวันที่ที่แสดงในปฏิทิน
+                    locale={selectedLocale}
+                  />
+                  <img
+                    src={calendarIcon}
+                    alt="calendar"
+                    className={style["calendar"]}
+                  />
+                </div>
+              </div>
+            </div>
+
+            {/*   {errorEventName && <div className="error-from">{errorEventName}</div>} */}
+          </div>
         </div>
         <div className="mb-5">
-          <p className={style["name-activity"]}>
-            รายละเอียด/เงื่อนไขกิจกรรม <span>*</span>
-          </p>
+          <p className={style["name-activity"]}>รายละเอียด/เงื่อนไขกิจกรรม</p>
           {/* <textarea
             className="form-control"
             name="eventDetail"
@@ -406,121 +403,37 @@ const CreateNewActivity = () => {
             onChange={handleProcedureContentChange}
             style={{ height: "320px" }}
           />
-
-          {errorEventDetail && (
-            <div className="error-from">{errorEventDetail}</div>
-          )}
         </div>
 
-        <p className={style["period"]}>
-          ระยะเวลาการแสดงผล <span>*</span>
-        </p>
-        <div className={style["flex-row"]}>
-          <div className={style["date-picker"]}>
-            <DatePicker
-              selected={startDate}
-              onChange={(date) => handleStartDateChange(date, "results")}
-              selectsStart
-              startDate={startDate}
-              endDate={endDate}
-              placeholderText="เริ่มต้น"
-              dateFormat="dd MMMM yyyy" // กำหนดรูปแบบวันที่ที่แสดงใน input
-              dateFormatCalendar="dd MMMM yyyy" // กำหนดรูปแบบวันที่ที่แสดงในปฏิทิน
-              locale={selectedLocale}
-            />
-
-            <img
-              src={calendarIcon}
-              alt="calendar"
-              className={style["calendar"]}
-              /*   onClick={onClick} */
-            />
-            {errorStartDate && (
-              <div className="error-from">{errorStartDate}</div>
-            )}
-          </div>
-
-          <span>&nbsp;&nbsp;{" - "}&nbsp;&nbsp;</span>
-          <div className={style["date-picker"]}>
-            <DatePicker
-              selected={endDate}
-              onChange={(date) => handleEndDateChange(date, "results")}
-              selectsEnd
-              startDate={startDate}
-              endDate={endDate}
-              minDate={startDate}
-              placeholderText="สิ้นสุด"
-              dateFormat="dd MMMM yyyy" // กำหนดรูปแบบวันที่ที่แสดงใน input
-              dateFormatCalendar="dd MMMM yyyy" // กำหนดรูปแบบวันที่ที่แสดงในปฏิทิน
-              locale={selectedLocale}
-            />
-            <img
-              src={calendarIcon}
-              alt="calendar"
-              className={style["calendar"]}
-            />
-            {errorEndDate && <div className="error-from">{errorEndDate}</div>}
-          </div>
-        </div>
-        <p className={style["period"]}>
-          ระยะเวลากิจกรรม <span>*</span>
-        </p>
-        <div className={style["flex-row"]}>
-          <div className={style["date-picker"]}>
-            <DatePicker
-              selected={startDateActivity}
-              onChange={(date) => handleStartDateChange(date, "activity")}
-              selectsStart
-              startDate={startDateActivity}
-              endDate={endDateActivity}
-              placeholderText="เริ่มต้น"
-              dateFormat="dd MMMM yyyy" // กำหนดรูปแบบวันที่ที่แสดงใน input
-              dateFormatCalendar="dd MMMM yyyy" // กำหนดรูปแบบวันที่ที่แสดงในปฏิทิน
-              locale={selectedLocale}
-            />
-            <img
-              src={calendarIcon}
-              alt="calendar"
-              className={style["calendar"]}
-            />
-            {errorStartDateActivity && (
-              <div className="error-from">{errorStartDateActivity}</div>
-            )}
-          </div>
-          <span>&nbsp;&nbsp;{" - "}&nbsp;&nbsp;</span>
-          <div className={style["date-picker"]}>
-            <DatePicker
-              selected={endDateActivity}
-              onChange={(date) => handleEndDateChange(date, "activity")}
-              selectsEnd
-              startDate={startDateActivity}
-              endDate={endDateActivity}
-              minDate={startDateActivity}
-              placeholderText="สิ้นสุด"
-              dateFormat="dd MMMM yyyy" // กำหนดรูปแบบวันที่ที่แสดงใน input
-              dateFormatCalendar="dd MMMM yyyy" // กำหนดรูปแบบวันที่ที่แสดงในปฏิทิน
-              locale={selectedLocale}
-            />
-            <img
-              src={calendarIcon}
-              alt="calendar"
-              className={style["calendar"]}
-            />
-            {errorEndDateActivity && (
-              <div className="error-from">{errorEndDateActivity}</div>
-            )}
-          </div>
-        </div>
         <div className={style["flex-row-btn"]}>
           <button
             className={style["btn-cancel"]}
-            onClick={() => setStatusCreateActivity("activity")}
+            onClick={() => repeal("activity")}
           >
-            ยกเลิก
+            ละทิ้ง
           </button>
+
           <button
-            className={style["btn-next"]}
-            onClick={() => handleEventChange("activity")}
+            className={
+              eventName != "" &&
+              eventDetail != "" &&
+              startDate != null &&
+              endDate != null &&
+              startDateActivity != null &&
+              endDateActivity != null
+                ? style["btn-next-active"]
+                : style["btn-next"]
+            }
+            onClick={
+              eventName != "" &&
+              eventDetail != "" &&
+              startDate != null &&
+              endDate != null &&
+              startDateActivity != null &&
+              endDateActivity != null
+                ? () => handleEventChange("activity")
+                : null
+            }
           >
             ถัดไป
           </button>
@@ -865,7 +778,6 @@ const CreateNewActivity = () => {
 
   return (
     <>
-      https://jpmshipping.com/user/trackings   {" "}
       <div className={style["nav-logo"]}>
         <img src={Logo_web} className={style["img-Logo_web"]} />
         <div className={style["flex-row"]}>
@@ -882,7 +794,7 @@ const CreateNewActivity = () => {
                 src={
                   statusCreateActivity == "activity"
                     ? Col2
-                    : statusCreateActivity == "criteria"
+                    : statusCreateActivity != "activity"
                     ? Col3
                     : Col1
                 }
@@ -912,32 +824,7 @@ const CreateNewActivity = () => {
               />
             </div>
           </div>
-          <div className={style["flex-row-criteria"]}>
-            <div>
-              <div>กิจกรรม</div>
-              {statusCreateActivity == "activity" && (
-                <div className={style["hr"]} />
-              )}
-            </div>
-            <div>
-              <div>Criteria</div>
-              {statusCreateActivity == "criteria" && (
-                <div className={style["hr"]} />
-              )}
-            </div>
-            <div>
-              <div>ของรางวัล</div>
-              {statusCreateActivity == "rewards" && (
-                <div className={style["hr"]} />
-              )}
-            </div>
-            <div>
-              <div>Badge</div>
-              {statusCreateActivity == "badge" && (
-                <div className={style["hr"]} />
-              )}
-            </div>
-          </div>
+
           {statusCreateActivity == "activity"
             ? createActivity()
             : statusCreateActivity == "criteria"
