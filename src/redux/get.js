@@ -14,7 +14,7 @@ export const getEventActivity = () => ({
 
 const getEventActivitySagaAsync = async () => {
   try {
-    const apiResult = await API.post("wellly", "/getEventActivity", {
+    const apiResult = await API.get("wellly", "/getEventActivity", {
       queryStringParameters: {},
     });
     console.log("get_event_activity apiResult", apiResult);
