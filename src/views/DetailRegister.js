@@ -168,11 +168,19 @@ const Detail = () => {
 
   useEffect(() => {
     if (isLeft == false) {
-     /*  setTimeout(() => {
-        navigate("/detailTimer");
-      }, 400); */
 
-      createGoogleAuthLink();
+
+      const accessToken = localStorage.getItem("accessToken");
+      const refreshtoken = localStorage.getItem("refreshToken");
+      if (accessToken && refreshtoken) {
+        console.log("มี Token");
+        setTimeout(() => {
+          navigate(`/detailTimer?accessToken=${accessToken}&refreshToken=${refreshtoken}`);
+        }, 400);
+      } else {
+        console.log("ไม่มี Token");
+        createGoogleAuthLink();
+      }
     }
   }, [isLeft]);
   const rewardScore = () => {
@@ -200,8 +208,8 @@ const Detail = () => {
         <div className={style["progress-activity"]}>
           <div
             className={`${statusProgressBar
-                ? style["progress-bar-active"]
-                : style["progress-bar"]
+              ? style["progress-bar-active"]
+              : style["progress-bar"]
               }`}
             style={{ width: "40%" }}
           ></div>
@@ -218,8 +226,8 @@ const Detail = () => {
         <div className={style["progress-activity"]}>
           <div
             className={`${statusProgressBar
-                ? style["progress-bar-active"]
-                : style["progress-bar"]
+              ? style["progress-bar-active"]
+              : style["progress-bar"]
               }`}
             style={{ width: "30%" }}
           ></div>
@@ -234,7 +242,7 @@ const Detail = () => {
             onTouchMove={handleTouchMove}
           />
           <p className={style["start-exercising"]}>เริ่มออกกำลังกาย</p>
-{/*           <button onClick={createGoogleAuthLink}>Login</button>
+          {/*           <button onClick={createGoogleAuthLink}>Login</button>
  */}        </div>
       </>
     );

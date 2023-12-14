@@ -52,9 +52,9 @@ const DetailTimer = () => {
   };
 
   const storeTokenData = async (token, refreshToken, expirationDate) => {
-    sessionStorage.setItem("accessToken", token);
-    sessionStorage.setItem("refreshToken", refreshToken);
-    sessionStorage.setItem("expirationDate", expirationDate);
+    localStorage.setItem("accessToken", token);
+    localStorage.setItem("refreshToken", refreshToken);
+    localStorage.setItem("expirationDate", expirationDate);
   };
 
   const handleSuccess = (position) => {
