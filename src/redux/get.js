@@ -30,7 +30,7 @@ function* getEventActivitySaga({}) {
     console.log("apiResult", apiResult);
     yield put({
       type: types.GET_EVENT_ACTIVITY_SUCCESS,
-      payload: apiResult.results,
+      payload: apiResult.results.eventActivity,
     });
   } catch (error) {
     console.log("error from event_activity :", error);
