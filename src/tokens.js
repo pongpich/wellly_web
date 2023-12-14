@@ -13,7 +13,7 @@ export const getToken = async () => {
 
 const newExpirationDate = () => {
   var expiration = new Date();
-  expiration.setHours(expiration.getHours() + 1);
+  expiration.setMinutes(expiration.getMinutes() + 45);
   return expiration;
 };
 

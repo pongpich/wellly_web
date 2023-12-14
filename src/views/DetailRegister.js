@@ -24,6 +24,20 @@ const Detail = () => {
   const [position, setPosition] = useState(0);
   const [viewportWidth, setViewportWidth] = useState(window.innerWidth);
 
+  const createGoogleAuthLink = async () => {
+    try {
+      const request = await fetch("https://api.planforfit.com/wellly/getUrlGoogleAuth", {
+        method: "GET"
+      });
+      const response = await request.json();
+      window.location.href = response.url;
+    } catch (error) {
+      console.log("home.js 12 | error", error);
+      throw new Error("Issue with Login", error.message);
+    }
+
+  };
+
   useEffect(() => {
     const handleResize = () => {
       setViewportWidth(window.innerWidth);
@@ -154,9 +168,11 @@ const Detail = () => {
 
   useEffect(() => {
     if (isLeft == false) {
-      setTimeout(() => {
+     /*  setTimeout(() => {
         navigate("/detailTimer");
-      }, 400);
+      }, 400); */
+
+      createGoogleAuthLink();
     }
   }, [isLeft]);
   const rewardScore = () => {
@@ -183,11 +199,10 @@ const Detail = () => {
         </div>
         <div className={style["progress-activity"]}>
           <div
-            className={`${
-              statusProgressBar
+            className={`${statusProgressBar
                 ? style["progress-bar-active"]
                 : style["progress-bar"]
-            }`}
+              }`}
             style={{ width: "40%" }}
           ></div>
         </div>
@@ -202,26 +217,25 @@ const Detail = () => {
         </div>
         <div className={style["progress-activity"]}>
           <div
-            className={`${
-              statusProgressBar
+            className={`${statusProgressBar
                 ? style["progress-bar-active"]
                 : style["progress-bar"]
-            }`}
+              }`}
             style={{ width: "30%" }}
           ></div>
         </div>
         <div className={style["box-frame13754"]}>
           <img
             src={Frame13}
-            className={`${style["frame13"]} ${
-              isLeft ? style["left"] : style["right"]
-            }`}
+            className={`${style["frame13"]} ${isLeft ? style["left"] : style["right"]
+              }`}
             style={{ left: `${position}px` }}
             draggable="true"
             onTouchMove={handleTouchMove}
           />
           <p className={style["start-exercising"]}>เริ่มออกกำลังกาย</p>
-        </div>
+{/*           <button onClick={createGoogleAuthLink}>Login</button>
+ */}        </div>
       </>
     );
   };
@@ -243,34 +257,31 @@ const Detail = () => {
           1 ม.ค. - 30 ม.ค. 2566
         </p>
         <div
-          className={` ${
-            statusManu == "score" ? "btn-manu-active" : "btn-manu"
-          } ${style["mr-9"]}`}
+          className={` ${statusManu == "score" ? "btn-manu-active" : "btn-manu"
+            } ${style["mr-9"]}`}
           onClick={() => setStatusManu("score")}
         >
           คะแนน
         </div>
         <div
-          className={` ${
-            statusManu == "details" ? "btn-manu-active" : "btn-manu"
-          } ${style["mr-9"]}`}
+          className={` ${statusManu == "details" ? "btn-manu-active" : "btn-manu"
+            } ${style["mr-9"]}`}
           onClick={() => setStatusManu("details")}
         >
           รายละเอียด
         </div>
         <div
           onClick={() => setStatusManu("reward")}
-          className={` ${
-            statusManu == "reward" ? "btn-manu-active" : "btn-manu"
-          }`}
+          className={` ${statusManu == "reward" ? "btn-manu-active" : "btn-manu"
+            }`}
         >
           รางวัล
         </div>
         {statusManu == "details"
           ? messageContent()
           : statusManu == "score"
-          ? rewardScore()
-          : rewardActivity()}
+            ? rewardScore()
+            : rewardActivity()}
       </div>
     </>
   );

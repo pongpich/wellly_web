@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import style from "../assets/css/detail.module.css";
 import stop from "../assets/image/icon/stop.png";
 import Contextual from "../assets/image/icon/Contextual.png";
+import { getMyGoogleFit } from '../fitnessApi';
 
 const DetailTimer = () => {
   const navigate = useNavigate();
@@ -15,15 +16,46 @@ const DetailTimer = () => {
   const [positions, setPositions] = useState([]);
   const [tracking, setTracking] = useState(false);
   const [watchId, setWatchId] = useState(null)
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
 
   useEffect(() => {
+    handleTokenFromQueryParams();
+
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(handleSuccess, handleError, { maximumAge: 60000, timeout: 5000, enableHighAccuracy: true });
     } else {
       console.log("Geolocation not supported");
     }
   }, []);
+
+  const handleTokenFromQueryParams = () => {
+    console.log("handleTokenFromQueryParams !!");
+    const query = new URLSearchParams(window.location.hash.substring(window.location.hash.indexOf('?')));
+    const accessToken = query.get("accessToken");
+    const refreshToken = query.get("refreshToken");
+    const expirationDate = newExpirationDate();
+    console.log("accessToken :", accessToken);
+    console.log("refreshToken :", refreshToken);
+    console.log("App.js 30 | expiration Date", expirationDate);
+
+    if (accessToken && refreshToken) {
+      storeTokenData(accessToken, refreshToken, expirationDate);
+      setIsLoggedIn(true);
+    }
+  }
+
+  const newExpirationDate = () => {
+    var expiration = new Date();
+    expiration.setHours(expiration.getHours() + 1);
+    return expiration;
+  };
+
+  const storeTokenData = async (token, refreshToken, expirationDate) => {
+    sessionStorage.setItem("accessToken", token);
+    sessionStorage.setItem("refreshToken", refreshToken);
+    sessionStorage.setItem("expirationDate", expirationDate);
+  };
 
   const handleSuccess = (position) => {
     const { latitude, longitude } = position.coords;
@@ -89,16 +121,33 @@ const DetailTimer = () => {
     navigate("/detailRegister");
   };
 
+  const callGetMyGoogleFit = async () => {
+    const startTimeMillis = Date.now() - (totalSeconds * 1000);
+    const endTimeMillis = Date.now();
+    /*   const startDate = new Date("December 12, 2023 00:00:00").getTime();
+      const endDate = new Date("December 13, 2023 00:00:00").getTime(); */
+
+    const data = await getMyGoogleFit(startTimeMillis, endTimeMillis);
+    console.log("data :", data);
+  }
+
+  let intervalId;
+  let intervalId2;
   useEffect(() => {
-    let intervalId;
 
     if (isRunning) {
       intervalId = setInterval(() => {
         setTotalSeconds((prevSeconds) => prevSeconds + 1);
       }, 1000);
+      intervalId2 = setInterval(() => {
+        callGetMyGoogleFit();
+      }, 5000);
     }
 
-    return () => clearInterval(intervalId);
+    return () => {
+      clearInterval(intervalId);
+      clearInterval(intervalId2);
+    };
   }, [isRunning]);
 
   useEffect(() => {
@@ -147,6 +196,9 @@ const DetailTimer = () => {
           <div>
             <p className={style["text-walk"]}>ก้าวเดิน (ก้าว)</p>
             <p className={style["count-walk"]}>200</p>
+            {/*   <button style={{ zIndex: 99, position: "relative" }} onClick={() => getMyGoogleFit(startTimeMillis, endTimeMillis)}>
+              Get Google Fit
+            </button> */}
           </div>
           <div>
             <p className={style["text-walk"]}>ระยะทาง (กม.)</p>
