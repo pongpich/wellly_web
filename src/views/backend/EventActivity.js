@@ -20,10 +20,12 @@ const columns = [
     {
         name: "ลำดับ",
         selector: (row) => row.id,
+        sortable: true,
     },
     {
         name: "สถานะ",
         selector: (row) => row.status,
+        sortable: true,
     },
     {
         name: "ชื่อกิจกรรม",
@@ -32,14 +34,17 @@ const columns = [
     {
         name: "ระยะเวลาการแสดงผล",
         selector: (row) => row.start_date,
+        sortable: true,
     },
     {
         name: "ระยะเวลากิจกรรม",
         selector: (row) => row.end_date,
+        sortable: true,
     },
     {
-        name: "updatedate",
+        name: "แก้ไขล่าสุด",
         selector: (row) => row.updated_at,
+        sortable: true,
     },
    
 ];
