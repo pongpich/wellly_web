@@ -1,5 +1,5 @@
 import "./App.css";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 
 import { Amplify } from "aws-amplify";
 import { awsConfig } from "./constants/defaultValues";
@@ -31,11 +31,25 @@ Amplify.configure(awsConfig);
 
 const App = () => {
   const location = useLocation();
+  const [statusPath, setStatusPath] = useState("#/");
 
   useEffect(() => {
     // Scroll to the top when the location changes
     window.scrollTo(0, 0);
   }, [location.pathname]); // Trigger the effect only on path change
+
+  const hash = window.location.hash;
+  const indexOfQuestionMark = hash.indexOf("?");
+
+  // ถ้ามี "?" ให้ใช้ substring เพื่อดึงเฉพาะส่วนของ path
+  const path =
+    indexOfQuestionMark !== -1
+      ? hash.substring(1, indexOfQuestionMark)
+      : hash.substring(1);
+  useEffect(() => {
+    setStatusPath(path);
+    window.ReactNativeWebView.postMessage(path);
+  }, [hash]);
 
   return (
     <Routes>

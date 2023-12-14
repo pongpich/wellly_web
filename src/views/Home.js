@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { Link, useLocation } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+import { Link, useLocation, useParams, useNavigate } from "react-router-dom";
+
 import { getEventActivity } from "../redux/get";
 import { useSelector, useDispatch } from "react-redux";
 
@@ -14,7 +14,7 @@ import Distance from "../assets/image/icon/Distance.png";
 import Tick3x from "../assets/image/icon/Tick3x.png";
 import EmptyState from "../assets/image/icon/EmptyState.png";
 
-const Home = () => {
+const Home = ({ match }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [statusHead, setStatusHead] = useState("ทั้งหมด");
@@ -22,6 +22,7 @@ const Home = () => {
   const [success, setSuccess] = useState(true);
   const [dataState, setDataState] = useState(true);
   const [barVisible, setBarVisible] = useState(false);
+  const [param1, setParam1] = useState(null);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -40,6 +41,22 @@ const Home = () => {
   useEffect(() => {
     dispatch(getEventActivity());
   }, []);
+
+  // Extract the query string from the URL
+  const params1 = "tha-0012";
+  useEffect(() => {
+    const query = new URLSearchParams(
+      window.location.hash.substring(window.location.hash.indexOf("?"))
+    );
+    const accessParams = query.get("params");
+
+    if (accessParams) {
+      setParam1(accessParams);
+    } else {
+      setParam1("ไม่มี params");
+    }
+    console.log(accessParams); // ผลลัพธ์คือ 'tha-0012'
+  }, []); // ใช้ useEffect โดยให้ dependencies เป็น [] เ
 
   return (
     <>
