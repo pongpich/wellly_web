@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { getEventActivity } from "../redux/get";
+import { useSelector, useDispatch } from "react-redux";
 
 import style from "../assets/css/home.module.css";
 import History from "../assets/image/icon/History.png";
@@ -12,6 +15,8 @@ import Tick3x from "../assets/image/icon/Tick3x.png";
 import EmptyState from "../assets/image/icon/EmptyState.png";
 
 const Home = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [statusHead, setStatusHead] = useState("ทั้งหมด");
   const [tickData, setTickData] = useState(true);
   const [success, setSuccess] = useState(true);
@@ -31,6 +36,10 @@ const Home = () => {
   const handleReloadClick = () => {
     window.location.reload(false);
   };
+
+  useEffect(() => {
+    dispatch(getEventActivity());
+  }, []);
 
   return (
     <>

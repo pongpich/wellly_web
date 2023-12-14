@@ -8,6 +8,7 @@ import settings from "./settings/reducer";
 //ของ Welly
 import { reducer as auth } from "./auth";
 import { reducer as createEv } from "./createEv";
+import { reducer as get } from "./get";
 
 const persistConfig = {
   key: "root",
@@ -19,6 +20,7 @@ const reducers = combineReducers({
   //ของ Bebe Stay Fit
   auth,
   createEv,
+  get,
 });
 
 const persistedReducer = persistReducer(persistConfig, reducers);
