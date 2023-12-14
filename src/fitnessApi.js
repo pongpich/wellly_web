@@ -1,6 +1,6 @@
 import { getToken } from "./tokens";
 
-export const getMyGoogleFit = async () => {
+export const getMyGoogleFit = async (startTimeMillis, endTimeMillis) => {
 	try {
 		const token = await getToken();
 		console.log(
@@ -12,8 +12,8 @@ export const getMyGoogleFit = async () => {
 		const query = {
 			aggregateBy: [{ dataTypeName, dataSourceId }],
 			bucketByTime: { durationMillis: 24 * 60 * 60 * 1000 },
-			startTimeMillis: Date.now() - (6 * 24 * 60 * 60 * 1000),
-			endTimeMillis: Date.now()
+			startTimeMillis: startTimeMillis,
+			endTimeMillis: endTimeMillis
 		};
 		const endpoint = 'https://www.googleapis.com/fitness/v1/users/me/dataset:aggregate';
 		const response = await fetch(endpoint, {
@@ -26,7 +26,7 @@ export const getMyGoogleFit = async () => {
 		});
 
 		const data = await response.json();
-		console.log("fitnessApi.js 24 | got steps data", data);
+		//console.log("fitnessApi.js 24 | got steps data", data); // data.bucket[0].dataset[0].point[0].value[0].intVal
 
 		return data;
 	} catch (error) {
