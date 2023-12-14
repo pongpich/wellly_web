@@ -9,6 +9,7 @@ import enUS from "date-fns/locale/en-US"; // import locale ภาษาอัง
 import { format } from "date-fns";
 import "quill/dist/quill.snow.css";
 import ReactQuill from "react-quill";
+import { s3Upload } from "../../helpers/awsLib";
 
 import calendarIcon from "../../assets/image/icon/Calendar.png"; // ปรับเปลี่ยนที่อยู่ของไฟล์รูปภาพปฏิทิน
 import Group7728 from "../../assets/image/icon/Upload.png"; // ปรับเปลี่ยนที่อยู่ของไฟล์รูปภาพปฏิทิน
@@ -30,9 +31,12 @@ const CreateNewActivity = () => {
 
   const [language, setLanguage] = useState("th");
   const [rewardsNumber, setRewardsNumber] = useState(1);
+  const [statusFail, setStatusFail] = useState(false);
   const [statusEventActivity, setStatusEventActivity] = useState(
     status_event_activity
   );
+  const [dateImage, setDateImage] = useState(new Date().getTime());
+
   const fileInputRef = useRef(null);
 
   // ส่วนเก็บข้อมูล  กิจกรรม, nameActivity
@@ -178,20 +182,25 @@ const CreateNewActivity = () => {
     areAllValuesFilled();
   };
 
-  const handleFileChange = (e) => {
+  const handleFileChange = async (e) => {
     // เมื่อมีการเปลี่ยนแปลงในไฟล์อินพุท
     // ทำตามต้องการ เช่น ดึงข้อมูลไฟล์, อัปโหลดไปที่เซิร์ฟเวอร์, เปลี่ยนสถานะ, ฯลฯ
     const selectedFile = e.target.files[0];
 
-    // สร้าง URL ของไฟล์ที่ถูกเลือก
-    const imageUrl = URL.createObjectURL(selectedFile);
-    setRewards((prevRewards) =>
-      prevRewards.map((reward) =>
-        reward.number === rewardsNumber
-          ? { ...reward, image: imageUrl }
-          : reward
-      )
-    );
+    if (selectedFile) {
+      const customPrefixName = `images/wellly_event/${dateImage}/${selectedFile.name}.png`;
+      const urlProductImg = `https://bebe-platform.s3-ap-southeast-1.amazonaws.com/public/${customPrefixName}`;
+      await s3Upload(selectedFile, customPrefixName);
+      // สร้าง URL ของไฟล์ที่ถูกเลือก
+      const imageUrl = URL.createObjectURL(selectedFile);
+      setRewards((prevRewards) =>
+        prevRewards.map((reward) =>
+          reward.number === rewardsNumber
+            ? { ...reward, image: urlProductImg }
+            : reward
+        )
+      );
+    }
   };
 
   const handleEventChange = (event) => {
@@ -224,6 +233,7 @@ const CreateNewActivity = () => {
   };
 
   const handleProcedureContentChange = (content) => {
+    console.log("content", content);
     setEventDetail(content);
   };
 
@@ -236,7 +246,6 @@ const CreateNewActivity = () => {
       setStartDateActivity(null);
       setEndDateActivity(null);
     } else if (event == "criteria") {
-      console.log("9999");
       setCriteria_distance(false);
       setDistance("");
       setCriteria_walk_step(false);
@@ -255,19 +264,21 @@ const CreateNewActivity = () => {
   useEffect(() => {
     setStatusEventActivity(status_event_activity);
   }, [status_event_activity]);
+
   useEffect(() => {
     /* const isLogged = !!sessionStorage.getItem("login_status"); */
-    console.log("isLogged", user);
+
     if (status_event_activity == "success") {
       dispatch(clear_status());
       navigate("/event-activity");
-    }
+    } /*  else if (status_event_activity != "loading") {
+      setStatusCreateActivity("activity");
+      setStatusFail(true);
+    } */
   }, [statusEventActivity]);
 
   const createActivity = () => {
     const selectedLocale = language === "th" ? th : enUS;
-
-    console.log("EventName", eventName);
     return (
       <>
         <div className={style["flex-row-date"]}>
@@ -394,7 +405,13 @@ const CreateNewActivity = () => {
             style={{ height: "320px" }}
           />
         </div>
-
+        <div>
+          {statusFail && (
+            <p className="error-from">
+              ตรวจสอบภาพ รายละเอียด/เงื่อนไขกิจกรรมใหญ่เกิน
+            </p>
+          )}
+        </div>
         <div className={style["flex-row-btn"]}>
           <button
             className={style["btn-cancel"]}
@@ -433,7 +450,6 @@ const CreateNewActivity = () => {
   };
 
   const createCriteria = () => {
-    console.log("criteria_distance", criteria_distance);
     return (
       <>
         <div className={style["box-criteria"]}>

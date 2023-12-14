@@ -158,6 +158,11 @@ export function reducer(state = INIT_STATE, action) {
         status_event_activity: "success",
         event_activity: action.payload,
       };
+    case types.CREATE_EVENT_ACTIVITY_FAIL:
+      return {
+        ...state,
+        status_event_activity: "fail",
+      };
     case types.CLEAR_STATUS:
       return {
         ...state,

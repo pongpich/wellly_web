@@ -14,7 +14,7 @@ const NavBackend = () => {
 
   useEffect(() => {
     getUser();
-    console.log(user);
+    /*     console.log(user); */
   }, [user]);
 
   useEffect(() => {
@@ -39,7 +39,6 @@ const NavBackend = () => {
     navigate("/login");
   };
 
-  console.log("user", user);
   return (
     <div className={style["nav-logo"]}>
       <img src={Logo_web} className={style["img-Logo_web"]} />
