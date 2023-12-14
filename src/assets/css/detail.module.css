@@ -88,7 +88,7 @@
 }
 
 .reward-tee {
-    width: calc(100% - 16px);
+    width: 100%;
     display: flex;
     justify-content: space-between;
 }
@@ -110,7 +110,7 @@
 }
 
 .reward-user {
-    margin-left: -16px;
+    margin-left: 0px;
     font-size: 20px;
     font-family: bold;
     color: var(--grey1);
@@ -125,6 +125,7 @@
 }
 
 .reward-scoreboard {
+    padding: 0;
     font-size: 16px;
     font-family: regular;
     color: var(--persianBlue);
