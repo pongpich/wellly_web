@@ -48,7 +48,11 @@ const App = () => {
       : hash.substring(1);
   useEffect(() => {
     setStatusPath(path);
-    window.ReactNativeWebView.postMessage(path);
+    if (window.ReactNativeWebView) {
+      window.ReactNativeWebView.postMessage(path);
+    } else {
+      console.error("window.ReactNativeWebView is undefined");
+    }
   }, [hash]);
 
   return (
