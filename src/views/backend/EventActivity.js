@@ -6,6 +6,8 @@ import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
 import Grid from "@mui/material/Grid";
 import Group7878 from "../../assets/image/icon/Group7878.png";
+import active from "../../assets/image/icon/active.png";
+import mag from "../../assets/image/icon/mag.png";
 import DatePicker from "react-datepicker";
 import calendarIcon from "../../assets/image/icon/date.png"; // ปรับเปลี่ยนที่อยู่ของไฟล์รูปภาพปฏิทิน
 import DataTable from "react-data-table-component";
@@ -21,35 +23,74 @@ const columns = [
         name: "ลำดับ",
         selector: (row) => row.id,
         sortable: true,
+        width: '4%',
     },
     {
         name: "สถานะ",
         selector: (row) => row.status,
         sortable: true,
+        cell: row => (
+            <div>
+                {row.status === 'active' ? (
+                    <>
+                        <img height="16px" width="40px" alt={row.status} src={active} />
+                    </>
+                ) : (
+                    <div>
+                        Waiting
+                    </div>
+                )}
+            </div>
+        ),
+        width: '5%',
     },
     {
         name: "ชื่อกิจกรรม",
         selector: (row) => row.event_name,
+        width: '40%',
     },
     {
         name: "ระยะเวลากิจกรรม",
         selector: (row) => row.actTimeThai,
         sortable: true,
+        width: '12%',
     },
     {
         name: "ช่วงที่แสดงผล",
         selector: (row) => row.showTimeThai,
         sortable: true,
+        width: '12%',
     },
     {
         name: "วันที่สร้าง",
-        selector: (row) => row.createformat,
+        // selector: (row) => row.createformat,
+        cell: row => (
+            <div>
+                <p>{row.createformat}</p>
+                {row.creator && (
+                    <div style={{ marginTop: "-10px", marginBottom: "8px" }}>
+                        <img alt={row.createformat} src={mag} ></img> &nbsp;{row.creator}
+                    </div>
+                )}
+            </div>
+        ),
         sortable: true,
+        width: '12.75%',
     },
     {
         name: "แก้ไขล่าสุด",
-        selector: (row) => row.updateformat,
+        cell: row => (
+            <div>
+                <p>{row.updateformat}</p>
+                {row.editor && (
+                    <div style={{ marginTop: "-10px", marginBottom: "8px" }}>
+                        <img alt={row.createformat} src={mag} ></img> &nbsp;{row.editor}
+                    </div>
+                )}
+            </div>
+        ),
         sortable: true,
+        width: '12.75%',
     },
 ];
 
@@ -92,7 +133,7 @@ const EventActivity = () => {
     const [afterformate, setAfterfotmat] = useState([]);
 
 
-    
+
     // console.log(testjson[0].start_date);
     function toThaiDateString(date) {
         let monthNames = [
@@ -117,7 +158,7 @@ const EventActivity = () => {
         const words = file.split('-');
         var f = new Date(words[2], words[1] - 1, words[0])
         return toThaiDateString(f);
-        
+
     }
     useEffect(() => {
         console.log({ event });
@@ -131,8 +172,8 @@ const EventActivity = () => {
                 ...obj
                 , actTimeThai: datatodate(obj.start_date) + ' - ' + datatodate(obj.end_date)
                 , showTimeThai: datatodate(obj.start_date_activity) + ' - ' + datatodate(obj.end_date_activity)
-                , createformat: datatodate(((obj.created_at).split('T')[0]).split("-").reverse().join("-"))+' - ' + ((obj.created_at).split('T')[1]).split(":", 2).join(":") + ' น.' 
-                , updateformat: datatodate(((obj.updated_at).split('T')[0]).split("-").reverse().join("-"))+' - ' + ((obj.updated_at).split('T')[1]).split(":", 2).join(":") + ' น.' 
+                , createformat: datatodate(((obj.created_at).split('T')[0]).split("-").reverse().join("-")) + ' - ' + ((obj.created_at).split('T')[1]).split(":", 2).join(":") + ' น.'
+                , updateformat: datatodate(((obj.updated_at).split('T')[0]).split("-").reverse().join("-")) + ' - ' + ((obj.updated_at).split('T')[1]).split(":", 2).join(":") + ' น.'
             };
         });
         setAfterfotmat(newState);
