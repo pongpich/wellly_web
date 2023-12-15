@@ -262,7 +262,7 @@ const Detail = () => {
           <span>
             <img src={dateIcon} className="date-icon" />
           </span>
-          1 ม.ค. - 30 ม.ค. 2566
+          1 ธ.ค. - 31 ธ.ค. 2566
         </p>
         <div
           className={` ${statusManu == "score" ? "btn-manu-active" : "btn-manu"

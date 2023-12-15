@@ -11,7 +11,7 @@ export const getMyGoogleFit = async (startTimeMillis, endTimeMillis) => {
 		const dataSourceId = 'derived:com.google.step_count.delta:com.google.android.gms:estimated_steps';
 		const query = {
 			aggregateBy: [{ dataTypeName, dataSourceId }],
-			bucketByTime: { durationMillis: 24 * 60 * 60 * 1000 },
+			bucketByTime: { durationMillis: 35 * 24 * 60 * 60 * 1000 }, //35 * 24 * 60 * 60 * 1000 คือ 35วัน กำหนดกว้างๆเผื่อไว้ก่อน
 			startTimeMillis: startTimeMillis,
 			endTimeMillis: endTimeMillis
 		};

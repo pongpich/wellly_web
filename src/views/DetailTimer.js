@@ -12,12 +12,13 @@ const DetailTimer = () => {
   const [statusAbandon, setStatusAbandon] = useState(0);
   const [totalSeconds, setTotalSeconds] = useState(0);
   const [isRunning, setIsRunning] = useState(true);
-  //สำหรับตัวจับระยะทาง
+  const [steps, setSteps] = useState(0);
   const [distance, setDistance] = useState(0);
   const [positions, setPositions] = useState([]);
   const [tracking, setTracking] = useState(false);
   const [watchId, setWatchId] = useState(null)
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [timeStampStartPage, setTimeStampStartPage] = useState(Date.now());
 
 
   useEffect(() => {
@@ -113,11 +114,11 @@ const DetailTimer = () => {
       Math.cos(lat2 * (Math.PI / 180)) *
       Math.sin(dLon / 2) *
       Math.sin(dLon / 2);
+    console.log("a :", a);
     const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
     const distance = R * c;
 
-    return distance;
-
+    return a ? distance : 0; //เช็คค่า a ก่อน เพราะเวลาไม่มีข้อมูล lat, lon aจะมีค่าเป็น NaN 
   };
 
   const clickFinish = () => {
@@ -125,13 +126,23 @@ const DetailTimer = () => {
   };
 
   const callGetMyGoogleFit = async () => {
-    const startTimeMillis = Date.now() - (totalSeconds * 1000);
-    const endTimeMillis = Date.now();
     /*   const startDate = new Date("December 12, 2023 00:00:00").getTime();
       const endDate = new Date("December 13, 2023 00:00:00").getTime(); */
 
-    const data = await getMyGoogleFit(startTimeMillis, endTimeMillis);
-    console.log("data :", data);
+    const data = await getMyGoogleFit(timeStampStartPage, Date.now());
+    checkStepsData(data);
+  }
+
+  function checkStepsData(data) {
+    let status_data;
+    let steps_count = 0;
+    if ((data.bucket.length === 0) || (data.bucket[0].dataset[0].point.length === 0)) {
+      status_data = "no_data";
+    } else {
+      status_data = "there_is_data";
+      steps_count = data.bucket[0].dataset[0].point[0].value[0].intVal;
+    }
+    setSteps(steps_count)
   }
 
   let intervalId;
@@ -157,7 +168,7 @@ const DetailTimer = () => {
     //ตั้งไว้หลังจากเริ่มจับเวลา 3วินาที ค่อยเริ่มนับ km เพราะก่อนหน้านี้บัค
     if (totalSeconds === 1) {
       setTracking(true);
-    }
+    };
   }, [totalSeconds])
 
   const formatTime = (seconds) => {
@@ -198,7 +209,7 @@ const DetailTimer = () => {
         <div className={style["justify-around"]}>
           <div>
             <p className={style["text-walk"]}>ก้าวเดิน (ก้าว)</p>
-            <p className={style["count-walk"]}>200</p>
+            <p className={style["count-walk"]}>{steps}</p>
             {/*   <button style={{ zIndex: 99, position: "relative" }} onClick={() => getMyGoogleFit(startTimeMillis, endTimeMillis)}>
               Get Google Fit
             </button> */}
