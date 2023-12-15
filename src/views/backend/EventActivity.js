@@ -18,12 +18,55 @@ import { logout } from "../../redux/auth";
 import NavBackend from "./NavBackend";
 import { getEventActivity } from "../../redux/get"
 
+const customStyles = {
+    rows: {
+        style: {
+            // minHeight: '72px', // override the row height
+            // backgroundColor:'black'
+            borderRightStyle: 'solid',
+            borderRightWidth: '1px',
+            borderRightColor: '#D2E6EA',
+        },
+    },
+    headCells: {
+        style: {
+            // fontWeight:'Regular',
+            fontFamily: 'Bold',
+            fontSize: '14px',
+            // borderBottomStyle: 'solid',
+            // borderBottomWidth: '1px',
+            // borderBottomColor: '#D2E6EA',
+
+            fontSize: '14px'
+        },
+    },
+    cells: {
+        style: {
+            // backgroundColor:'red'
+            fontFamily: 'Regular',
+            // borderBottomStyle: 'solid',
+            // borderBottomWidth: '1px',
+            // borderBottomColor: '#D2E6EA',
+            borderLeftStyle: 'solid',
+            borderLeftWidth: '1px',
+            borderLeftColor: '#D2E6EA',
+
+            fontSize: '14px'
+        },
+    },
+    headRow: {
+        style: {
+
+        },
+    },
+};
+
 const columns = [
     {
         name: "ลำดับ",
         selector: (row) => row.id,
         sortable: true,
-        width: '4%',
+        width: '5%',
     },
     {
         name: "สถานะ",
@@ -33,7 +76,7 @@ const columns = [
             <div>
                 {row.status === 'active' ? (
                     <>
-                        <img height="16px" width="40px" alt={row.status} src={active} />
+                        <img height="20px" width="55px" alt={row.status} src={active} />
                     </>
                 ) : (
                     <div>
@@ -46,7 +89,12 @@ const columns = [
     },
     {
         name: "ชื่อกิจกรรม",
-        selector: (row) => row.event_name,
+        // selector: (row) => row.event_name,
+        cell: row => (
+            <div style={{ fontFamily: "Bold"}}>
+                <p>{row.event_name}</p>
+            </div>
+        ),
         width: '40%',
     },
     {
@@ -338,8 +386,9 @@ const EventActivity = () => {
                         </div>
                     </div>
                     <div>
+                        <div className={style["title-header"]}>กิจกรรม</div>
                         <button className={style["btn-create"]} onClick={handleClick}>
-                            + สร้างกิจกรรมใหม่
+                            สร้างกิจกรรม
                         </button>
                     </div>
                     <div className={style["table"]}>
@@ -357,6 +406,7 @@ const EventActivity = () => {
                             responsive
                             subHeaderAlign="right"
                             subHeaderWrap
+                            customStyles={customStyles}
                         />
                     </div>
                 </div>

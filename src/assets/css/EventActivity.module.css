@@ -142,11 +142,30 @@
     /* display: flex; */
     align-items: center;
     justify-content: center;
-    border-radius: 5px;
+    border-radius: 50px;
     border: 2px ;
-    background-color: #000000;
+    background-color: #3762FC;
+    font-family: Bold;
     color: var(--white);
-    font-size: 15px;
+    font-size: 18px;
+    /* font-family: bold; */
+}
+
+.title-header {
+    /* width: auto; */
+    /* height: auto; */
+    font-family: Bold;
+    font-size: 28px;
+    float: left;
+    margin-top: 45px;
+    /* padding: 8px 20px; */
+    /* display: flex; */
+    align-items: center;
+    justify-content: center;
+    /* border-radius: 5px; */
+    /* border: 2px ; */
+    /* background-color: #000000; */
+    /* color: var(--white); */
     /* font-family: bold; */
 
 }
