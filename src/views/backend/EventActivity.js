@@ -8,6 +8,7 @@ import Grid from "@mui/material/Grid";
 import Group7878 from "../../assets/image/icon/Group7878.png";
 import active from "../../assets/image/icon/active.png";
 import mag from "../../assets/image/icon/mag.png";
+import search_but from "../../assets/image/icon/search_but.png";
 import DatePicker from "react-datepicker";
 import calendarIcon from "../../assets/image/icon/date.png"; // ปรับเปลี่ยนที่อยู่ของไฟล์รูปภาพปฏิทิน
 import DataTable from "react-data-table-component";
@@ -91,7 +92,7 @@ const columns = [
         name: "ชื่อกิจกรรม",
         // selector: (row) => row.event_name,
         cell: row => (
-            <div style={{ fontFamily: "Bold"}}>
+            <div style={{ fontFamily: "Bold" }}>
                 <p>{row.event_name}</p>
             </div>
         ),
@@ -293,95 +294,85 @@ const EventActivity = () => {
             <div className={style["flex-row"]}>
                 <div className={style["challenge"]}>
 
-                    <div className={style["challenge-title"]}>Challenge</div>
 
-                    <div className={style["grid-container"]}>
-                        <div className={style["grid-item1"]}>
-                            <img
-                                src={Group7878}
-                                alt="filter"
-                                className={style["filter-logo"]}
-                            />
-                        </div>
-                        <div className={style["grid-item2"]}>
-                            <div className={style["grid-container2"]}>
-                                <div>
-                                    <p className={style["name-activity"]}>
-                                        ชื่อกิจกรรม/ผู้สร้าง/ผู้แก้ไข
-                                    </p>
-                                    <input
-                                        type="email"
-                                        // class="form-control"
-                                        id="exampleFormControlInput1"
-                                        className={style["input-name"]}
+                    <div className={style["grid-item2"]}>
+                        <div className={style["grid-container2"]}>
+                            <div>
+
+                                <input
+                                    type="email"
+                                    // class="form-control"
+                                    id="exampleFormControlInput1"
+                                    className={style["input-name"]}
+                                />
+                            </div>
+                            <div>
+
+                                <select
+                                    id="cars"
+                                    name="cars"
+                                    className={style["input-status"]}
+                                >
+                                    <option value="volvo">ทั้งหมด</option>
+                                    <option value="saab">Saab</option>
+                                    <option value="fiat">Fiat</option>
+                                    <option value="audi">Audi</option>
+                                </select>
+                            </div>
+                            <div>
+                                <div className={style["date-picker1"]}>
+                                    <DatePicker
+                                        selected={startDate}
+                                        onChange={(date) =>
+                                            handleStartDateChange(date, "results")
+                                        }
+                                        selectsStart
+                                        startDate={startDate}
+                                        endDate={endDate}
+                                        placeholderText="เริ่มต้น"
+                                        dateFormat="dd MMMM yyyy" // กำหนดรูปแบบวันที่ที่แสดงใน input
+                                        dateFormatCalendar="dd MMMM yyyy" // กำหนดรูปแบบวันที่ที่แสดงในปฏิทิน
+                                    // locale={selectedLocale}
+                                    />
+                                    <img
+                                        src={calendarIcon}
+                                        alt="calendar"
+                                        className={style["calendar"]}
+                                    /*   onClick={onClick} */
                                     />
                                 </div>
-                                <div>
-                                    <p className={style["name-status"]}>สถานะ</p>
-
-                                    <select
-                                        id="cars"
-                                        name="cars"
-                                        className={style["input-status"]}
-                                    >
-                                        <option value="volvo">ทั้งหมด</option>
-                                        <option value="saab">Saab</option>
-                                        <option value="fiat">Fiat</option>
-                                        <option value="audi">Audi</option>
-                                    </select>
+                            </div>
+                            <div>
+                                <div className={style["date-picker2"]}>
+                                    <DatePicker
+                                        selected={startDate}
+                                        onChange={(date) =>
+                                            handleStartDateChange(date, "results")
+                                        }
+                                        selectsStart
+                                        startDate={startDate}
+                                        endDate={endDate}
+                                        placeholderText="สิ้นสุด"
+                                        dateFormat="dd MMMM yyyy" // กำหนดรูปแบบวันที่ที่แสดงใน input
+                                        dateFormatCalendar="dd MMMM yyyy" // กำหนดรูปแบบวันที่ที่แสดงในปฏิทิน
+                                    // locale={selectedLocale}
+                                    />
+                                    <img
+                                        src={calendarIcon}
+                                        alt="calendar"
+                                        className={style["calendar"]}
+                                    /*   onClick={onClick} */
+                                    />
                                 </div>
-                                <div>
-                                    <p className={style["name-status"]}>ระยะเวลา</p>
-                                    <div className={style["date-picker1"]}>
-                                        <DatePicker
-                                            selected={startDate}
-                                            onChange={(date) =>
-                                                handleStartDateChange(date, "results")
-                                            }
-                                            selectsStart
-                                            startDate={startDate}
-                                            endDate={endDate}
-                                            placeholderText="เริ่มต้น"
-                                            dateFormat="dd MMMM yyyy" // กำหนดรูปแบบวันที่ที่แสดงใน input
-                                            dateFormatCalendar="dd MMMM yyyy" // กำหนดรูปแบบวันที่ที่แสดงในปฏิทิน
-                                        // locale={selectedLocale}
-                                        />
-                                        <img
-                                            src={calendarIcon}
-                                            alt="calendar"
-                                            className={style["calendar"]}
-                                        /*   onClick={onClick} */
-                                        />
-                                    </div>
-                                </div>
-                                <div>
-                                    <div className={style["date-picker2"]}>
-                                        <DatePicker
-                                            selected={startDate}
-                                            onChange={(date) =>
-                                                handleStartDateChange(date, "results")
-                                            }
-                                            selectsStart
-                                            startDate={startDate}
-                                            endDate={endDate}
-                                            placeholderText="สิ้นสุด"
-                                            dateFormat="dd MMMM yyyy" // กำหนดรูปแบบวันที่ที่แสดงใน input
-                                            dateFormatCalendar="dd MMMM yyyy" // กำหนดรูปแบบวันที่ที่แสดงในปฏิทิน
-                                        // locale={selectedLocale}
-                                        />
-                                        <img
-                                            src={calendarIcon}
-                                            alt="calendar"
-                                            className={style["calendar"]}
-                                        /*   onClick={onClick} */
-                                        />
-                                    </div>
-                                </div>
-                                <div>
-                                    <button className={style["btn-next"]} onClick={handleClick}>
-                                        ค้นหา
-                                    </button>
-                                </div>
+                            </div>
+                            <div>
+                                <img
+                                    src={search_but}
+                                    alt="search_but"
+                                    // className={style["calendar"]}
+                                    onClick={handleClick}
+                                />
+                               
                             </div>
                         </div>
                     </div>
