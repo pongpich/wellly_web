@@ -5,6 +5,7 @@ import style from "../assets/css/detail.module.css";
 import stop from "../assets/image/icon/stop.png";
 import Contextual from "../assets/image/icon/Contextual.png";
 import { getMyGoogleFit } from '../fitnessApi';
+import { checkLocalToken } from '../tokens';
 
 const DetailTimer = () => {
   const navigate = useNavigate();
@@ -20,7 +21,9 @@ const DetailTimer = () => {
 
 
   useEffect(() => {
-    handleTokenFromQueryParams();
+    if (!checkLocalToken()) {
+      handleTokenFromQueryParams();
+    }
 
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(handleSuccess, handleError, { maximumAge: 60000, timeout: 5000, enableHighAccuracy: true });

@@ -1,5 +1,6 @@
 export const getToken = async () => {
   if (tokenExpired()) {
+    console.log("token หมดอายุ");
     const refreshtoken = localStorage.getItem("refreshToken");
     const token = await getValidTokenFromServer(refreshtoken);
     localStorage.setItem("accessToken", token.accessToken);
@@ -8,6 +9,18 @@ export const getToken = async () => {
   } else {
     console.log("tokens.js 11 | token not expired");
     return localStorage.getItem("accessToken");
+  }
+};
+
+export const checkLocalToken = () => {
+  const accessToken = localStorage.getItem("accessToken");
+  const refreshtoken = localStorage.getItem("refreshToken");
+  const expirationDate = localStorage.getItem("expirationDate");
+
+  if (accessToken && refreshtoken && expirationDate) {
+    return true;
+  } else {
+    return false;
   }
 };
 
