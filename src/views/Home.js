@@ -250,28 +250,42 @@ const Home = ({ match }) => {
           <>
             {event_activity && event_activity.length > 0 ? (
               <>
-                {event_activity &&
-                  event_activity.map((item, index) => {
-                    return (
-                      eventUser &&
-                      eventUser.map((itemUser, indexItem) => {
-                        const formattedDate = parse(
-                          item.end_date,
-                          "dd-MM-yyyy",
-                          new Date()
-                        );
-                        const tickId = item.id == itemUser.event_id;
-                        const tickData = dateNow > new Date(formattedDate);
-                        return renderActivityDetails(
-                          item,
-                          itemUser,
-                          tickData,
-                          tickId,
-                          indexItem
-                        );
-                      })
+                {event_activity.map((item, index) => {
+                  const formattedDate = parse(
+                    item.end_date,
+                    "dd-MM-yyyy",
+                    new Date()
+                  );
+                  const formattedStartDateShow = parse(
+                    item.start_date_show,
+                    "dd-MM-yyyy",
+                    new Date()
+                  );
+                  const formattedEndDateShow = parse(
+                    item.end_date_show,
+                    "dd-MM-yyyy",
+                    new Date()
+                  );
+
+                  const foundItemUser =
+                    eventUser &&
+                    eventUser.find(
+                      (itemUser) =>
+                        dateNow >= formattedStartDateShow &&
+                        dateNow <= formattedEndDateShow
                     );
-                  })}
+
+                  return (
+                    foundItemUser &&
+                    renderActivityDetails(
+                      item,
+                      foundItemUser,
+                      dateNow > new Date(formattedDate),
+                      item.id === foundItemUser.event_id,
+                      index
+                    )
+                  );
+                })}
               </>
             ) : (
               <div>
@@ -284,31 +298,43 @@ const Home = ({ match }) => {
           <>
             {event_activity && event_activity.length > 0 ? (
               <>
-                {event_activity &&
-                  event_activity.map((item, index) => {
-                    return (
-                      eventUser &&
-                      eventUser.map((itemUser, indexItem) => {
-                        const formattedDate = parse(
-                          item.end_date,
-                          "dd-MM-yyyy",
-                          new Date()
-                        );
+                {event_activity.map((item, index) => {
+                  const formattedDate = parse(
+                    item.end_date,
+                    "dd-MM-yyyy",
+                    new Date()
+                  );
+                  const formattedStartDateShow = parse(
+                    item.start_date_show,
+                    "dd-MM-yyyy",
+                    new Date()
+                  );
+                  const formattedEndDateShow = parse(
+                    item.end_date_show,
+                    "dd-MM-yyyy",
+                    new Date()
+                  );
 
-                        const tickId = item.id == itemUser.event_id;
-                        const tickData = dateNow > new Date(formattedDate);
-                        if (tickId) {
-                          return renderActivityDetails(
-                            item,
-                            itemUser,
-                            tickData,
-                            tickId,
-                            indexItem
-                          );
-                        }
-                      })
+                  const foundItemUser =
+                    eventUser &&
+                    eventUser.find(
+                      (itemUser) =>
+                        dateNow >= formattedStartDateShow &&
+                        dateNow <= formattedEndDateShow &&
+                        item.id == itemUser.event_id
                     );
-                  })}
+
+                  return (
+                    foundItemUser &&
+                    renderActivityDetails(
+                      item,
+                      foundItemUser,
+                      dateNow > new Date(formattedDate),
+                      item.id === foundItemUser.event_id,
+                      index
+                    )
+                  );
+                })}
               </>
             ) : (
               <div>
