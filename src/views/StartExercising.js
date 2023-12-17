@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import NavbarImg from "./layouts/NavbarImg";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import style from "../assets/css/detail.module.css";
+import formattedDate from "../components/formatDate";
 
 import Ads from "../assets/image/img/Ads.png";
 import CloseButton from "../assets/image/icon/CloseButton.png";
@@ -16,26 +17,40 @@ import Distance from "../assets/image/icon/Distance.png";
 import Frame13 from "../assets/image/icon/Frame13754.png";
 
 const Detail = () => {
-
   const navigate = useNavigate();
+  const { event, event_user } = useSelector(({ get }) => (get ? get : ""));
   const [statusManu, setStatusManu] = useState("score");
   const [statusProgressBar, setStatusProgressBar] = useState(true);
   const [isLeft, setIsLeft] = useState(true);
   const [position, setPosition] = useState(0);
   const [viewportWidth, setViewportWidth] = useState(window.innerWidth);
+  const [event_activity, setEvent_activity] = useState(null);
+  const [eventUser, setEventUser] = useState(null);
+  const { id } = useParams();
+
+  useEffect(() => {
+    const foundEvent = event && event.find((item) => item.id == id);
+    const foundEventUser =
+      event_user && event_user.find((item) => item.event_id === id);
+
+    setEvent_activity(foundEvent);
+    setEventUser(foundEventUser);
+  }, []);
 
   const createGoogleAuthLink = async () => {
     try {
-      const request = await fetch("https://api.planforfit.com/wellly/getUrlGoogleAuth", {
-        method: "GET"
-      });
+      const request = await fetch(
+        "https://api.planforfit.com/wellly/getUrlGoogleAuth",
+        {
+          method: "GET",
+        }
+      );
       const response = await request.json();
       window.location.href = response.url;
     } catch (error) {
       console.log("home.js 12 | error", error);
       throw new Error("Issue with Login", error.message);
     }
-
   };
 
   useEffect(() => {
@@ -54,90 +69,40 @@ const Detail = () => {
   const messageContent = () => {
     return (
       <>
-        <p className={style["message-content"]}>
-          Lorem Ipsum is simply dummy text of the printing and typesetting
-          industry. Lorem Ipsum has been the industry's standard dummy text ever
-          since the 1500s, when an unknown printer took a galley of type and
-          scrambled it to make a type specimen book. It has survived not only
-          five centuries, but also the leap into electronic typesetting,
-          remaining essentially unchanged. It was popularised in the 1960s with
-          the release of Letraset sheets containing Lorem Ipsum passages, and
-          more recently with desktop publishing software like Aldus PageMaker
-          including versions of Lorem Ipsum Lorem Ipsum is simply dummy text of
-          the printing and typesetting industry. Lorem Ipsum has been the
-          industry's standard dummy text ever since the 1500s, when an unknown
-          printer took a galley of type and scrambled it to make a type specimen
-          book. It has survived not only five centuries, but also the leap into
-          electronic typesetting, remaining essentially unchanged. It was
-          popularised in the 1960s with the release of Letraset sheets
-          containing Lorem Ipsum passages, and more recently with desktop
-          publishing software like Aldus PageMaker including versions of Lorem
-          Ipsum Lorem Ipsum is simply dummy text of the printing and typesetting
-          industry. Lorem Ipsum has been the industry's standard dummy text ever
-          since the 1500s, when an unknown printer took a galley of type and
-          scrambled it to make a type specimen book. It has survived not only
-          five centuries, but also the leap into electronic typesetting,
-          remaining essentially unchanged. It was popularised in the 1960s with
-          the release of Letraset sheets containing Lorem Ipsum passages, and
-          more recently with desktop publishing software like Aldus PageMaker
-          including versions of Lorem Ipsum Lorem Ipsum is simply dummy text of
-          the printing and typesetting industry. Lorem Ipsum has been the
-          industry's standard dummy text ever since the 1500s, when an unknown
-          printer took a galley of type and scrambled it to make a type specimen
-          book. It has survived not only five centuries, but also the leap into
-          electronic typesetting, remaining essentially unchanged. It was
-          popularised in the 1960s with the release of Letraset sheets
-          containing Lorem Ipsum passages, and more recently with desktop
-          publishing software like Aldus PageMaker including versions of Lorem
-          Ipsum
-        </p>
+        <p
+          className={style["message-content"]}
+          dangerouslySetInnerHTML={{
+            __html: event_activity && event_activity.event_detail,
+          }}
+        />
       </>
     );
   };
 
   const rewardActivity = () => {
+    let reward = event_activity && JSON.parse(event_activity.reward);
     return (
       <div className={style["mt-box-reward"]}>
-        <div className={style["box-reward"]}>
-          <div className={style["reward-img"]}>
-            <img src={Reward1} className={style["img-reward"]} />
-          </div>
-          <div>
-            <div className={style["reward-one"]}>
-              <span className={style["reward-1"]}>รางวัลที่ 1</span>
-              <span className={style["reward-2"]}>1 รางวัล</span>
+        {reward &&
+          reward.map((item, index) => (
+            <div className={style["box-reward"]}>
+              <div className={style["reward-img"]}>
+                <img src={item.image} className={style["img-reward"]} />
+              </div>
+              <div>
+                <div className={style["reward-one"]}>
+                  <span className={style["reward-1"]}>
+                    รางวัลที่ {item.number}
+                  </span>
+                  <span className={style["reward-2"]}>
+                    {" "}
+                    {item.number} รางวัล
+                  </span>
+                </div>
+                <span className={style["reward-detail"]}>{item.name}</span>
+              </div>
             </div>
-            <span className={style["reward-detail"]}>
-              เครื่องอบขนมปังลายทหารอากาศจากอิตาลี
-            </span>
-          </div>
-        </div>
-        <div className={style["box-reward"]}>
-          <div className={style["reward-img"]}>
-            <img src={Reward2} className={style["img-reward"]} />
-          </div>
-          <div>
-            <div className={style["reward-one"]}>
-              <span className={style["reward-1"]}>รางวัลที่ 2</span>
-              <span className={style["reward-2"]}>2 รางวัล</span>
-            </div>
-            <span className={style["reward-detail"]}>
-              เครื่องเขียนถ่านไฟฉายตากบอ๋บๆ
-            </span>
-          </div>
-        </div>
-        <div className={style["box-reward"]}>
-          <div className={style["reward-img"]}>
-            <img src={Reward3} className={style["img-reward"]} />
-          </div>
-          <div>
-            <div className={style["reward-one"]}>
-              <span className={style["reward-1"]}>รางวัลที่ 3</span>
-              <span className={style["reward-2"]}>3 รางวัล</span>
-            </div>
-            <span className={style["reward-detail"]}>เงินจำนวน 10 บาท</span>
-          </div>
-        </div>
+          ))}
       </div>
     );
   };
@@ -168,14 +133,14 @@ const Detail = () => {
 
   useEffect(() => {
     if (isLeft == false) {
-
-
       const accessToken = localStorage.getItem("accessToken");
       const refreshtoken = localStorage.getItem("refreshToken");
       if (accessToken && refreshtoken) {
         console.log("มี Token");
         setTimeout(() => {
-          navigate(`/detailTimer?accessToken=${accessToken}&refreshToken=${refreshtoken}`);
+          navigate(
+            `/detailTimer?accessToken=${accessToken}&refreshToken=${refreshtoken}`
+          );
         }, 400);
       } else {
         console.log("ไม่มี Token");
@@ -183,8 +148,8 @@ const Detail = () => {
       }
     }
   }, [isLeft]);
+
   const rewardScore = () => {
-    /*     console.log("isLeft", isLeft); */
     return (
       <>
         <div className={style["reward-one"]}>
@@ -201,17 +166,27 @@ const Detail = () => {
             <span>
               <img src={Foot_step} className={style["date-icon"]} />
             </span>
-            1500
+            {eventUser && eventUser.walk_step}
           </p>
-          <p className={style["tex-pace"]}>400,000 ก้าว</p>
+          <p className={style["tex-pace"]}>
+            {event_activity && event_activity.walk_step} ก้าว
+          </p>
         </div>
         <div className={style["progress-activity"]}>
           <div
-            className={`${statusProgressBar
-              ? style["progress-bar-active"]
-              : style["progress-bar"]
-              }`}
-            style={{ width: "40%" }}
+            className={`${
+              statusProgressBar
+                ? style["progress-bar-active"]
+                : style["progress-bar"]
+            }`}
+            style={{
+              width: `${
+                ((eventUser && eventUser.walk_step) /
+                  (event_activity && event_activity.walk_step)) *
+                100
+              }%`,
+              maxWidth: "100%",
+            }}
           ></div>
         </div>
         <div className={`${style["mt-bar"]} ${style["justify-between"]}`}>
@@ -219,31 +194,44 @@ const Detail = () => {
             <span>
               <img src={Distance} className={style["date-icon"]} />
             </span>
-            400
+            {eventUser && eventUser.distance}
           </p>
-          <p className={style["tex-pace"]}>1000 กิโลเมตร</p>
+          <p className={style["tex-pace"]}>
+            {" "}
+            {event_activity && event_activity.distance} กิโลเมตร
+          </p>
         </div>
         <div className={style["progress-activity"]}>
           <div
-            className={`${statusProgressBar
-              ? style["progress-bar-active"]
-              : style["progress-bar"]
-              }`}
-            style={{ width: "30%" }}
+            className={`${
+              statusProgressBar
+                ? style["progress-bar-active"]
+                : style["progress-bar"]
+            }`}
+            style={{
+              width: `${
+                ((eventUser && eventUser.distance) /
+                  (event_activity && event_activity.distance)) *
+                100
+              }%`,
+              maxWidth: "100%",
+            }}
           ></div>
         </div>
         <div className={style["box-frame13754"]}>
           <img
             src={Frame13}
-            className={`${style["frame13"]} ${isLeft ? style["left"] : style["right"]
-              }`}
+            className={`${style["frame13"]} ${
+              isLeft ? style["left"] : style["right"]
+            }`}
             style={{ left: `${position}px` }}
             draggable="true"
             onTouchMove={handleTouchMove}
           />
           <p className={style["start-exercising"]}>เริ่มออกกำลังกาย</p>
           {/*           <button onClick={createGoogleAuthLink}>Login</button>
- */}        </div>
+           */}{" "}
+        </div>
       </>
     );
   };
@@ -256,40 +244,46 @@ const Detail = () => {
       </div>
       <div className={style["box-content"]}>
         <p className={style["text-head"]}>
-          วิ่งเก็บระยะทางมาราธอน 10 ชั่วโมง ประจำปี 2566 ขององค์กร ABCDF group{" "}
+          {event_activity && event_activity.event_name}
         </p>
         <p className={`${style["mt--16"]} "details-text-date"`}>
           <span>
             <img src={dateIcon} className="date-icon" />
           </span>
-          1 ธ.ค. - 31 ธ.ค. 2566
+          {formattedDate(
+            event_activity && event_activity.start_date,
+            event_activity && event_activity.end_date
+          )}
         </p>
         <div
-          className={` ${statusManu == "score" ? "btn-manu-active" : "btn-manu"
-            } ${style["mr-9"]}`}
+          className={` ${
+            statusManu == "score" ? "btn-manu-active" : "btn-manu"
+          } ${style["mr-9"]}`}
           onClick={() => setStatusManu("score")}
         >
           คะแนน
         </div>
         <div
-          className={` ${statusManu == "details" ? "btn-manu-active" : "btn-manu"
-            } ${style["mr-9"]}`}
+          className={` ${
+            statusManu == "details" ? "btn-manu-active" : "btn-manu"
+          } ${style["mr-9"]}`}
           onClick={() => setStatusManu("details")}
         >
           รายละเอียด
         </div>
         <div
           onClick={() => setStatusManu("reward")}
-          className={` ${statusManu == "reward" ? "btn-manu-active" : "btn-manu"
-            }`}
+          className={` ${
+            statusManu == "reward" ? "btn-manu-active" : "btn-manu"
+          }`}
         >
           รางวัล
         </div>
         {statusManu == "details"
           ? messageContent()
           : statusManu == "score"
-            ? rewardScore()
-            : rewardActivity()}
+          ? rewardScore()
+          : rewardActivity()}
       </div>
     </>
   );

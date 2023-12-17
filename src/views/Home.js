@@ -96,7 +96,7 @@ const Home = ({ match }) => {
             ? "/detail/" + item.id
             : tickId && tickData
             ? "/detailSucceed/" + item.id
-            : "/start-exercising"
+            : "/start-exercising/" + item.id
         }
         key={indexItem}
       >

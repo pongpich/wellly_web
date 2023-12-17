@@ -54,7 +54,7 @@ const Detail = () => {
 
   const rewardActivity = () => {
     let reward = event_activity && JSON.parse(event_activity.reward);
-    console.log("reward", reward);
+
     return (
       <div className={style["mb-box-reward"]}>
         <div className={style["reward-too-user"]}>

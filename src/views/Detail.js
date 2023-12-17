@@ -33,10 +33,11 @@ const Detail = () => {
 
   useEffect(() => {
     const foundEvent = event && event.find((item) => item.id == id);
-    /*     const foundEventUser =
+    const foundEventUser =
       event_user && event_user.some((item) => item.event_id === id);
- */
+
     setEvent_activity(foundEvent);
+    setEventUser(foundEventUser);
   }, []);
 
   useEffect(() => {
@@ -54,8 +55,6 @@ const Detail = () => {
     let walk_step = 0;
     let distance = 0;
     dispatch(registerEventActivity(id, userId, walk_step, distance));
-
-    /*  */
   };
 
   const messageContent = () => {
@@ -78,7 +77,6 @@ const Detail = () => {
 
   const rewardActivity = () => {
     let reward = event_activity && JSON.parse(event_activity.reward);
-    console.log("reward", reward);
     return (
       <div className={style["mt-box-reward"]}>
         {reward &&
@@ -98,33 +96,6 @@ const Detail = () => {
               </div>
             </div>
           ))}
-
-        {/*   <div className={style["box-reward"]}>
-          <div className={style["reward-img"]}>
-            <img src={Reward2} className={style["img-reward"]} />
-          </div>
-          <div>
-            <div className={style["reward-one"]}>
-              <span className={style["reward-1"]}>รางวัลที่ 2</span>
-              <span className={style["reward-2"]}>2 รางวัล</span>
-            </div>
-            <span className={style["reward-detail"]}>
-              เครื่องเขียนถ่านไฟฉายตากบอ๋บๆ
-            </span>
-          </div>
-        </div>
-        <div className={style["box-reward"]}>
-          <div className={style["reward-img"]}>
-            <img src={Reward3} className={style["img-reward"]} />
-          </div>
-          <div>
-            <div className={style["reward-one"]}>
-              <span className={style["reward-1"]}>รางวัลที่ 3</span>
-              <span className={style["reward-2"]}>3 รางวัล</span>
-            </div>
-            <span className={style["reward-detail"]}>เงินจำนวน 10 บาท</span>
-          </div>
-        </div> */}
       </div>
     );
   };
