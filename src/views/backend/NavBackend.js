@@ -5,6 +5,7 @@ import Logo_web from "../../assets/image/img/Logo_web.png"; // ปรับเ�
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { logout } from "../../redux/auth";
+import { Link } from "react-router-dom";
 
 const NavBackend = () => {
   const dispatch = useDispatch();
@@ -41,7 +42,9 @@ const NavBackend = () => {
 
   return (
     <div className={style["nav-logo"]}>
-      <img src={Logo_web} className={style["img-Logo_web"]} />
+      <Link to="/">
+        <img src={Logo_web} className={style["img-Logo_web"]} />
+      </Link>
       <div className={style["flex-row"]}>
         <span className={style["user-name"]}>{user} </span>
         <div class="dropdown">
