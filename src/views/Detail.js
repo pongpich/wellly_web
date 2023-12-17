@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import NavbarImg from "./layouts/NavbarImg";
 import { useSelector, useDispatch } from "react-redux";
+import { registerEventActivity, clear_status } from "../redux/createEv";
 import { useNavigate } from "react-router-dom";
+import { userId } from "../redux/createEv";
+
 import style from "../assets/css/detail.module.css";
 import Ads from "../assets/image/img/Ads.png";
 import CloseButton from "../assets/image/icon/CloseButton.png";
@@ -13,16 +16,44 @@ import Reward3 from "../assets/image/img/Reward3.png";
 
 const Detail = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { user_id } = useSelector(({ auth }) => (auth ? auth : ""));
+  const { status_event_user } = useSelector(({ createEv }) =>
+    createEv ? createEv : ""
+  );
+
   const [statusManu, setStatusManu] = useState("details");
+  const [userId, setUserId] = useState(user_id);
+
+  const { id } = useParams();
+
+  useEffect(() => {
+    setUserId(user_id);
+  }, [user_id]);
+
+  useEffect(() => {
+    if (status_event_user == "success") {
+      dispatch(clear_status());
+      navigate("/");
+    }
+  }, [status_event_user]);
 
   const register = () => {
-    navigate("/");
+    let walk_step = 0;
+    let distance = 0;
+    dispatch(registerEventActivity(id, userId, walk_step, distance));
+
+    /*  */
   };
+  console.log("id", id);
+  console.log("user_id", userId);
 
   const messageContent = () => {
     return (
       <>
         <p className={style["message-content"]}>
+          <h1>userId: {userId}</h1>
+          <h1>userId: {id}</h1>
           Lorem Ipsum is simply dummy text of the printing and typesetting
           industry. Lorem Ipsum has been the industry's standard dummy text ever
           since the 1500s, when an unknown printer took a galley of type and

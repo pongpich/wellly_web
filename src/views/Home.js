@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { Link, useLocation, useParams, useNavigate } from "react-router-dom";
-import { format, parse } from "date-fns";
-import { th, enUS } from "date-fns/locale"; // Import the Thai locale
 
 import { getEventActivity } from "../redux/get";
 import { userId } from "../redux/auth";
 import { useSelector, useDispatch } from "react-redux";
+import formattedDate from "../components/formatDate";
 
 import style from "../assets/css/home.module.css";
 import History from "../assets/image/icon/History.png";
@@ -21,7 +20,6 @@ const Home = ({ match }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { event } = useSelector(({ get }) => (get ? get : ""));
-  const { user_id } = useSelector(({ auth }) => (auth ? auth : ""));
   const [statusHead, setStatusHead] = useState("ทั้งหมด");
   const [tickData, setTickData] = useState(true);
   const [success, setSuccess] = useState(true);
@@ -65,33 +63,9 @@ const Home = ({ match }) => {
 
     if (accessParams) {
       dispatch(userId(accessParams));
-    } else {
-      /*  dispatch(userId("ไม่มี params")); */
-    }
-    /* console.log(accessParams); // ผลลัพธ์คือ 'tha-0012' */
-  }, []); // ใช้ useEffect โดยให้ dependencies เป็น [] เ
+    } 
 
-  /* console.log("userId", user_id.userId); */
-
-  const formattedDate = (start_date, end_date) => {
-    try {
-      const startDate = parse(start_date, "dd-MM-yyyy", new Date());
-      const endDate = parse(end_date, "dd-MM-yyyy", new Date());
-
-      const formattedStartDate = format(startDate, "d MMM", {
-        locale: th,
-      });
-      const formattedEndDate = format(endDate, "d MMM yyyy", {
-        locale: th,
-      });
-      let date = formattedStartDate + " - " + formattedEndDate;
-      return date;
-    } catch (error) {
-      return "Invalid Date Range";
-    }
-  };
-
-  /*  console.log("user_id", user_id); */
+  }, []); 
   return (
     <>
       <div className={style["navbar-fixed-top"]} />
@@ -160,10 +134,10 @@ const Home = ({ match }) => {
               <>
                 {event_activity &&
                   event_activity.map((item, index) => {
-                    /*    console.log("item, index", item, index);
-                     */
+                    /* console.log("item, index", item.id, index); */
+
                     return (
-                      <Link to="/detail">
+                      <Link to={"/detail/" + item.id}>
                         <div className={style["activity-box-user"]}>
                           {!tickData && (
                             <img src={Tick3x} className={style["img-tick3x"]} />

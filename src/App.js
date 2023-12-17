@@ -61,7 +61,7 @@ const App = () => {
       {/*  frontend */}
       <Route path="/" element={<Home />} />
       <Route path="/all-test" element={<AllTest />} />
-      <Route path="/detail" element={<Detail />} />
+      <Route path="/detail/:id" element={<Detail />} />
       <Route path="/detailRegister" element={<DetailRegister />} />
       <Route path="/detailSucceed" element={<DetailSucceed />} />
       <Route path="/detailTimer" element={<DetailTimer />} />
