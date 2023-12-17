@@ -203,7 +203,6 @@ const INIT_STATE = {
   status_event_activity: "default",
   status_event_user: "default",
   event_activity: null,
-  event_user: null,
 };
 
 export function reducer(state = INIT_STATE, action) {
@@ -233,7 +232,6 @@ export function reducer(state = INIT_STATE, action) {
       return {
         ...state,
         status_event_user: "success",
-        event_user: action.payload,
       };
     case types.REGISTER_EVENT_ACTIVITY_FAIL:
       return {
