@@ -118,7 +118,6 @@ const Home = ({ match }) => {
               <img src={dateIcon} className={style["date-icon"]} />
             </span>
             {formattedDate(item.start_date, item.end_date)}
-            id: {item.id}
           </p>
           {item.id == itemUser.event_id && (
             <>

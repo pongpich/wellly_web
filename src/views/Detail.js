@@ -5,6 +5,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { registerEventActivity, clear_status } from "../redux/createEv";
 import { useNavigate } from "react-router-dom";
 import { userId } from "../redux/createEv";
+import formattedDate from "../components/formatDate";
 
 import style from "../assets/css/detail.module.css";
 import Ads from "../assets/image/img/Ads.png";
@@ -17,6 +18,7 @@ import Reward3 from "../assets/image/img/Reward3.png";
 const Detail = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const { event, event_user } = useSelector(({ get }) => (get ? get : ""));
   const { user_id } = useSelector(({ auth }) => (auth ? auth : ""));
   const { status_event_user } = useSelector(({ createEv }) =>
     createEv ? createEv : ""
@@ -24,8 +26,18 @@ const Detail = () => {
 
   const [statusManu, setStatusManu] = useState("details");
   const [userId, setUserId] = useState(user_id);
+  const [event_activity, setEvent_activity] = useState(null);
+  const [eventUser, setEventUser] = useState(null);
 
   const { id } = useParams();
+
+  useEffect(() => {
+    const foundEvent = event && event.find((item) => item.id == id);
+    /*     const foundEventUser =
+      event_user && event_user.some((item) => item.event_id === id);
+ */
+    setEvent_activity(foundEvent);
+  }, []);
 
   useEffect(() => {
     setUserId(user_id);
@@ -45,52 +57,16 @@ const Detail = () => {
 
     /*  */
   };
-  console.log("id", id);
-  console.log("user_id", userId);
 
   const messageContent = () => {
     return (
       <>
-        <p className={style["message-content"]}>
-          <h1>userId: {userId}</h1>
-          <h1>userId: {id}</h1>
-          Lorem Ipsum is simply dummy text of the printing and typesetting
-          industry. Lorem Ipsum has been the industry's standard dummy text ever
-          since the 1500s, when an unknown printer took a galley of type and
-          scrambled it to make a type specimen book. It has survived not only
-          five centuries, but also the leap into electronic typesetting,
-          remaining essentially unchanged. It was popularised in the 1960s with
-          the release of Letraset sheets containing Lorem Ipsum passages, and
-          more recently with desktop publishing software like Aldus PageMaker
-          including versions of Lorem Ipsum Lorem Ipsum is simply dummy text of
-          the printing and typesetting industry. Lorem Ipsum has been the
-          industry's standard dummy text ever since the 1500s, when an unknown
-          printer took a galley of type and scrambled it to make a type specimen
-          book. It has survived not only five centuries, but also the leap into
-          electronic typesetting, remaining essentially unchanged. It was
-          popularised in the 1960s with the release of Letraset sheets
-          containing Lorem Ipsum passages, and more recently with desktop
-          publishing software like Aldus PageMaker including versions of Lorem
-          Ipsum Lorem Ipsum is simply dummy text of the printing and typesetting
-          industry. Lorem Ipsum has been the industry's standard dummy text ever
-          since the 1500s, when an unknown printer took a galley of type and
-          scrambled it to make a type specimen book. It has survived not only
-          five centuries, but also the leap into electronic typesetting,
-          remaining essentially unchanged. It was popularised in the 1960s with
-          the release of Letraset sheets containing Lorem Ipsum passages, and
-          more recently with desktop publishing software like Aldus PageMaker
-          including versions of Lorem Ipsum Lorem Ipsum is simply dummy text of
-          the printing and typesetting industry. Lorem Ipsum has been the
-          industry's standard dummy text ever since the 1500s, when an unknown
-          printer took a galley of type and scrambled it to make a type specimen
-          book. It has survived not only five centuries, but also the leap into
-          electronic typesetting, remaining essentially unchanged. It was
-          popularised in the 1960s with the release of Letraset sheets
-          containing Lorem Ipsum passages, and more recently with desktop
-          publishing software like Aldus PageMaker including versions of Lorem
-          Ipsum
-        </p>
-
+        <p
+          className={style["message-content"]}
+          dangerouslySetInnerHTML={{
+            __html: event_activity && event_activity.event_detail,
+          }}
+        />
         <div className="box-button">
           <div className="btn-persianBlue" onClick={register}>
             ลงทะเบียน
@@ -101,23 +77,29 @@ const Detail = () => {
   };
 
   const rewardActivity = () => {
+    let reward = event_activity && JSON.parse(event_activity.reward);
+    console.log("reward", reward);
     return (
       <div className={style["mt-box-reward"]}>
-        <div className={style["box-reward"]}>
-          <div className={style["reward-img"]}>
-            <img src={Reward1} className={style["img-reward"]} />
-          </div>
-          <div>
-            <div className={style["reward-one"]}>
-              <span className={style["reward-1"]}>รางวัลที่ 1</span>
-              <span className={style["reward-2"]}>1 รางวัล</span>
+        {reward &&
+          reward.map((item, index) => (
+            <div className={style["box-reward"]} key={index}>
+              <div className={style["reward-img"]}>
+                <img src={item.image} className={style["img-reward"]} />
+              </div>
+              <div className="col-">
+                <div className={style["reward-one"]}>
+                  <div className={style["reward-1"]}>
+                    รางวัลที่ {item.number}
+                  </div>
+                  <div className={style["reward-2"]}>{item.number} รางวัล</div>
+                </div>
+                <div className={style["reward-detail"]}>{item.name}</div>
+              </div>
             </div>
-            <span className={style["reward-detail"]}>
-              เครื่องอบขนมปังลายทหารอากาศจากอิตาลี
-            </span>
-          </div>
-        </div>
-        <div className={style["box-reward"]}>
+          ))}
+
+        {/*   <div className={style["box-reward"]}>
           <div className={style["reward-img"]}>
             <img src={Reward2} className={style["img-reward"]} />
           </div>
@@ -142,7 +124,7 @@ const Detail = () => {
             </div>
             <span className={style["reward-detail"]}>เงินจำนวน 10 บาท</span>
           </div>
-        </div>
+        </div> */}
       </div>
     );
   };
@@ -155,13 +137,16 @@ const Detail = () => {
       </div>
       <div className={style["box-content"]}>
         <p className={style["text-head"]}>
-          วิ่งเก็บระยะทางมาราธอน 10 ชั่วโมง ประจำปี 2566 ขององค์กร ABCDF group{" "}
+          {event_activity && event_activity.event_name}
         </p>
         <p className={`${style["mt--16"]} "details-text-date"`}>
           <span>
             <img src={dateIcon} className="date-icon" />
           </span>
-          1 ม.ค. - 30 ม.ค. 2566
+          {formattedDate(
+            event_activity && event_activity.start_date,
+            event_activity && event_activity.end_date
+          )}
         </p>
         <div
           className={` ${
