@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { Link, useLocation, useParams, useNavigate } from "react-router-dom";
+import { format, parse } from "date-fns";
+import { th, enUS } from "date-fns/locale"; // Import the Thai locale
 
 import { getEventActivity } from "../redux/get";
+import { userId } from "../redux/auth";
 import { useSelector, useDispatch } from "react-redux";
 
 import style from "../assets/css/home.module.css";
@@ -17,12 +20,14 @@ import EmptyState from "../assets/image/icon/EmptyState.png";
 const Home = ({ match }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const { event } = useSelector(({ get }) => (get ? get : ""));
+  const { user_id } = useSelector(({ auth }) => (auth ? auth : ""));
   const [statusHead, setStatusHead] = useState("ทั้งหมด");
   const [tickData, setTickData] = useState(true);
   const [success, setSuccess] = useState(true);
   const [dataState, setDataState] = useState(true);
   const [barVisible, setBarVisible] = useState(false);
-  const [param1, setParam1] = useState(null);
+  const [event_activity, setEvent_activity] = useState(event);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -33,6 +38,14 @@ const Home = ({ match }) => {
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
+
+  useEffect(() => {
+    setEvent_activity(event_activity);
+  }, [event]);
+
+  /*   useEffect(() => {
+    setParam1(userId);
+  }, []); */
 
   const handleReloadClick = () => {
     window.location.reload(false);
@@ -51,19 +64,40 @@ const Home = ({ match }) => {
     const accessParams = query.get("params");
 
     if (accessParams) {
-      setParam1(accessParams);
+      dispatch(userId(accessParams));
     } else {
-      setParam1("ไม่มี params");
+      /*  dispatch(userId("ไม่มี params")); */
     }
-    console.log(accessParams); // ผลลัพธ์คือ 'tha-0012'
+    /* console.log(accessParams); // ผลลัพธ์คือ 'tha-0012' */
   }, []); // ใช้ useEffect โดยให้ dependencies เป็น [] เ
 
+  /* console.log("userId", user_id.userId); */
+
+  const formattedDate = (start_date, end_date) => {
+    try {
+      const startDate = parse(start_date, "dd-MM-yyyy", new Date());
+      const endDate = parse(end_date, "dd-MM-yyyy", new Date());
+
+      const formattedStartDate = format(startDate, "d MMM", {
+        locale: th,
+      });
+      const formattedEndDate = format(endDate, "d MMM yyyy", {
+        locale: th,
+      });
+      let date = formattedStartDate + " - " + formattedEndDate;
+      return date;
+    } catch (error) {
+      return "Invalid Date Range";
+    }
+  };
+
+  /*  console.log("user_id", user_id); */
   return (
     <>
       <div className={style["navbar-fixed-top"]} />
       <div className={style["fixed-top"]}>
         <div className={style["nav-activity"]}>
-          <span className={style["text-activity"]}>กิจกรรม</span>
+          <span className={style["text-activity"]}>กิจกรรม </span>
           <img
             src={History}
             onClick={handleReloadClick}
@@ -122,89 +156,110 @@ const Home = ({ match }) => {
       <div className={style["box-activity"]}>
         {statusHead == "ทั้งหมด" ? (
           <>
-            {dataState ? (
+            {event_activity && event_activity.length > 0 ? (
               <>
-                <Link to="/detail">
-                  <div className={style["activity-box-user"]}>
-                    {!tickData && (
-                      <img src={Tick3x} className={style["img-tick3x"]} />
-                    )}
-                    <div className={style["activity-image"]}>
-                      <img
-                        src={Frame13716}
-                        className={`${style["img-activity"]} ${
-                          !tickData && style["opacity-tick"]
-                        }`}
-                      />
-                    </div>{" "}
-                    <p className={style["details-text"]}>
-                      วิ่งเก็บระยะทางมาราธอน 10 ชั่วโมง ประจำปี 2566 ขององค์กร
-                      ABCDF group 1
-                    </p>
-                    <p className={style["details-text-date"]}>
-                      <span>
-                        <img src={dateIcon} className={style["date-icon"]} />
-                      </span>
-                      1 ม.ค. - 30 ม.ค. 2566
-                    </p>
-                    {success == false && (
-                      <>
-                        <div
-                          className={`${style["success-text"]} ${style["justify-between"]}`}
-                        >
-                          <p className={`${tickData && style["scores-text"]}`}>
+                {event_activity &&
+                  event_activity.map((item, index) => {
+                    /*    console.log("item, index", item, index);
+                     */
+                    return (
+                      <Link to="/detail">
+                        <div className={style["activity-box-user"]}>
+                          {!tickData && (
+                            <img src={Tick3x} className={style["img-tick3x"]} />
+                          )}
+                          <div className={style["activity-image"]}>
+                            <img
+                              src={Frame13716}
+                              className={`${style["img-activity"]} ${
+                                !tickData && style["opacity-tick"]
+                              }`}
+                            />
+                          </div>{" "}
+                          <p className={style["details-text"]}>
+                            {item.event_name}
+                          </p>
+                          <p className={style["details-text-date"]}>
                             <span>
                               <img
-                                src={Foot_step}
+                                src={dateIcon}
                                 className={style["date-icon"]}
                               />
                             </span>
-                            1500
+                            {/*   {formattedStartDate} - {formattedEndDate} */}
+                            {formattedDate(item.start_date, item.end_date)}
+
+                            {/*  1 ม.ค. - 30 ม.ค. 2566 */}
                           </p>
-                          <p>400,000 ก้าว</p>
+                          {success == false && (
+                            <>
+                              <div
+                                className={`${style["success-text"]} ${style["justify-between"]}`}
+                              >
+                                <p
+                                  className={`${
+                                    tickData && style["scores-text"]
+                                  }`}
+                                >
+                                  <span>
+                                    <img
+                                      src={Foot_step}
+                                      className={style["date-icon"]}
+                                    />
+                                  </span>
+                                  1500
+                                </p>
+                                <p>400,000 ก้าว</p>
+                              </div>
+                              <div className={style["progress-activity"]}>
+                                <div
+                                  className={`${
+                                    tickData
+                                      ? style["progress-bar-active"]
+                                      : style["progress-bar"]
+                                  }`}
+                                  style={{ width: "40%" }}
+                                ></div>
+                              </div>
+                              <div
+                                className={`${style["success-text"]} ${style["justify-between"]}`}
+                              >
+                                <p
+                                  className={`${
+                                    tickData && style["scores-text"]
+                                  }`}
+                                >
+                                  <span>
+                                    <img
+                                      src={Foot_step}
+                                      className={style["date-icon"]}
+                                    />
+                                  </span>
+                                  1500
+                                </p>
+                                <p>400,000 ก้าว</p>
+                              </div>
+                              <div className={style["progress-activity"]}>
+                                <div
+                                  className={`${
+                                    tickData
+                                      ? style["progress-bar-active"]
+                                      : style["progress-bar"]
+                                  }`}
+                                  style={{ width: "30%" }}
+                                ></div>
+                              </div>
+                            </>
+                          )}
+                          {!tickData && (
+                            <p className={style["view-scores"]}>ดูผลคะแนน</p>
+                          )}
                         </div>
-                        <div className={style["progress-activity"]}>
-                          <div
-                            className={`${
-                              tickData
-                                ? style["progress-bar-active"]
-                                : style["progress-bar"]
-                            }`}
-                            style={{ width: "40%" }}
-                          ></div>
-                        </div>
-                        <div
-                          className={`${style["success-text"]} ${style["justify-between"]}`}
-                        >
-                          <p className={`${tickData && style["scores-text"]}`}>
-                            <span>
-                              <img
-                                src={Foot_step}
-                                className={style["date-icon"]}
-                              />
-                            </span>
-                            1500
-                          </p>
-                          <p>400,000 ก้าว</p>
-                        </div>
-                        <div className={style["progress-activity"]}>
-                          <div
-                            className={`${
-                              tickData
-                                ? style["progress-bar-active"]
-                                : style["progress-bar"]
-                            }`}
-                            style={{ width: "30%" }}
-                          ></div>
-                        </div>
-                      </>
-                    )}
-                    {!tickData && (
-                      <p className={style["view-scores"]}>ดูผลคะแนน</p>
-                    )}
-                  </div>
-                </Link>
-                <Link to="/all-test">
+                      </Link>
+                    );
+                  })}
+
+                {/*    <Link to="/all-test">
                   <div className={style["activity-box-user"]}>
                     {!tickData && (
                       <img src={Tick3x} className={style["img-tick3x"]} />
@@ -347,7 +402,7 @@ const Home = ({ match }) => {
                       <p className={style["view-scores"]}>ดูผลคะแนน</p>
                     )}
                   </div>
-                </Link>
+                </Link> */}
               </>
             ) : (
               <div>

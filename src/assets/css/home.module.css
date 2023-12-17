@@ -110,14 +110,14 @@
     font-size: 16px;
     font-family: bold;
     color: var(--black);
-    margin: 16px;
+    margin: 16px 16px 0px 16px !important;
 }
 
 .details-text-date {
     font-size: 14px;
     font-family: Regular;
     color: var(--grey1);
-    margin: 0px 16px 0px 16px;
+    margin: 0px 16px 0px 16px !important;
 }
 
 .date-icon {

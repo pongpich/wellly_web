@@ -17,7 +17,7 @@ const getEventActivitySagaAsync = async () => {
     const apiResult = await API.get("wellly", "/getEventActivity", {
       queryStringParameters: {},
     });
-    console.log("get_event_activity apiResult", apiResult);
+    /* console.log("get_event_activity apiResult", apiResult); */
     return apiResult;
   } catch (error) {
     return { error, messsage: error.message };
@@ -27,7 +27,7 @@ const getEventActivitySagaAsync = async () => {
 function* getEventActivitySaga({}) {
   try {
     const apiResult = yield call(getEventActivitySagaAsync);
-    console.log("apiResult", apiResult);
+    /*  console.log("apiResult", apiResult); */
     yield put({
       type: types.GET_EVENT_ACTIVITY_SUCCESS,
       payload: apiResult.results.eventActivity,

@@ -10,6 +10,7 @@ export const types = {
   LOGIN_ADMIN_FAIL: "LOGIN_ADMIN_FAIL",
   LOGOUT: "LOGOUT",
   CLEAR_STATUS: "CLEAR_STATUS",
+  USER_ID_SUCCESS: "USER_ID_SUCCESS",
 };
 
 export const login_admin = (email, password) => ({
@@ -20,9 +21,15 @@ export const login_admin = (email, password) => ({
   },
 });
 
-
 export const clear_status = () => ({
   type: types.CLEAR_STATUS,
+});
+
+export const userId = (userId) => ({
+  type: types.USER_ID_SUCCESS,
+  payload: {
+    userId,
+  },
 });
 
 export const logout = () => ({
@@ -50,9 +57,7 @@ export function* mySaga() {
 }
 
 export function* saga() {
-  yield all([
-    fork(watchLoginAdmin),
-  ]);
+  yield all([fork(watchLoginAdmin)]);
 }
 
 const loginAdminSagaAsync = async (email, password) => {
@@ -68,7 +73,6 @@ const loginAdminSagaAsync = async (email, password) => {
     return { error, messsage: error.message };
   }
 };
-
 
 function* loginAdminSaga({ payload }) {
   const { email, password } = payload;
@@ -103,6 +107,7 @@ const INIT_STATE = {
   // Initial state properties
   statusLoginAdmin: "default",
   user: null,
+  user_id: null,
 };
 
 export function reducer(state = INIT_STATE, action) {
@@ -127,6 +132,11 @@ export function reducer(state = INIT_STATE, action) {
       return {
         ...state,
         statusLoginAdmin: "default",
+      };
+    case types.USER_ID_SUCCESS:
+      return {
+        ...state,
+        user_id: action.payload.userId,
       };
     case types.LOGOUT:
       return INIT_STATE;
