@@ -411,3 +411,8 @@
     display: flex;
     justify-content: center;
 }
+
+.icon-delete {
+    width: 24px;
+    height: 24px;
+}

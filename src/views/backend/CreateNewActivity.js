@@ -16,6 +16,7 @@ import Group7728 from "../../assets/image/icon/Upload.png"; // ปรับเ�
 import Col1 from "../../assets/image/icon/Col1.png"; // ปรับเปลี่ยนที่อยู่ของไฟล์รูปภาพปฏิทิน
 import Col2 from "../../assets/image/icon/Col2.png"; // ปรับเปลี่ยนที่อยู่ของไฟล์รูปภาพปฏิทิน
 import Col3 from "../../assets/image/icon/Col3.png"; // ปรับเปลี่ยนที่อยู่ของไฟล์รูปภาพปฏิทิน
+import Delete from "../../assets/image/icon/Delete.png"; // ปรับเปลี่ยนที่อยู่ของไฟล์รูปภาพปฏิทิน
 import Logo_web from "../../assets/image/img/Logo_web.png"; // ปรับเปลี่ยนที่อยู่ของไฟล์รูปภาพปฏิทิน
 import { useNavigate } from "react-router-dom";
 import NavBackend from "./NavBackend";
@@ -27,7 +28,7 @@ const CreateNewActivity = () => {
   const { status_event_activity } = useSelector(({ createEv }) =>
     createEv ? createEv : ""
   );
-  const [statusCreateActivity, setStatusCreateActivity] = useState("activity"); //activity = กิจกรรม, criteria = เกณฑ์ ,Rewards = ของรางวัล,badge = ตราสัญลักษณ์
+  const [statusCreateActivity, setStatusCreateActivity] = useState("rewards"); //activity = กิจกรรม, criteria = เกณฑ์ ,Rewards = ของรางวัล,badge = ตราสัญลักษณ์
 
   const [language, setLanguage] = useState("th");
   const [rewardsNumber, setRewardsNumber] = useState(1);
@@ -57,6 +58,8 @@ const CreateNewActivity = () => {
   //   ส่วนเก็บข้อมูล   Rewards รางวัล
   const [rewards, setRewards] = useState([
     { number: 1, name: "", image: "", quantity: "" },
+    { number: 2, name: "", image: "", quantity: "" },
+    { number: 3, name: "", image: "", quantity: "" },
   ]);
 
   // error  ส่วนเก็บข้อมูล    Rewards รางวัล
@@ -261,6 +264,11 @@ const CreateNewActivity = () => {
     });
   };
 
+  const clickDelete = () => {
+
+    setRewards(rewards.slice(0, -1));
+  };
+
   useEffect(() => {
     setStatusEventActivity(status_event_activity);
   }, [status_event_activity]);
@@ -276,6 +284,8 @@ const CreateNewActivity = () => {
       setStatusFail(true);
     } */
   }, [statusEventActivity]);
+
+
 
   const createActivity = () => {
     const selectedLocale = language === "th" ? th : enUS;
@@ -568,8 +578,20 @@ const CreateNewActivity = () => {
               rewards.map((reward) => {
                 return (
                   <div key={reward.number} className={style["box-upload"]}>
-                    <div className={style["rewards-number"]}>
-                      รางวัลที่ {reward.number}
+                    <div
+                      className={`${style["rewards-number"]} ${style["flex-between"]}`}
+                    >
+                      รางวัลที่ {reward.number}{" "}
+                      {reward.number > 2 && (
+                        <span>
+                          <img
+                            src={Delete}
+                            alt="calendar"
+                            className={style["icon-delete"]}
+                            onClick={clickDelete}
+                          />
+                        </span>
+                      )}
                     </div>
                     <div className="row">
                       <div className="col-4">
