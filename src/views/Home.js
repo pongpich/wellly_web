@@ -82,7 +82,13 @@ const Home = ({ match }) => {
     }
   }, []);
 
-  const renderActivityDetails = (item, itemUser, tickData, tickId) => {
+  const renderActivityDetails = (
+    item,
+    itemUser,
+    tickData,
+    tickId,
+    indexItem
+  ) => {
     return (
       <Link
         to={
@@ -92,6 +98,7 @@ const Home = ({ match }) => {
             ? "/detailSucceed/" + item.id
             : "/start-exercising"
         }
+        key={indexItem}
       >
         <div className={style["activity-box-user"]}>
           {tickId && !tickId && (
@@ -249,13 +256,19 @@ const Home = ({ match }) => {
                     return (
                       eventUser &&
                       eventUser.map((itemUser, indexItem) => {
+                        const formattedDate = parse(
+                          item.end_date,
+                          "dd-MM-yyyy",
+                          new Date()
+                        );
                         const tickId = item.id == itemUser.event_id;
-                        const tickData = dateNow > new Date(item.created_at);
+                        const tickData = dateNow > new Date(formattedDate);
                         return renderActivityDetails(
                           item,
                           itemUser,
                           tickData,
-                          tickId
+                          tickId,
+                          indexItem
                         );
                       })
                     );
@@ -277,14 +290,21 @@ const Home = ({ match }) => {
                     return (
                       eventUser &&
                       eventUser.map((itemUser, indexItem) => {
+                        const formattedDate = parse(
+                          item.end_date,
+                          "dd-MM-yyyy",
+                          new Date()
+                        );
+
                         const tickId = item.id == itemUser.event_id;
-                        const tickData = dateNow > new Date(item.created_at);
+                        const tickData = dateNow > new Date(formattedDate);
                         if (tickId) {
                           return renderActivityDetails(
                             item,
                             itemUser,
                             tickData,
-                            tickId
+                            tickId,
+                            indexItem
                           );
                         }
                       })
