@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import NavbarImg from "./layouts/NavbarImg";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import formattedDate from "../components/formatDate";
 import style from "../assets/css/detail.module.css";
+
 import Ads from "../assets/image/img/Ads.png";
 import CloseButton from "../assets/image/icon/CloseButton.png";
 import dateIcon from "../assets/image/icon/schedule.png";
@@ -14,7 +16,18 @@ import Group13719 from "../assets/image/icon/Group13719.png";
 
 const Detail = () => {
   const navigate = useNavigate();
+  const { event, event_user } = useSelector(({ get }) => (get ? get : ""));
+  const [event_activity, setEvent_activity] = useState(null);
+  const { id } = useParams();
   const [statusManu, setStatusManu] = useState("reward");
+
+  useEffect(() => {
+    const foundEvent = event && event.find((item) => item.id == id);
+    /*     const foundEventUser =
+      event_user && event_user.some((item) => item.event_id === id);
+ */
+    setEvent_activity(foundEvent);
+  }, []);
 
   const register = () => {
     navigate("/");
@@ -23,54 +36,25 @@ const Detail = () => {
   const messageContent = () => {
     return (
       <>
-        <p className={style["message-content"]}>
-          Lorem Ipsum is simply dummy text of the printing and typesetting
-          industry. Lorem Ipsum has been the industry's standard dummy text ever
-          since the 1500s, when an unknown printer took a galley of type and
-          scrambled it to make a type specimen book. It has survived not only
-          five centuries, but also the leap into electronic typesetting,
-          remaining essentially unchanged. It was popularised in the 1960s with
-          the release of Letraset sheets containing Lorem Ipsum passages, and
-          more recently with desktop publishing software like Aldus PageMaker
-          including versions of Lorem Ipsum Lorem Ipsum is simply dummy text of
-          the printing and typesetting industry. Lorem Ipsum has been the
-          industry's standard dummy text ever since the 1500s, when an unknown
-          printer took a galley of type and scrambled it to make a type specimen
-          book. It has survived not only five centuries, but also the leap into
-          electronic typesetting, remaining essentially unchanged. It was
-          popularised in the 1960s with the release of Letraset sheets
-          containing Lorem Ipsum passages, and more recently with desktop
-          publishing software like Aldus PageMaker including versions of Lorem
-          Ipsum Lorem Ipsum is simply dummy text of the printing and typesetting
-          industry. Lorem Ipsum has been the industry's standard dummy text ever
-          since the 1500s, when an unknown printer took a galley of type and
-          scrambled it to make a type specimen book. It has survived not only
-          five centuries, but also the leap into electronic typesetting,
-          remaining essentially unchanged. It was popularised in the 1960s with
-          the release of Letraset sheets containing Lorem Ipsum passages, and
-          more recently with desktop publishing software like Aldus PageMaker
-          including versions of Lorem Ipsum Lorem Ipsum is simply dummy text of
-          the printing and typesetting industry. Lorem Ipsum has been the
-          industry's standard dummy text ever since the 1500s, when an unknown
-          printer took a galley of type and scrambled it to make a type specimen
-          book. It has survived not only five centuries, but also the leap into
-          electronic typesetting, remaining essentially unchanged. It was
-          popularised in the 1960s with the release of Letraset sheets
-          containing Lorem Ipsum passages, and more recently with desktop
-          publishing software like Aldus PageMaker including versions of Lorem
-          Ipsum
-        </p>
+        <p
+          className={style["message-content"]}
+          dangerouslySetInnerHTML={{
+            __html: event_activity && event_activity.event_detail,
+          }}
+        />
 
-        <div className="box-button">
+        {/*  <div className="box-button">
           <div className="btn-persianBlue" onClick={register}>
             ลงทะเบียน
           </div>
-        </div>
+        </div> */}
       </>
     );
   };
 
   const rewardActivity = () => {
+    let reward = event_activity && JSON.parse(event_activity.reward);
+    console.log("reward", reward);
     return (
       <div className={style["mb-box-reward"]}>
         <div className={style["reward-too-user"]}>
@@ -81,24 +65,27 @@ const Detail = () => {
             </Link>
           </p>
         </div>
+        {reward &&
+          reward.map((item, index) => (
+            <div className={style["box-reward-succeed"]} key={index}>
+              <div className={style["reward-too"]}>
+                <span className={style["reward-1"]}>
+                  รางวัลที่ {item.number}
+                </span>
+                <span className={style["reward-2"]}>{item.number} รางวัล</span>
+              </div>
+              <p className={style["reward-detail-2"]}>{item.name}</p>
+              <img src={item.image} className={style["img-reward-succeed"]} />
+              <p className={style["tec"]}>
+                <span>
+                  <img src={Group13719} className={style["img-right"]} />
+                </span>
+                Borpitbull Tec.
+              </p>
+            </div>
+          ))}
 
-        <div className={style["box-reward-succeed"]}>
-          <div className={style["reward-too"]}>
-            <span className={style["reward-1"]}>รางวัลที่ 1</span>
-            <span className={style["reward-2"]}>1 รางวัล</span>
-          </div>
-          <p className={style["reward-detail-2"]}>
-            เครื่องอบขนมปังลายทหารอากาศจากอิตาลี
-          </p>
-          <img src={Reward1} className={style["img-reward-succeed"]} />
-          <p className={style["tec"]}>
-            <span>
-              <img src={Group13719} className={style["img-right"]} />
-            </span>
-            Borpitbull Tec.
-          </p>
-        </div>
-        <div className={style["box-reward-succeed"]}>
+        {/*     <div className={style["box-reward-succeed"]}>
           <div className={style["reward-too"]}>
             <span className={style["reward-1"]}>รางวัลที่ 2</span>
             <span className={style["reward-2"]}>1 รางวัล</span>
@@ -113,7 +100,7 @@ const Detail = () => {
             </span>
             Borpitbull Tec.
           </p>
-        </div>
+        </div> */}
       </div>
     );
   };
@@ -126,13 +113,16 @@ const Detail = () => {
       </div>
       <div className={style["box-content"]}>
         <p className={style["text-head"]}>
-          วิ่งเก็บระยะทางมาราธอน 10 ชั่วโมง ประจำปี 2566 ขององค์กร ABCDF group{" "}
+          {event_activity && event_activity.event_name}
         </p>
         <p className={`${style["mt--16"]} "details-text-date"`}>
           <span>
             <img src={dateIcon} className="date-icon" />
           </span>
-          1 ม.ค. - 30 ม.ค. 2566
+          {formattedDate(
+            event_activity && event_activity.start_date,
+            event_activity && event_activity.end_date
+          )}
         </p>
         <div
           className={` ${
