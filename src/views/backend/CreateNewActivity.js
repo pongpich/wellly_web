@@ -44,8 +44,8 @@ const CreateNewActivity = () => {
   const [eventDetail, setEventDetail] = useState(""); //รายละเอียด กิจกรรม
   const [startDate, setStartDate] = useState(null); //ระยะเวลาการแสดงผล start
   const [endDate, setEndDate] = useState(null); //ระยะเวลาการแสดงผล end
-  const [startDateActivity, setStartDateActivity] = useState(null); //ระยะเวลากิจกรรม start
-  const [endDateActivity, setEndDateActivity] = useState(null); //ระยะเวลากิจกรรม * end
+  const [startDateShow, setStartDateShow] = useState(null); //ระยะเวลากิจกรรม start
+  const [endDateShow, setEndDateShow] = useState(null); //ระยะเวลากิจกรรม * end
 
   //   ส่วนเก็บข้อมูล   เกณฑ์  activityType
 
@@ -151,7 +151,7 @@ const CreateNewActivity = () => {
 
   const handleStartDateChange = (date, event) => {
     if (event == "activity") {
-      setStartDateActivity(date);
+      setStartDateShow(date);
     } else {
       setStartDate(date);
     }
@@ -159,7 +159,7 @@ const CreateNewActivity = () => {
 
   const handleEndDateChange = (date, event) => {
     if (event == "activity") {
-      setEndDateActivity(date);
+      setEndDateShow(date);
     } else {
       setEndDate(date);
     }
@@ -217,8 +217,8 @@ const CreateNewActivity = () => {
           eventDetail,
           format(startDate, "dd-MM-yyyy"),
           format(endDate, "dd-MM-yyyy"),
-          format(startDateActivity, "dd-MM-yyyy"),
-          format(endDateActivity, "dd-MM-yyyy"),
+          format(startDateShow, "dd-MM-yyyy"),
+          format(endDateShow, "dd-MM-yyyy"),
           criteria_distance,
           distance,
           criteria_walk_step,
@@ -243,8 +243,8 @@ const CreateNewActivity = () => {
       setEventDetail("");
       setStartDate(null);
       setEndDate(null);
-      setStartDateActivity(null);
-      setEndDateActivity(null);
+      setStartDateShow(null);
+      setEndDateShow(null);
     } else if (event == "criteria") {
       setCriteria_distance(false);
       setDistance("");
@@ -345,11 +345,11 @@ const CreateNewActivity = () => {
               <div className={style["flex-row"]}>
                 <div className={style["date-picker"]}>
                   <DatePicker
-                    selected={startDateActivity}
+                    selected={startDateShow}
                     onChange={(date) => handleStartDateChange(date, "activity")}
                     selectsStart
-                    startDate={startDateActivity}
-                    endDate={endDateActivity}
+                    startDate={startDateShow}
+                    endDate={endDateShow}
                     placeholderText="เริ่มต้น"
                     dateFormat="dd MMMM yyyy" // กำหนดรูปแบบวันที่ที่แสดงใน input
                     dateFormatCalendar="dd MMMM yyyy" // กำหนดรูปแบบวันที่ที่แสดงในปฏิทิน
@@ -364,12 +364,12 @@ const CreateNewActivity = () => {
                 </div>
                 <div className={`${"ml-3"} ${style["date-picker"]}`}>
                   <DatePicker
-                    selected={endDateActivity}
+                    selected={endDateShow}
                     onChange={(date) => handleEndDateChange(date, "activity")}
                     selectsEnd
-                    startDate={startDateActivity}
-                    endDate={endDateActivity}
-                    minDate={startDateActivity}
+                    startDate={startDateShow}
+                    endDate={endDateShow}
+                    minDate={startDateShow}
                     placeholderText="สิ้นสุด"
                     dateFormat="dd MMMM yyyy" // กำหนดรูปแบบวันที่ที่แสดงใน input
                     dateFormatCalendar="dd MMMM yyyy" // กำหนดรูปแบบวันที่ที่แสดงในปฏิทิน
@@ -426,8 +426,8 @@ const CreateNewActivity = () => {
               eventDetail != "" &&
               startDate != null &&
               endDate != null &&
-              startDateActivity != null &&
-              endDateActivity != null
+              startDateShow != null &&
+              endDateShow != null
                 ? style["btn-next-active"]
                 : style["btn-next"]
             }
@@ -436,8 +436,8 @@ const CreateNewActivity = () => {
               eventDetail != "" &&
               startDate != null &&
               endDate != null &&
-              startDateActivity != null &&
-              endDateActivity != null
+              startDateShow != null &&
+              endDateShow != null
                 ? () => handleEventChange("activity")
                 : null
             }
