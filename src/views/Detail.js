@@ -41,7 +41,7 @@ const Detail = () => {
   const register = () => {
     let walk_step = 0;
     let distance = 0;
-    dispatch(registerEventActivity(id, "th_003", walk_step, distance));
+    dispatch(registerEventActivity(id, userId, walk_step, distance));
 
     /*  */
   };

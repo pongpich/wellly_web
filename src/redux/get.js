@@ -15,7 +15,7 @@ export const getEventActivity = () => ({
   type: types.GET_EVENT_ACTIVITY,
 });
 export const getEventUser = (user_id) => ({
-  type: types.GET_EVENT_ACTIVITY,
+  type: types.GET_EVENT_USER,
   payload: {
     user_id,
   },
@@ -26,7 +26,7 @@ const getEventUserSagaAsync = async (user_id) => {
     const apiResult = await API.get("wellly", "/get_event_user", {
       queryStringParameters: { user_id },
     });
-    /* console.log("get_event_activity apiResult", apiResult); */
+    /*  console.log("get_event_User apiResult", apiResult); */
     return apiResult;
   } catch (error) {
     return { error, messsage: error.message };
@@ -60,7 +60,7 @@ function* getEventUserSaga({ payload }) {
   const { user_id } = payload;
   try {
     const apiResult = yield call(getEventUserSagaAsync, user_id);
-    /*  console.log("apiResult", apiResult); */
+    /* console.log("apiResult", apiResult); */
     yield put({
       type: types.GET_EVENT_USER_SUCCESS,
       payload: apiResult.results.event_user,
@@ -87,6 +87,8 @@ export function* saga() {
 const INIT_STATE = {
   status_event: "default",
   event: null,
+  status_event_user: "default",
+  event_user: null,
 };
 
 export function reducer(state = INIT_STATE, action) {

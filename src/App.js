@@ -14,7 +14,7 @@ import {
 
 import Home from "../src/views/Home";
 import Detail from "../src/views/Detail";
-import DetailRegister from "../src/views/DetailRegister";
+import StartExercising from "./views/StartExercising";
 import DetailTimer from "../src/views/DetailTimer";
 import DetailSucceed from "../src/views/DetailSucceed";
 import GoogleAuth from "../src/views/GoogleAuth";
@@ -62,8 +62,8 @@ const App = () => {
       <Route path="/" element={<Home />} />
       <Route path="/all-test" element={<AllTest />} />
       <Route path="/detail/:id" element={<Detail />} />
-      <Route path="/detailRegister" element={<DetailRegister />} />
-      <Route path="/detailSucceed" element={<DetailSucceed />} />
+      <Route path="/start-exercising" element={<StartExercising />} />
+      <Route path="/detailSucceed/:id" element={<DetailSucceed />} />
       <Route path="/detailTimer" element={<DetailTimer />} />
       <Route path="/scoreboard" element={<Scoreboard />} />
       <Route path="/scoreboardSucceed" element={<ScoreboardSucceed />} />
