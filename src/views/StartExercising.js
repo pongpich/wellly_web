@@ -5,6 +5,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import style from "../assets/css/detail.module.css";
 import formattedDate from "../components/formatDate";
+import { getEventActivity, getEventUser } from "../redux/get";
 
 import Ads from "../assets/image/img/Ads.png";
 import CloseButton from "../assets/image/icon/CloseButton.png";
@@ -18,6 +19,7 @@ import Frame13 from "../assets/image/icon/Frame13754.png";
 
 const Detail = () => {
   const navigate = useNavigate();
+  const { user_id } = useSelector(({ auth }) => (auth ? auth : ""));
   const { event, event_user } = useSelector(({ get }) => (get ? get : ""));
   const [statusManu, setStatusManu] = useState("score");
   const [statusProgressBar, setStatusProgressBar] = useState(true);
@@ -35,6 +37,18 @@ const Detail = () => {
 
     setEvent_activity(foundEvent);
     setEventUser(foundEventUser);
+  }, []);
+
+  useEffect(() => {
+    const foundEventUser =
+      event_user && event_user.find((item) => item.event_id === id);
+    setEventUser(foundEventUser);
+  }, [event_user]);
+
+  useEffect(() => {
+    /*  dispatch(getEventUser(user_id)); */ //สำหรับใช้งานจริงผ่านมือถือ
+
+    dispatch(getEventUser("tha-0012")); // สำหรับเทส เเค่ตัวเว็บ
   }, []);
 
   const createGoogleAuthLink = async () => {

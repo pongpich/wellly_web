@@ -63,11 +63,11 @@ const Home = ({ match }) => {
   }, []);
 
   useEffect(() => {
-    /*  if (user_id) {
-      dispatch(getEventUser(user_id));
-    } */
-    dispatch(getEventUser("tha-0012"));
+    /*  dispatch(getEventUser(user_id)); */ //สำหรับใช้งานจริงผ่านมือถือ
+
+    dispatch(getEventUser("tha-0012")); // สำหรับเทส เเค่ตัวเว็บ
   }, []);
+
 
   // Extract the query string from the URL
   const params1 = "tha-0012";
@@ -266,8 +266,6 @@ const Home = ({ match }) => {
                     "dd-MM-yyyy",
                     new Date()
                   );
-
-                  
 
                   const foundItemUser =
                     eventUser &&
