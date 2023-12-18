@@ -220,7 +220,7 @@ const EventActivity = () => {
             return {
                 ...obj
                 , actTimeThai: datatodate(obj.start_date) + ' - ' + datatodate(obj.end_date)
-                , showTimeThai: datatodate(obj.start_date_activity) + ' - ' + datatodate(obj.end_date_activity)
+                , showTimeThai: datatodate(obj.start_date_show) + ' - ' + datatodate(obj.end_date_show)
                 , createformat: datatodate(((obj.created_at).split('T')[0]).split("-").reverse().join("-")) + ' - ' + ((obj.created_at).split('T')[1]).split(":", 2).join(":") + ' น.'
                 , updateformat: datatodate(((obj.updated_at).split('T')[0]).split("-").reverse().join("-")) + ' - ' + ((obj.updated_at).split('T')[1]).split(":", 2).join(":") + ' น.'
             };
@@ -300,11 +300,14 @@ const EventActivity = () => {
                             <div>
 
                                 <input
-                                    type="email"
-                                    // class="form-control"
+                                    type="text"
+                                    class="form-control"
                                     id="exampleFormControlInput1"
                                     className={style["input-name"]}
+                                    // onChange={(e) => setAfterfotmat(e.target.value)}
+
                                 />
+                              
                             </div>
                             <div>
 
@@ -372,7 +375,7 @@ const EventActivity = () => {
                                     // className={style["calendar"]}
                                     onClick={handleClick}
                                 />
-                               
+
                             </div>
                         </div>
                     </div>
