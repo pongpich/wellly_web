@@ -18,6 +18,7 @@ import Distance from "../assets/image/icon/Distance.png";
 import Frame13 from "../assets/image/icon/Frame13754.png";
 
 const Detail = () => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const { user_id } = useSelector(({ auth }) => (auth ? auth : ""));
   const { event, event_user } = useSelector(({ get }) => (get ? get : ""));
