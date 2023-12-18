@@ -267,6 +267,8 @@ const Home = ({ match }) => {
                     new Date()
                   );
 
+                  
+
                   const foundItemUser =
                     eventUser &&
                     eventUser.find(
@@ -281,7 +283,7 @@ const Home = ({ match }) => {
                       item,
                       foundItemUser,
                       dateNow > new Date(formattedDate),
-                      item.id === foundItemUser.event_id,
+                      item.id == foundItemUser.event_id,
                       index
                     )
                   );
