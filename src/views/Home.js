@@ -84,11 +84,6 @@ const Home = ({ match }) => {
   const renderActivityDetails = (item, tickData, itemUser, indexItem) => {
     let tickId =
       eventUser && eventUser.some((user) => user.event_id == item.id);
-    let tickDistance = itemUser && itemUser.distance > item && item.distance;
-    let tickWalk_step = itemUser && itemUser.walk_step > item && item.walk_step;
-    console.log("tickDistance", tickDistance);
-
-    console.log("tickData", tickData);
 
     return (
       <Link
@@ -324,28 +319,20 @@ const Home = ({ match }) => {
                     "dd-MM-yyyy",
                     new Date()
                   );
-
+                  const tickData = dateNow > new Date(formattedEndDate);
                   const foundItemUser =
                     eventUser &&
                     eventUser.find(
                       (itemUser) =>
                         dateNow >= formattedStartDateShow &&
                         dateNow <= formattedEndDateShow &&
-                        item.id == itemUser &&
-                        itemUser &&
-                        itemUser.event_id
+                        item.id == itemUser.event_id
                     );
 
-                  /*  return (
+                  return (
                     foundItemUser &&
-                    renderActivityDetails(
-                      item,
-                      foundItemUser,
-                      dateNow > new Date(formattedEndDate),
-                      item.id === founditemUser && itemUser && itemUser.event_id,
-                      index
-                    )
-                  ); */
+                    renderActivityDetails(item, tickData, foundItemUser, index)
+                  );
                 })}
               </>
             ) : (
