@@ -82,39 +82,34 @@ const Home = ({ match }) => {
   }, []);
 
   const renderActivityDetails = (item, tickData, itemUser, indexItem) => {
-    let tickId = item.id == itemUser && itemUser && itemUser.event_id;
-    /*  const foundItemUser =
-    eventUser &&
-    eventUser.find(
-      (itemUser) =>
-        dateNow >= formattedStartDateShow &&
-        dateNow <= formattedEndDateShow &&
-        item.id == itemUser &&
-        itemUser && itemUser.event_id
-    ); */
+    let tickId =
+      eventUser && eventUser.some((user) => user.event_id == item.id);
+    let tickDistance = itemUser && itemUser.distance > item && item.distance;
+    let tickWalk_step = itemUser && itemUser.walk_step > item && item.walk_step;
+    console.log("tickDistance", tickDistance);
 
     console.log("tickData", tickData);
 
     return (
       <Link
         to={
-          !tickId
-            ? "/detail/" + item.id
-            : tickId && tickData
+          tickData
             ? "/detailSucceed/" + item.id
-            : "/start-exercising/" + item.id
+            : tickId
+            ? "/start-exercising/" + item.id
+            : "/detail/" + item.id
         }
         key={indexItem}
       >
         <div className={style["activity-box-user"]}>
-          {tickId && !tickId && (
+          {tickId && tickData && (
             <img src={Tick3x} className={style["img-tick3x"]} />
           )}
           <div className={style["activity-image"]}>
             <img
               src={Frame13716}
               className={`${style["img-activity"]} ${
-                tickId && !tickId && style["opacity-tick"]
+                tickId && tickData && style["opacity-tick"]
               }`}
             />
           </div>
@@ -127,7 +122,7 @@ const Home = ({ match }) => {
             </span>
             {formattedDate(item.start_date, item.end_date)}
           </p>
-          {item.id == itemUser && itemUser && itemUser.event_id && (
+          {tickId && (
             <>
               <div
                 className={`${style["success-text"]} ${style["justify-between"]}`}
@@ -162,7 +157,7 @@ const Home = ({ match }) => {
               <div
                 className={`${style["success-text"]} ${style["justify-between"]}`}
               >
-                <p className={`${style["scores-text"]}`}>
+                <p className={!tickData && `${style["scores-text"]}`}>
                   <span>
                     <img src={Foot_step} className={style["date-icon"]} />
                   </span>
@@ -176,7 +171,7 @@ const Home = ({ match }) => {
               <div className={style["progress-activity"]}>
                 <div
                   className={`${
-                    tickData
+                    !tickData
                       ? style["progress-bar-active"]
                       : style["progress-bar"]
                   }`}
@@ -192,9 +187,7 @@ const Home = ({ match }) => {
               </div>
             </>
           )}
-          {tickId && tickData && (
-            <p className={style["view-scores"]}>ดูผลคะแนน</p>
-          )}
+          {tickData && <p className={style["view-scores"]}>ดูผลคะแนน</p>}
         </div>
       </Link>
     );
@@ -266,39 +259,6 @@ const Home = ({ match }) => {
           <>
             {event_activity && event_activity.length > 0 ? (
               <>
-                {/* {event_activity &&
-                  event_activity.map((item, index) => {
-                    return (
-                      eventUser &&
-                      eventUser.map((itemUser, indexItem) => {
-                        const formattedDate = parse(
-                          item.end_date,
-                          "dd-MM-yyyy",
-                          new Date()
-                        );
-                        const formattedStartDateShow = parse(
-                          item.start_date_show,
-                          "dd-MM-yyyy",
-                          new Date()
-                        );
-                        const formattedEndDateShow = parse(
-                          item.end_date_show,
-                          "dd-MM-yyyy",
-                          new Date()
-                        );
-                        const tickId = item.id == itemUser && itemUser && itemUser.event_id;
-                        const tickData = dateNow > new Date(formattedDate);
-
-                        return renderActivityDetails(
-                          item,
-                          itemUser,
-                          tickData,
-                          tickId,
-                          indexItem
-                        );
-                      })
-                    );
-                  })} */}
                 {event_activity &&
                   event_activity.map((item, index) => {
                     const formattedEndDate = parse(
@@ -316,7 +276,11 @@ const Home = ({ match }) => {
                       "dd-MM-yyyy",
                       new Date()
                     );
-
+                    const foundItemUser =
+                      eventUser &&
+                      eventUser.find(
+                        (itemUser) => item.id == itemUser.event_id
+                      );
                     const tickData = dateNow > new Date(formattedEndDate);
                     const isDateInRange =
                       dateNow >= formattedStartDateShow &&
@@ -324,7 +288,12 @@ const Home = ({ match }) => {
 
                     return (
                       isDateInRange &&
-                      renderActivityDetails(item, tickData, eventUser, index)
+                      renderActivityDetails(
+                        item,
+                        tickData,
+                        foundItemUser,
+                        index
+                      )
                     );
                   })}
               </>
