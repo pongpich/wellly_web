@@ -65,7 +65,7 @@ const App = () => {
       <Route path="/start-exercising/:id" element={<StartExercising />} />
       <Route path="/detailSucceed/:id" element={<DetailSucceed />} />
       <Route path="/detailTimer" element={<DetailTimer />} />
-      <Route path="/scoreboard" element={<Scoreboard />} />
+      <Route path="/scoreboard/:id" element={<Scoreboard />} />
       <Route path="/scoreboardSucceed" element={<ScoreboardSucceed />} />
       <Route path="/googleAuth" element={<GoogleAuth />} />
 

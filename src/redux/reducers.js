@@ -10,6 +10,7 @@ import { reducer as auth } from "./auth";
 import { reducer as createEv } from "./createEv";
 import { reducer as get } from "./get";
 import { reducer as update } from "./update";
+import { reducer as activity } from "./activity";
 
 const persistConfig = {
   key: "root",
@@ -23,6 +24,7 @@ const reducers = combineReducers({
   createEv,
   get,
   update,
+  activity
 });
 
 const persistedReducer = persistReducer(persistConfig, reducers);

@@ -5,7 +5,7 @@ import { saga as authSagas } from "./auth";
 import { saga as createEvSagas } from "./createEv";
 import { saga as getSagas } from "./get";
 import { saga as updateSagas } from "./update";
-
+import { saga as activitySagas } from "./activity";
 export default function* rootSaga(getState) {
   yield all([
     //ของ Bebe Stay Fit
@@ -13,5 +13,6 @@ export default function* rootSaga(getState) {
     createEvSagas(),
     getSagas(),
     updateSagas(),
+    activitySagas()
   ]);
 }
