@@ -65,7 +65,7 @@ const Home = ({ match }) => {
   useEffect(() => {
     //dispatch(getEventUser(user_id));//สำหรับใช้งานจริงผ่านมือถือ
 
-    dispatch(getEventUser("tha-0012")); // สำหรับเทส เเค่ตัวเว็บ
+    dispatch(getEventUser("f64621ce-85f6-4e83-9aa2-63f746d88ec8")); // สำหรับเทส เเค่ตัวเว็บ
   }, []);
 
   // Extract the query string from the URL

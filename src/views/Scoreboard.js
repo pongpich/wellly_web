@@ -26,7 +26,7 @@ const Scoreboard = () => {
 
 
   console.log(activityUsers);
- 
+
   return (
     <div className={style["box-head"]}>
       <NavbarScoreboard path="/detailRegister" />
@@ -47,7 +47,10 @@ const Scoreboard = () => {
                   }`}
               >
                 <p className={style["list-id"]}>{index + 1}</p>
-                <div className={style["box-list-name"]}>{item.display_name[0].toUpperCase()}</div>
+                {item.display_name != null &&
+                  <div className={style["box-list-name"]}>{item.display_name[0].toUpperCase()}</div>
+                }
+
 
                 <p className={style["list-name"]}>{item.display_name}</p>
 
@@ -55,7 +58,7 @@ const Scoreboard = () => {
                 <p className={style["list-score"]}>{item.distance}</p>
               </div>
             ))}
-         
+
         </div>
       </div>
     </div>
