@@ -82,7 +82,7 @@ const Home = ({ match }) => {
   }, []);
 
   const renderActivityDetails = (item, tickData, itemUser, indexItem) => {
-    let tickId = item.id == itemUser && itemUser.event_id;
+    let tickId = item.id == itemUser && itemUser && itemUser.event_id;
     /*  const foundItemUser =
     eventUser &&
     eventUser.find(
@@ -90,7 +90,7 @@ const Home = ({ match }) => {
         dateNow >= formattedStartDateShow &&
         dateNow <= formattedEndDateShow &&
         item.id == itemUser &&
-        itemUser.event_id
+        itemUser && itemUser.event_id
     ); */
 
     console.log("tickData", tickData);
@@ -127,7 +127,7 @@ const Home = ({ match }) => {
             </span>
             {formattedDate(item.start_date, item.end_date)}
           </p>
-          {item.id == itemUser && itemUser.event_id && (
+          {item.id == itemUser && itemUser && itemUser.event_id && (
             <>
               <div
                 className={`${style["success-text"]} ${style["justify-between"]}`}
@@ -136,7 +136,7 @@ const Home = ({ match }) => {
                   <span>
                     <img src={Foot_step} className={style["date-icon"]} />
                   </span>
-                  {itemUser && itemUser.walk_step}
+                  {itemUser && itemUser && itemUser.walk_step}
                 </p>
                 <p>
                   {new Intl.NumberFormat("en-US").format(item.walk_step)} ก้าว
@@ -151,7 +151,9 @@ const Home = ({ match }) => {
                   }`}
                   style={{
                     width: `${
-                      (itemUser && itemUser.walk_step / item.walk_step) * 100
+                      (itemUser &&
+                        itemUser &&
+                        itemUser.walk_step / item.walk_step) * 100
                     }%`,
                     maxWidth: "100%",
                   }}
@@ -164,7 +166,7 @@ const Home = ({ match }) => {
                   <span>
                     <img src={Foot_step} className={style["date-icon"]} />
                   </span>
-                  {itemUser && itemUser.distance}
+                  {itemUser && itemUser && itemUser.distance}
                 </p>
                 <p>
                   {new Intl.NumberFormat("en-US").format(item.distance)}{" "}
@@ -180,7 +182,9 @@ const Home = ({ match }) => {
                   }`}
                   style={{
                     width: `${
-                      (itemUser && itemUser.distance / item.distance) * 100
+                      (itemUser &&
+                        itemUser &&
+                        itemUser.distance / item.distance) * 100
                     }%`,
                     maxWidth: "100%",
                   }}
@@ -282,7 +286,7 @@ const Home = ({ match }) => {
                           "dd-MM-yyyy",
                           new Date()
                         );
-                        const tickId = item.id == itemUser && itemUser.event_id;
+                        const tickId = item.id == itemUser && itemUser && itemUser.event_id;
                         const tickData = dateNow > new Date(formattedDate);
 
                         return renderActivityDetails(
@@ -313,7 +317,6 @@ const Home = ({ match }) => {
                       new Date()
                     );
 
-                    const tickId = item.id == itemUser && itemUser.event_id;
                     const tickData = dateNow > new Date(formattedEndDate);
                     const isDateInRange =
                       dateNow >= formattedStartDateShow &&
@@ -360,6 +363,7 @@ const Home = ({ match }) => {
                         dateNow >= formattedStartDateShow &&
                         dateNow <= formattedEndDateShow &&
                         item.id == itemUser &&
+                        itemUser &&
                         itemUser.event_id
                     );
 
@@ -369,7 +373,7 @@ const Home = ({ match }) => {
                       item,
                       foundItemUser,
                       dateNow > new Date(formattedEndDate),
-                      item.id === founditemUser && itemUser.event_id,
+                      item.id === founditemUser && itemUser && itemUser.event_id,
                       index
                     )
                   ); */
