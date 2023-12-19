@@ -19,10 +19,10 @@ export const updateWalkStep = (user_id, event_id, walk_step) => ({
     },
 });
 
-export const updateDistance = (user_id, event_id, distance) => ({
+export const updateDistance = (user_id, event_id, distance, distance_goal) => ({
     type: types.UPDATE_DISTANCE,
     payload: {
-        user_id, event_id, distance
+        user_id, event_id, distance, distance_goal
     },
 });
 
@@ -45,11 +45,11 @@ const updateWalkStepSagaAsync = async (user_id, event_id, walk_step) => {
     }
 };
 
-const updateDistanceSagaAsync = async (user_id, event_id, distance) => {
+const updateDistanceSagaAsync = async (user_id, event_id, distance, distance_goal) => {
     try {
         const apiResult = await API.put("wellly", "/update_distance", {
             body: {
-                user_id, event_id, distance
+                user_id, event_id, distance, distance_goal
             },
         });
         return apiResult;
@@ -75,10 +75,10 @@ function* updateWalkStepSaga({ payload }) {
 }
 
 function* updateDistanceSaga({ payload }) {
-    const { user_id, event_id, distance } = payload;
+    const { user_id, event_id, distance, distance_goal } = payload;
 
     try {
-        const apiResult = yield call(updateDistanceSagaAsync, user_id, event_id, distance);
+        const apiResult = yield call(updateDistanceSagaAsync, user_id, event_id, distance, distance_goal);
 
         if (apiResult.results.message === "success") {
             yield put({

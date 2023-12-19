@@ -131,6 +131,8 @@ const DetailTimer = () => {
     const selected_event_id = localStorage.getItem("selected_event_id");
     const selected_event_start_date = localStorage.getItem("selected_event_start_date");
     const selected_event_end_date = localStorage.getItem("selected_event_end_date");
+    const walk_step_goal = localStorage.getItem("walk_step_goal");
+    const distance_goal = localStorage.getItem("distance_goal");
     const dateParts1 = selected_event_start_date.split('-'); // แยกส่วนของวันที่
     const dateParts2 = selected_event_end_date.split('-'); // แยกส่วนของวันที่
     const startEvent = new Date(`${dateParts1[2]}-${dateParts1[1]}-${dateParts1[0]}`).getTime();
@@ -145,8 +147,8 @@ const DetailTimer = () => {
       totalSteps = dataTotalSteps.bucket[0].dataset[0].point[0].value[0].intVal;
     }
 
-    dispatch(updateWalkStep(user_id, selected_event_id, totalSteps));
-    dispatch(updateDistance(user_id, selected_event_id, distance));
+    dispatch(updateWalkStep(user_id, selected_event_id, (totalSteps > walk_step_goal) ? walk_step_goal : totalSteps));
+    dispatch(updateDistance(user_id, selected_event_id, distance, distance_goal));
     navigate("/detailRegister");
   };
 

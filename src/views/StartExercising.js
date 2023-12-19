@@ -39,7 +39,6 @@ const Detail = () => {
     setEvent_activity(foundEvent);
     setEventUser(foundEventUser);
 
-    console.log("event_activity :", event_activity);
   }, []);
 
   useEffect(() => {
@@ -53,7 +52,11 @@ const Detail = () => {
     if (event_activity) {
       localStorage.setItem("selected_event_start_date", event_activity.start_date);
       localStorage.setItem("selected_event_end_date", event_activity.end_date);
+      localStorage.setItem("walk_step_goal", event_activity.walk_step);
+      localStorage.setItem("distance_goal", event_activity.distance);
     }
+    console.log("event_activity :", event_activity);
+
   }, [event_activity]);
 
   useEffect(() => {
@@ -61,6 +64,8 @@ const Detail = () => {
     if (eventUser) {
       localStorage.setItem("selected_event_id", eventUser.event_id);
     }
+    console.log("eventUser :", eventUser);
+
   }, [eventUser]);
 
   useEffect(() => {
