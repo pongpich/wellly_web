@@ -21,7 +21,7 @@ const Detail = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { user_id } = useSelector(({ auth }) => (auth ? auth : ""));
-  const { event, event_user } = useSelector(({ get }) => (get ? get : ""));
+  const { event, event_user, status_event_user } = useSelector(({ get }) => (get ? get : ""));
   const [statusManu, setStatusManu] = useState("score");
   const [statusProgressBar, setStatusProgressBar] = useState(true);
   const [isLeft, setIsLeft] = useState(true);
@@ -38,16 +38,33 @@ const Detail = () => {
 
     setEvent_activity(foundEvent);
     setEventUser(foundEventUser);
+
+    console.log("event_activity :", event_activity);
   }, []);
 
   useEffect(() => {
     const foundEventUser =
       event_user && event_user.find((item) => item.event_id === id);
     setEventUser(foundEventUser);
+
   }, [event_user]);
 
   useEffect(() => {
-    /*  dispatch(getEventUser(user_id)); */ //สำหรับใช้งานจริงผ่านมือถือ
+    if (event_activity) {
+      localStorage.setItem("selected_event_start_date", event_activity.start_date);
+      localStorage.setItem("selected_event_end_date", event_activity.end_date);
+    }
+  }, [event_activity]);
+
+  useEffect(() => {
+
+    if (eventUser) {
+      localStorage.setItem("selected_event_id", eventUser.event_id);
+    }
+  }, [eventUser]);
+
+  useEffect(() => {
+    //dispatch(getEventUser(user_id)); //สำหรับใช้งานจริงผ่านมือถือ
 
     dispatch(getEventUser("tha-0012")); // สำหรับเทส เเค่ตัวเว็บ
   }, []);
@@ -189,17 +206,15 @@ const Detail = () => {
         </div>
         <div className={style["progress-activity"]}>
           <div
-            className={`${
-              statusProgressBar
-                ? style["progress-bar-active"]
-                : style["progress-bar"]
-            }`}
+            className={`${statusProgressBar
+              ? style["progress-bar-active"]
+              : style["progress-bar"]
+              }`}
             style={{
-              width: `${
-                ((eventUser && eventUser.walk_step) /
-                  (event_activity && event_activity.walk_step)) *
+              width: `${((eventUser && eventUser.walk_step) /
+                (event_activity && event_activity.walk_step)) *
                 100
-              }%`,
+                }%`,
               maxWidth: "100%",
             }}
           ></div>
@@ -218,17 +233,15 @@ const Detail = () => {
         </div>
         <div className={style["progress-activity"]}>
           <div
-            className={`${
-              statusProgressBar
-                ? style["progress-bar-active"]
-                : style["progress-bar"]
-            }`}
+            className={`${statusProgressBar
+              ? style["progress-bar-active"]
+              : style["progress-bar"]
+              }`}
             style={{
-              width: `${
-                ((eventUser && eventUser.distance) /
-                  (event_activity && event_activity.distance)) *
+              width: `${((eventUser && eventUser.distance) /
+                (event_activity && event_activity.distance)) *
                 100
-              }%`,
+                }%`,
               maxWidth: "100%",
             }}
           ></div>
@@ -236,9 +249,8 @@ const Detail = () => {
         <div className={style["box-frame13754"]}>
           <img
             src={Frame13}
-            className={`${style["frame13"]} ${
-              isLeft ? style["left"] : style["right"]
-            }`}
+            className={`${style["frame13"]} ${isLeft ? style["left"] : style["right"]
+              }`}
             style={{ left: `${position}px` }}
             draggable="true"
             onTouchMove={handleTouchMove}
@@ -271,34 +283,31 @@ const Detail = () => {
           )}
         </p>
         <div
-          className={` ${
-            statusManu == "score" ? "btn-manu-active" : "btn-manu"
-          } ${style["mr-9"]}`}
+          className={` ${statusManu == "score" ? "btn-manu-active" : "btn-manu"
+            } ${style["mr-9"]}`}
           onClick={() => setStatusManu("score")}
         >
           คะแนน
         </div>
         <div
-          className={` ${
-            statusManu == "details" ? "btn-manu-active" : "btn-manu"
-          } ${style["mr-9"]}`}
+          className={` ${statusManu == "details" ? "btn-manu-active" : "btn-manu"
+            } ${style["mr-9"]}`}
           onClick={() => setStatusManu("details")}
         >
           รายละเอียด
         </div>
         <div
           onClick={() => setStatusManu("reward")}
-          className={` ${
-            statusManu == "reward" ? "btn-manu-active" : "btn-manu"
-          }`}
+          className={` ${statusManu == "reward" ? "btn-manu-active" : "btn-manu"
+            }`}
         >
           รางวัล
         </div>
         {statusManu == "details"
           ? messageContent()
           : statusManu == "score"
-          ? rewardScore()
-          : rewardActivity()}
+            ? rewardScore()
+            : rewardActivity()}
       </div>
     </>
   );
