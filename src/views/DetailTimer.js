@@ -6,19 +6,26 @@ import stop from "../assets/image/icon/stop.png";
 import Contextual from "../assets/image/icon/Contextual.png";
 import { getMyGoogleFit } from '../fitnessApi';
 import { checkLocalToken } from '../tokens';
+import { updateDistance, updateWalkStep } from '../redux/update';
+import { useSelector, useDispatch } from "react-redux";
+
 
 const DetailTimer = () => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const [statusAbandon, setStatusAbandon] = useState(0);
   const [totalSeconds, setTotalSeconds] = useState(0);
   const [isRunning, setIsRunning] = useState(true);
   const [steps, setSteps] = useState(0);
+  const [totalSteps, setTotalSteps] = useState(0);
   const [distance, setDistance] = useState(0);
   const [positions, setPositions] = useState([]);
   const [tracking, setTracking] = useState(false);
   const [watchId, setWatchId] = useState(null)
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [timeStampStartPage, setTimeStampStartPage] = useState(Date.now());
+  const statusUpdateWalkStep = useSelector(({ update }) => (update ? update.statusUpdateWalkStep : ""));
+  const statusUpdateDistance = useSelector(({ update }) => (update ? update.statusUpdateDistance : ""));
 
 
   useEffect(() => {
@@ -121,15 +128,27 @@ const DetailTimer = () => {
     return a ? distance : 0; //เช็คค่า a ก่อน เพราะเวลาไม่มีข้อมูล lat, lon aจะมีค่าเป็น NaN 
   };
 
-  const clickFinish = () => {
+  const clickFinish = async () => {
+    const user_id = "tha-0012";
+    const event_id = "46";
+    const startEvent = new Date("December 10, 2023 00:00:00").getTime();
+
+    const dataTotalSteps = await getMyGoogleFit(startEvent, Date.now()); //ดึงข้อมูลจำนวนก้าวทั้งหมดในช่วงระยะเวลา event
+    let totalSteps = 0;
+    if ((dataTotalSteps.bucket.length === 0) || (dataTotalSteps.bucket[0].dataset[0].point.length === 0)) {
+      //ไม่มีข้อมูลจำนวนก้าว
+    } else {
+      //มีข้อมูลจำนวนก้าว
+      totalSteps = dataTotalSteps.bucket[0].dataset[0].point[0].value[0].intVal;
+    }
+
+    dispatch(updateWalkStep(user_id, event_id, totalSteps));
+    dispatch(updateDistance(user_id, event_id, distance));
     navigate("/detailRegister");
   };
 
   const callGetMyGoogleFit = async () => {
-    /*   const startDate = new Date("December 12, 2023 00:00:00").getTime();
-      const endDate = new Date("December 13, 2023 00:00:00").getTime(); */
-
-    const data = await getMyGoogleFit(timeStampStartPage, Date.now());
+    const data = await getMyGoogleFit(timeStampStartPage, Date.now()); //ดึงข้อมูลจำนวนก้าวในช่วงเวลาที่จับ
     checkStepsData(data);
   }
 
