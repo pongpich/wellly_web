@@ -68,7 +68,6 @@ const Home = ({ match }) => {
     dispatch(getEventUser("tha-0012")); // สำหรับเทส เเค่ตัวเว็บ
   }, []);
 
-
   // Extract the query string from the URL
   const params1 = "tha-0012";
   useEffect(() => {
@@ -82,13 +81,20 @@ const Home = ({ match }) => {
     }
   }, []);
 
-  const renderActivityDetails = (
-    item,
-    itemUser,
-    tickData,
-    tickId,
-    indexItem
-  ) => {
+  const renderActivityDetails = (item, tickData, itemUser, indexItem) => {
+    let tickId = item.id == itemUser && itemUser.event_id;
+    /*  const foundItemUser =
+    eventUser &&
+    eventUser.find(
+      (itemUser) =>
+        dateNow >= formattedStartDateShow &&
+        dateNow <= formattedEndDateShow &&
+        item.id == itemUser &&
+        itemUser.event_id
+    ); */
+
+    console.log("tickData", tickData);
+
     return (
       <Link
         to={
@@ -112,14 +118,16 @@ const Home = ({ match }) => {
               }`}
             />
           </div>
-          <p className={style["details-text"]}>{item.event_name}</p>
+          <p className={style["details-text"]}>
+            {item.event_name} {item.id}
+          </p>
           <p className={style["details-text-date"]}>
             <span>
               <img src={dateIcon} className={style["date-icon"]} />
             </span>
             {formattedDate(item.start_date, item.end_date)}
           </p>
-          {item.id == itemUser.event_id && (
+          {item.id == itemUser && itemUser.event_id && (
             <>
               <div
                 className={`${style["success-text"]} ${style["justify-between"]}`}
@@ -128,7 +136,7 @@ const Home = ({ match }) => {
                   <span>
                     <img src={Foot_step} className={style["date-icon"]} />
                   </span>
-                  {itemUser.walk_step}
+                  {itemUser && itemUser.walk_step}
                 </p>
                 <p>
                   {new Intl.NumberFormat("en-US").format(item.walk_step)} ก้าว
@@ -142,7 +150,9 @@ const Home = ({ match }) => {
                       : style["progress-bar"]
                   }`}
                   style={{
-                    width: `${(itemUser.walk_step / item.walk_step) * 100}%`,
+                    width: `${
+                      (itemUser && itemUser.walk_step / item.walk_step) * 100
+                    }%`,
                     maxWidth: "100%",
                   }}
                 ></div>
@@ -150,11 +160,11 @@ const Home = ({ match }) => {
               <div
                 className={`${style["success-text"]} ${style["justify-between"]}`}
               >
-                <p className={`${!tickData && style["scores-text"]}`}>
+                <p className={`${style["scores-text"]}`}>
                   <span>
                     <img src={Foot_step} className={style["date-icon"]} />
                   </span>
-                  {itemUser.distance}
+                  {itemUser && itemUser.distance}
                 </p>
                 <p>
                   {new Intl.NumberFormat("en-US").format(item.distance)}{" "}
@@ -164,12 +174,14 @@ const Home = ({ match }) => {
               <div className={style["progress-activity"]}>
                 <div
                   className={`${
-                    !tickData
+                    tickData
                       ? style["progress-bar-active"]
                       : style["progress-bar"]
                   }`}
                   style={{
-                    width: `${(itemUser.distance / item.distance) * 100}%`,
+                    width: `${
+                      (itemUser && itemUser.distance / item.distance) * 100
+                    }%`,
                     maxWidth: "100%",
                   }}
                 ></div>
@@ -250,42 +262,68 @@ const Home = ({ match }) => {
           <>
             {event_activity && event_activity.length > 0 ? (
               <>
-                {event_activity.map((item, index) => {
-                  const formattedDate = parse(
-                    item.end_date,
-                    "dd-MM-yyyy",
-                    new Date()
-                  );
-                  const formattedStartDateShow = parse(
-                    item.start_date_show,
-                    "dd-MM-yyyy",
-                    new Date()
-                  );
-                  const formattedEndDateShow = parse(
-                    item.end_date_show,
-                    "dd-MM-yyyy",
-                    new Date()
-                  );
+                {/* {event_activity &&
+                  event_activity.map((item, index) => {
+                    return (
+                      eventUser &&
+                      eventUser.map((itemUser, indexItem) => {
+                        const formattedDate = parse(
+                          item.end_date,
+                          "dd-MM-yyyy",
+                          new Date()
+                        );
+                        const formattedStartDateShow = parse(
+                          item.start_date_show,
+                          "dd-MM-yyyy",
+                          new Date()
+                        );
+                        const formattedEndDateShow = parse(
+                          item.end_date_show,
+                          "dd-MM-yyyy",
+                          new Date()
+                        );
+                        const tickId = item.id == itemUser && itemUser.event_id;
+                        const tickData = dateNow > new Date(formattedDate);
 
-                  const foundItemUser =
-                    eventUser &&
-                    eventUser.find(
-                      (itemUser) =>
-                        dateNow >= formattedStartDateShow &&
-                        dateNow <= formattedEndDateShow
+                        return renderActivityDetails(
+                          item,
+                          itemUser,
+                          tickData,
+                          tickId,
+                          indexItem
+                        );
+                      })
+                    );
+                  })} */}
+                {event_activity &&
+                  event_activity.map((item, index) => {
+                    const formattedEndDate = parse(
+                      item.end_date,
+                      "dd-MM-yyyy",
+                      new Date()
+                    );
+                    const formattedStartDateShow = parse(
+                      item.start_date_show,
+                      "dd-MM-yyyy",
+                      new Date()
+                    );
+                    const formattedEndDateShow = parse(
+                      item.end_date_show,
+                      "dd-MM-yyyy",
+                      new Date()
                     );
 
-                  return (
-                    foundItemUser &&
-                    renderActivityDetails(
-                      item,
-                      foundItemUser,
-                      dateNow > new Date(formattedDate),
-                      item.id == foundItemUser.event_id,
-                      index
-                    )
-                  );
-                })}
+                    const tickId = item.id == itemUser && itemUser.event_id;
+                    const tickData = dateNow > new Date(formattedEndDate);
+                    const isDateInRange =
+                      dateNow >= formattedStartDateShow &&
+                      dateNow <= formattedEndDateShow;
+
+                    return (
+                      isDateInRange &&
+                      renderActivityDetails(item, tickData, eventUser, index)
+                    );
+                  })}
               </>
             ) : (
               <div>
@@ -299,7 +337,7 @@ const Home = ({ match }) => {
             {event_activity && event_activity.length > 0 ? (
               <>
                 {event_activity.map((item, index) => {
-                  const formattedDate = parse(
+                  const formattedEndDate = parse(
                     item.end_date,
                     "dd-MM-yyyy",
                     new Date()
@@ -321,19 +359,20 @@ const Home = ({ match }) => {
                       (itemUser) =>
                         dateNow >= formattedStartDateShow &&
                         dateNow <= formattedEndDateShow &&
-                        item.id == itemUser.event_id
+                        item.id == itemUser &&
+                        itemUser.event_id
                     );
 
-                  return (
+                  /*  return (
                     foundItemUser &&
                     renderActivityDetails(
                       item,
                       foundItemUser,
-                      dateNow > new Date(formattedDate),
-                      item.id === foundItemUser.event_id,
+                      dateNow > new Date(formattedEndDate),
+                      item.id === founditemUser && itemUser.event_id,
                       index
                     )
-                  );
+                  ); */
                 })}
               </>
             ) : (
