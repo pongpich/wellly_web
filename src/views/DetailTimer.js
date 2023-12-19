@@ -17,7 +17,6 @@ const DetailTimer = () => {
   const [totalSeconds, setTotalSeconds] = useState(0);
   const [isRunning, setIsRunning] = useState(true);
   const [steps, setSteps] = useState(0);
-  const [totalSteps, setTotalSteps] = useState(0);
   const [distance, setDistance] = useState(0);
   const [positions, setPositions] = useState([]);
   const [tracking, setTracking] = useState(false);
@@ -26,7 +25,7 @@ const DetailTimer = () => {
   const [timeStampStartPage, setTimeStampStartPage] = useState(Date.now());
   const statusUpdateWalkStep = useSelector(({ update }) => (update ? update.statusUpdateWalkStep : ""));
   const statusUpdateDistance = useSelector(({ update }) => (update ? update.statusUpdateDistance : ""));
-
+  const { user_id } = useSelector(({ auth }) => (auth ? auth : ""));
 
   useEffect(() => {
     if (!checkLocalToken()) {
@@ -129,11 +128,17 @@ const DetailTimer = () => {
   };
 
   const clickFinish = async () => {
-    const user_id = "tha-0012";
-    const event_id = "46";
-    const startEvent = new Date("December 10, 2023 00:00:00").getTime();
+    const selected_event_id = localStorage.getItem("selected_event_id");
+    const selected_event_start_date = localStorage.getItem("selected_event_start_date");
+    const selected_event_end_date = localStorage.getItem("selected_event_end_date");
+    const walk_step_goal = localStorage.getItem("walk_step_goal");
+    const distance_goal = localStorage.getItem("distance_goal");
+    const dateParts1 = selected_event_start_date.split('-'); // แยกส่วนของวันที่
+    const dateParts2 = selected_event_end_date.split('-'); // แยกส่วนของวันที่
+    const startEvent = new Date(`${dateParts1[2]}-${dateParts1[1]}-${dateParts1[0]}`).getTime();
+    const endEvent = new Date(`${dateParts2[2]}-${dateParts2[1]}-${dateParts2[0]}`).getTime();
 
-    const dataTotalSteps = await getMyGoogleFit(startEvent, Date.now()); //ดึงข้อมูลจำนวนก้าวทั้งหมดในช่วงระยะเวลา event
+    const dataTotalSteps = await getMyGoogleFit(startEvent, endEvent); //ดึงข้อมูลจำนวนก้าวทั้งหมดในช่วงระยะเวลา event
     let totalSteps = 0;
     if ((dataTotalSteps.bucket.length === 0) || (dataTotalSteps.bucket[0].dataset[0].point.length === 0)) {
       //ไม่มีข้อมูลจำนวนก้าว
@@ -142,8 +147,8 @@ const DetailTimer = () => {
       totalSteps = dataTotalSteps.bucket[0].dataset[0].point[0].value[0].intVal;
     }
 
-    dispatch(updateWalkStep(user_id, event_id, totalSteps));
-    dispatch(updateDistance(user_id, event_id, distance));
+    dispatch(updateWalkStep(user_id, selected_event_id, (totalSteps > walk_step_goal) ? walk_step_goal : totalSteps));
+    dispatch(updateDistance(user_id, selected_event_id, distance, distance_goal));
     navigate("/detailRegister");
   };
 
