@@ -60,7 +60,7 @@ const Detail = () => {
         <div className={style["reward-too-user"]}>
           <p className={` ${style["reward-tee"]} `}>
             <span className={style["reward-user"]}>ผู้ได้รับรางวัล</span>
-            <Link to="/scoreboardSucceed">
+            <Link to={"/scoreboard/" + id}>
               <span className={style["reward-scoreboard"]}>ตารางคะแนน</span>
             </Link>
           </p>
