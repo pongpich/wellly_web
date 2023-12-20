@@ -319,6 +319,9 @@ const EventActivity = () => {
   }
 
   const handelSearch = (e) => {
+    setSelectStatusActive("All");
+    setStartDate(null);
+    setEndDate(null);
     const filteredEvents =
       activityData &&
       activityData.filter((item) => item.event_name.toLowerCase().includes(e));
