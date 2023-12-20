@@ -393,6 +393,8 @@ const EventActivity = () => {
   const handleClickClear = () => {
     setSelectStatusActive("All");
     setActivity(event);
+    setStartDate(null);
+    setEndDate(null);
   };
   /* 
   console.log("dateNew", dateNew); */
