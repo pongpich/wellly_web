@@ -182,6 +182,7 @@ const EventActivity = () => {
   const dispatch = useDispatch();
   const { event } = useSelector(({ get }) => (get ? get : ""));
   const [activity, setActivity] = useState(event);
+  const [activityData, setActivityData] = useState(event);
   // const { event } = useSelector(({ get }) => (get ? get : ""));
   const [afterformate, setAfterfotmat] = useState([]);
 
@@ -253,6 +254,10 @@ const EventActivity = () => {
     setActivity(event);
     newFotomatData();
   }, [event]);
+  useEffect(() => {
+    setActivityData(event);
+    newFotomatData();
+  }, [event]);
 
   useEffect(() => {
     newFotomatData();
@@ -314,10 +319,9 @@ const EventActivity = () => {
   }
 
   const handelSearch = (e) => {
-    const filteredEvents = activity.filter((item) =>
-      item.event_name.toLowerCase().includes(e)
-    );
-    console.log("filteredEvents", filteredEvents);
+    const filteredEvents =
+      activityData &&
+      activityData.filter((item) => item.event_name.toLowerCase().includes(e));
     if (filteredEvents.length > 0) {
       setActivity(filteredEvents);
     }
@@ -327,59 +331,65 @@ const EventActivity = () => {
   };
 
   const handelSearchDate = () => {
-    handleClickClear();
-    const filteredEvents = activity.filter((item) => {
-      const startDateInRange =
-        parse(item.start_date, "dd-MM-yyyy", new Date()) >= startDate;
-      const endDateInRange =
-        parse(item.end_date, "dd-MM-yyyy", new Date()) <= endDate;
-
-      return startDateInRange && endDateInRange;
-    });
-    // Check if filteredEvents has items
-    if (filteredEvents.length > 0) {
-      setActivity(filteredEvents);
-    } else {
-      // Do something when there are no matching events
-      console.log("No matching events found.");
-    }
-  };
-
-  useEffect(() => {
-  
-    if (selectStatusActive == "Active") {
-      const filteredEvents = activity.filter((item) => {
+    setSelectStatusActive("All");
+    const filteredEvents =
+      activityData &&
+      activityData.filter((item) => {
         const startDateInRange =
-          dateNew >= parse(item.start_date, "dd-MM-yyyy", new Date());
+          parse(item.start_date, "dd-MM-yyyy", new Date()) >= startDate;
         const endDateInRange =
-          dateNew <= parse(item.end_date, "dd-MM-yyyy", new Date());
+          parse(item.end_date, "dd-MM-yyyy", new Date()) <= endDate;
 
         return startDateInRange && endDateInRange;
       });
+    // Check if filteredEvents has items
+    if (filteredEvents.length > 0) {
+      setActivity(filteredEvents);
+    }
+  };
+
+  const handelSelectStatus = (e) => {
+    setStartDate(null);
+    setEndDate(null);
+    setSelectStatusActive(e);
+    if (e == "Active") {
+      const filteredEvents =
+        activityData &&
+        activityData.filter((item) => {
+          const startDateInRange =
+            dateNew >= parse(item.start_date, "dd-MM-yyyy", new Date());
+          const endDateInRange =
+            dateNew <= parse(item.end_date, "dd-MM-yyyy", new Date());
+
+          return startDateInRange && endDateInRange;
+        });
 
       // Check if filteredEvents has items
       if (filteredEvents.length > 0) {
         setActivity(filteredEvents);
       }
-    } else if (selectStatusActive == "Waiting") {
-      const filteredEvents = activity.filter((item) => {
-        const dateIsBeforeStart =
-          dateNew < parse(item.start_date, "dd-MM-yyyy", new Date());
-        const dateIsAfterEnd =
-          dateNew > parse(item.end_date, "dd-MM-yyyy", new Date());
-        return dateIsBeforeStart || dateIsAfterEnd;
-      });
+    } else if (e == "Waiting") {
+      const filteredEvents =
+        activityData &&
+        activityData.filter((item) => {
+          const startDateInRange =
+            dateNew < parse(item.start_date, "dd-MM-yyyy", new Date());
+          const endDateInRange =
+            dateNew > parse(item.end_date, "dd-MM-yyyy", new Date());
+
+          return startDateInRange || endDateInRange;
+        });
       if (filteredEvents.length > 0) {
         setActivity(filteredEvents);
       }
+    } else {
+      setActivity(event);
     }
-  }, [selectStatusActive]);
+  };
 
   const handleClickClear = () => {
     setSelectStatusActive("All");
     setActivity(event);
-    setStartDate(null);
-    setEndDate(null);
   };
   /* 
   console.log("dateNew", dateNew); */
@@ -404,7 +414,7 @@ const EventActivity = () => {
                   id="cars"
                   name="cars"
                   value={selectStatusActive}
-                  onChange={(e) => setSelectStatusActive(e.target.value)}
+                  onChange={(e) => handelSelectStatus(e.target.value)}
                   className={style["input-status"]}
                 >
                   <option value="All">ทั้งหมด</option>
