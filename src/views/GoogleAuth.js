@@ -64,9 +64,11 @@ function GoogleAuth() {
             {!isLoggedIn ? (
                 <div>
                     <button onClick={createGoogleAuthLink}>Login</button>
-                    <Link to={"https://wellly.planforfit.com/privacy_policy.html"}>
+                    <br/><br/>
+                    <a href="https://wellly.planforfit.com/privacy_policy.html">Privacy Link</a>
+                    {/* <Link to={"https://wellly.planforfit.com/privacy_policy.html"}>
                         <p>Privacy Link</p>
-                    </Link>
+                    </Link> */}
                 </div>
             ) : (
                 <>
