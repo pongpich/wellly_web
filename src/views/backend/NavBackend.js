@@ -38,6 +38,7 @@ const NavBackend = () => {
     setUser(null);
     dispatch(logout());
     navigate("/login");
+    
   };
 
   return (

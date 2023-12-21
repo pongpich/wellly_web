@@ -13,6 +13,7 @@ import { s3Upload } from "../../helpers/awsLib";
 
 import calendarIcon from "../../assets/image/icon/Calendar.png"; // ปรับเปลี่ยนที่อยู่ของไฟล์รูปภาพปฏิทิน
 import Group7728 from "../../assets/image/icon/Upload.png"; // ปรับเปลี่ยนที่อยู่ของไฟล์รูปภาพปฏิทิน
+import UploadHead from "../../assets/image/icon/UploadHead.png"; // image Head
 import Col1 from "../../assets/image/icon/Col1.png"; // ปรับเปลี่ยนที่อยู่ของไฟล์รูปภาพปฏิทิน
 import Col2 from "../../assets/image/icon/Col2.png"; // ปรับเปลี่ยนที่อยู่ของไฟล์รูปภาพปฏิทิน
 import Col3 from "../../assets/image/icon/Col3.png"; // ปรับเปลี่ยนที่อยู่ของไฟล์รูปภาพปฏิทิน
@@ -28,7 +29,7 @@ const CreateNewActivity = () => {
   const { status_event_activity } = useSelector(({ createEv }) =>
     createEv ? createEv : ""
   );
-  const [statusCreateActivity, setStatusCreateActivity] = useState("rewards"); //activity = กิจกรรม, criteria = เกณฑ์ ,Rewards = ของรางวัล,badge = ตราสัญลักษณ์
+  const [statusCreateActivity, setStatusCreateActivity] = useState("activity"); //activity = กิจกรรม, criteria = เกณฑ์ ,Rewards = ของรางวัล,badge = ตราสัญลักษณ์
 
   const [language, setLanguage] = useState("th");
   const [rewardsNumber, setRewardsNumber] = useState(1);
@@ -36,6 +37,7 @@ const CreateNewActivity = () => {
   const [statusEventActivity, setStatusEventActivity] = useState(
     status_event_activity
   );
+
   const [dateImage, setDateImage] = useState(new Date().getTime());
 
   const fileInputRef = useRef(null);
@@ -49,7 +51,7 @@ const CreateNewActivity = () => {
   const [endDateShow, setEndDateShow] = useState(null); //ระยะเวลากิจกรรม * end
 
   //   ส่วนเก็บข้อมูล   เกณฑ์  activityType
-
+  const [imageHead, setImageHead] = useState(null);
   const [criteria_distance, setCriteria_distance] = useState(false);
   const [distance, setDistance] = useState("");
   const [criteria_walk_step, setCriteria_walk_step] = useState(false);
@@ -181,15 +183,21 @@ const CreateNewActivity = () => {
     // เมื่อคลิกที่รูปภาพ
     // เรียก click() method ของไฟล์อินพุท
     fileInputRef.current.click();
+
     setRewardsNumber(number);
     areAllValuesFilled();
+  };
+
+  const handleImageHeadClick = (number) => {
+    // เมื่อคลิกที่รูปภาพ
+
+    fileInputRef.current.click();
   };
 
   const handleFileChange = async (e) => {
     // เมื่อมีการเปลี่ยนแปลงในไฟล์อินพุท
     // ทำตามต้องการ เช่น ดึงข้อมูลไฟล์, อัปโหลดไปที่เซิร์ฟเวอร์, เปลี่ยนสถานะ, ฯลฯ
     const selectedFile = e.target.files[0];
-
     if (selectedFile) {
       const customPrefixName = `images/wellly_event/${dateImage}/${selectedFile.name}.png`;
       const urlProductImg = `https://bebe-platform.s3-ap-southeast-1.amazonaws.com/public/${customPrefixName}`;
@@ -203,6 +211,20 @@ const CreateNewActivity = () => {
             : reward
         )
       );
+    }
+  };
+  const handleFileHeadChange = async (e) => {
+    // เมื่อมีการเปลี่ยนแปลงในไฟล์อินพุท
+    // ทำตามต้องการ เช่น ดึงข้อมูลไฟล์, อัปโหลดไปที่เซิร์ฟเวอร์, เปลี่ยนสถานะ, ฯลฯ
+    const selectedFile = e.target.files[0];
+
+    if (selectedFile) {
+      const customPrefixName = `images/wellly_event/${dateImage}/${selectedFile.name}.png`;
+      const urlProductImg = `https://bebe-platform.s3-ap-southeast-1.amazonaws.com/public/${customPrefixName}`;
+      await s3Upload(selectedFile, customPrefixName);
+      // สร้าง URL ของไฟล์ที่ถูกเลือก
+      const imageUrl = URL.createObjectURL(selectedFile);
+      setImageHead(urlProductImg);
     }
   };
 
@@ -265,7 +287,6 @@ const CreateNewActivity = () => {
   };
 
   const clickDelete = () => {
-
     setRewards(rewards.slice(0, -1));
   };
 
@@ -285,8 +306,6 @@ const CreateNewActivity = () => {
     } */
   }, [statusEventActivity]);
 
-
-
   const createActivity = () => {
     const selectedLocale = language === "th" ? th : enUS;
     return (
@@ -303,9 +322,6 @@ const CreateNewActivity = () => {
               id="exampleFormControlInput1"
               placeholder="รายละอียดกิจกรรม"
             />
-            {/*   {errorEventName && <div className="error-from">{errorEventName}</div>} */}
-          </div>
-          <div className="col-6 ml-3">
             <div className="col-12 ">
               <p className={style["name-activity"]}>ระยะเวลากิจกรรม</p>
               <div className={style["flex-row"]}>
@@ -393,8 +409,21 @@ const CreateNewActivity = () => {
                 </div>
               </div>
             </div>
-
             {/*   {errorEventName && <div className="error-from">{errorEventName}</div>} */}
+          </div>
+          <div className="col-6 ml-3">
+            <img
+              src={imageHead ? imageHead : UploadHead}
+              alt="calendar"
+              className={style["upload-head"]}
+              onClick={() => handleImageHeadClick()}
+            />
+            <input
+              type="file"
+              ref={fileInputRef}
+              style={{ display: "none" }}
+              onChange={handleFileHeadChange}
+            />
           </div>
         </div>
         <div className="mb-5">
@@ -447,7 +476,8 @@ const CreateNewActivity = () => {
               startDate != null &&
               endDate != null &&
               startDateShow != null &&
-              endDateShow != null
+              endDateShow != null &&
+              imageHead != null
                 ? () => handleEventChange("activity")
                 : null
             }
