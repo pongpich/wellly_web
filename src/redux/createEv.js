@@ -15,6 +15,7 @@ export const types = {
 /* ACTION Section */
 export const createEventActivity = (
   eventName,
+  imageHead,
   eventDetail,
   startDate,
   endDate,
@@ -30,6 +31,7 @@ export const createEventActivity = (
   type: types.CREATE_EVENT_ACTIVITY,
   payload: {
     eventName,
+    imageHead,
     eventDetail,
     startDate,
     endDate,
@@ -66,6 +68,7 @@ export const clear_status_message = () => ({
 
 const createEventActivitySagaAsync = async (
   eventName,
+  imageHead,
   eventDetail,
   startDate,
   endDate,
@@ -82,6 +85,7 @@ const createEventActivitySagaAsync = async (
     const apiResult = await API.post("wellly", "/create_event_activity", {
       body: {
         eventName,
+        imageHead,
         eventDetail,
         startDate,
         endDate,
@@ -126,6 +130,7 @@ const registerEventActivitySagaAsync = async (
 function* createEventActivitySaga({ payload }) {
   const {
     eventName,
+    imageHead,
     eventDetail,
     startDate,
     endDate,
@@ -143,6 +148,7 @@ function* createEventActivitySaga({ payload }) {
     const apiResult = yield call(
       createEventActivitySagaAsync,
       eventName,
+      imageHead,
       eventDetail,
       startDate,
       endDate,

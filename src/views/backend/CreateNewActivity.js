@@ -44,6 +44,7 @@ const CreateNewActivity = () => {
 
   // ส่วนเก็บข้อมูล  กิจกรรม, nameActivity
   const [eventName, setEventName] = useState(""); // ชื่อกิจกรรม
+  const [imageHead, setImageHead] = useState(null);
   const [eventDetail, setEventDetail] = useState(""); //รายละเอียด กิจกรรม
   const [startDate, setStartDate] = useState(null); //ระยะเวลาการแสดงผล start
   const [endDate, setEndDate] = useState(null); //ระยะเวลาการแสดงผล end
@@ -51,7 +52,6 @@ const CreateNewActivity = () => {
   const [endDateShow, setEndDateShow] = useState(null); //ระยะเวลากิจกรรม * end
 
   //   ส่วนเก็บข้อมูล   เกณฑ์  activityType
-  const [imageHead, setImageHead] = useState(null);
   const [criteria_distance, setCriteria_distance] = useState(false);
   const [distance, setDistance] = useState("");
   const [criteria_walk_step, setCriteria_walk_step] = useState(false);
@@ -239,6 +239,7 @@ const CreateNewActivity = () => {
       dispatch(
         createEventActivity(
           eventName,
+          imageHead,
           eventDetail,
           format(startDate, "dd-MM-yyyy"),
           format(endDate, "dd-MM-yyyy"),

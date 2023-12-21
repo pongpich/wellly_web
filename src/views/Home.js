@@ -79,7 +79,7 @@ const Home = ({ match }) => {
   useEffect(() => {
     dispatch(getEventActivity());
   }, []);
-  const params1 = "tha-0017";
+  const params1 = "tha-0018";
   useEffect(() => {
     /*  dispatch(getEventUser(user_id)); //สำหรับใช้งานจริงผ่านมือถือ */
 
