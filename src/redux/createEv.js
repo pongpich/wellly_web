@@ -6,6 +6,7 @@ export const types = {
   CREATE_EVENT_ACTIVITY_SUCCESS: "CREATE_EVENT_ACTIVITY_SUCCESS",
   CREATE_EVENT_ACTIVITY_FAIL: "CREATE_EVENT_ACTIVITY_FAIL",
   CLEAR_STATUS: "CLEAR_STATUS",
+  CLEAR_STATUS_MESSAGE: "CLEAR_STATUS_MESSAGE",
   REGISTER_EVENT_ACTIVITY: "REGISTER_EVENT_ACTIVITY",
   REGISTER_EVENT_ACTIVITY_SUCCESS: "REGISTER_EVENT_ACTIVITY_SUCCESS",
   REGISTER_EVENT_ACTIVITY_FAIL: "REGISTER_EVENT_ACTIVITY_FAIL",
@@ -54,6 +55,9 @@ export const registerEventActivity = (id, user_id, walk_step, distance) => ({
 
 export const clear_status = () => ({
   type: types.CLEAR_STATUS,
+});
+export const clear_status_message = () => ({
+  type: types.CLEAR_STATUS_MESSAGE,
 });
 
 /* END OF ACTION Section */
@@ -202,6 +206,7 @@ export function* saga() {
 const INIT_STATE = {
   status_event_activity: "default",
   status_event_user: "default",
+  status_event_message: "default",
   event_activity: null,
 };
 
@@ -227,16 +232,24 @@ export function reducer(state = INIT_STATE, action) {
       return {
         ...state,
         status_event_user: "loading",
+        status_event_message: "loading",
       };
     case types.REGISTER_EVENT_ACTIVITY_SUCCESS:
       return {
         ...state,
         status_event_user: "success",
+        status_event_message: "success",
       };
     case types.REGISTER_EVENT_ACTIVITY_FAIL:
       return {
         ...state,
         status_event_user: "fail",
+        status_event_message: "fail",
+      };
+    case types.CLEAR_STATUS_MESSAGE:
+      return {
+        ...state,
+        status_event_message: "fail",
       };
     case types.CLEAR_STATUS:
       return {

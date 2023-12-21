@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link, useLocation, useParams, useNavigate } from "react-router-dom";
+import { clear_status_message } from "../redux/createEv";
 
 import { getEventActivity, getEventUser } from "../redux/get";
 import { userId } from "../redux/auth";
@@ -15,6 +16,7 @@ import dateIcon from "../assets/image/icon/schedule.png";
 import Foot_step from "../assets/image/icon/Foot_step.png";
 import Distance from "../assets/image/icon/Distance.png";
 import Tick3x from "../assets/image/icon/Tick3x.png";
+import Checked from "../assets/image/icon/Checked.png";
 import EmptyState from "../assets/image/icon/EmptyState.png";
 import { el } from "date-fns/locale";
 
@@ -23,6 +25,9 @@ const Home = ({ match }) => {
   const navigate = useNavigate();
   const { user_id } = useSelector(({ auth }) => (auth ? auth : ""));
   const { event, event_user } = useSelector(({ get }) => (get ? get : ""));
+  const { status_event_message } = useSelector(({ createEv }) =>
+    createEv ? createEv : ""
+  );
   const [statusHead, setStatusHead] = useState("ทั้งหมด");
   /*   const [tickData, setTickData] = useState(true); */
   const [success, setSuccess] = useState(true);
@@ -50,9 +55,22 @@ const Home = ({ match }) => {
     setEventUser(event_user);
   }, [event_user]);
 
-  /*   useEffect(() => {
-    setParam1(userId);
-  }, []); */
+  useEffect(() => {
+    if (status_event_message == "success") {
+      setStatusHead("ลงทะเบียนแล้ว");
+      setTimeout(() => {
+        dispatch(clear_status_message());
+      }, 3000);
+    }
+    /*   setStatusEvent(status_event_message); */
+  }, [status_event_message]);
+  useEffect(() => {
+    if (status_event_message == "success") {
+      setTimeout(() => {
+        dispatch(clear_status_message());
+      }, 2000);
+    }
+  }, []);
 
   const handleReloadClick = () => {
     window.location.reload(false);
@@ -61,15 +79,15 @@ const Home = ({ match }) => {
   useEffect(() => {
     dispatch(getEventActivity());
   }, []);
-
+  const params1 = "tha-0017";
   useEffect(() => {
-    //dispatch(getEventUser(user_id));//สำหรับใช้งานจริงผ่านมือถือ
+    /*  dispatch(getEventUser(user_id)); //สำหรับใช้งานจริงผ่านมือถือ */
 
-    dispatch(getEventUser("f64621ce-85f6-4e83-9aa2-63f746d88ec8")); // สำหรับเทส เเค่ตัวเว็บ
+    dispatch(getEventUser(params1)); // สำหรับเทส เเค่ตัวเว็บ
   }, []);
 
   // Extract the query string from the URL
-  const params1 = "tha-0012";
+
   useEffect(() => {
     const query = new URLSearchParams(
       window.location.hash.substring(window.location.hash.indexOf("?"))
@@ -78,9 +96,12 @@ const Home = ({ match }) => {
 
     if (accessParams) {
       dispatch(userId(accessParams));
+    } else {
+      dispatch(userId(params1));
     }
   }, []);
 
+  console.log("status_event_message", status_event_message);
   const renderActivityDetails = (item, tickData, itemUser, indexItem) => {
     let tickId =
       eventUser && eventUser.some((user) => user.event_id == item.id);
@@ -91,8 +112,8 @@ const Home = ({ match }) => {
           tickData
             ? "/detailSucceed/" + item.id
             : tickId
-              ? "/start-exercising/" + item.id
-              : "/detail/" + item.id
+            ? "/start-exercising/" + item.id
+            : "/detail/" + item.id
         }
         key={indexItem}
       >
@@ -103,8 +124,9 @@ const Home = ({ match }) => {
           <div className={style["activity-image"]}>
             <img
               src={Frame13716}
-              className={`${style["img-activity"]} ${tickId && tickData && style["opacity-tick"]
-                }`}
+              className={`${style["img-activity"]} ${
+                tickId && tickData && style["opacity-tick"]
+              }`}
             />
           </div>
           <p className={style["details-text"]}>
@@ -133,15 +155,17 @@ const Home = ({ match }) => {
               </div>
               <div className={style["progress-activity"]}>
                 <div
-                  className={`${!tickData
+                  className={`${
+                    !tickData
                       ? style["progress-bar-active"]
                       : style["progress-bar"]
-                    }`}
+                  }`}
                   style={{
-                    width: `${(itemUser &&
+                    width: `${
+                      (itemUser &&
                         itemUser &&
                         itemUser.walk_step / item.walk_step) * 100
-                      }%`,
+                    }%`,
                     maxWidth: "100%",
                   }}
                 ></div>
@@ -162,15 +186,17 @@ const Home = ({ match }) => {
               </div>
               <div className={style["progress-activity"]}>
                 <div
-                  className={`${!tickData
+                  className={`${
+                    !tickData
                       ? style["progress-bar-active"]
                       : style["progress-bar"]
-                    }`}
+                  }`}
                   style={{
-                    width: `${(itemUser &&
+                    width: `${
+                      (itemUser &&
                         itemUser &&
                         itemUser.distance / item.distance) * 100
-                      }%`,
+                    }%`,
                     maxWidth: "100%",
                   }}
                 ></div>
@@ -339,6 +365,14 @@ const Home = ({ match }) => {
           </>
         )}
       </div>
+
+      {status_event_message == "success" && (
+        <div className={style["box-checked"]}>
+          {" "}
+          <img src={Checked} className={style["checked-icon"]} />
+          ลงทะเบียนสำเร็จ
+        </div>
+      )}
     </>
   );
 };
