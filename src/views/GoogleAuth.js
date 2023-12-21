@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { getMyGoogleFit } from '../fitnessApi';
+import { Link, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 function GoogleAuth() {
     useEffect(() => {
@@ -60,13 +62,19 @@ function GoogleAuth() {
         <div>
             <h1>Google</h1>
             {!isLoggedIn ? (
-                <button onClick={createGoogleAuthLink}>Login</button>
+                <div>
+                    <button onClick={createGoogleAuthLink}>Login</button>
+                    <Link to={"https://wellly.planforfit.com/privacy_policy.html"}>
+                        <p>Privacy Link</p>
+                    </Link>
+                </div>
             ) : (
                 <>
                     <button onClick={getMyGoogleFit}>
                         Get Google Fit
                     </button>
                     <button onClick={signOut}>Sign Out</button>
+
                 </>
             )}
         </div>
