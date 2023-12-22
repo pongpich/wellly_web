@@ -123,7 +123,7 @@ const Home = ({ match }) => {
           )}
           <div className={style["activity-image"]}>
             <img
-              src={Frame13716}
+              src={item.cover_Image ? item.cover_Image : Frame13716}
               className={`${style["img-activity"]} ${
                 tickId && tickData && style["opacity-tick"]
               }`}
