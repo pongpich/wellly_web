@@ -580,7 +580,8 @@ const CreateNewActivity = () => {
               <div>
                 <button
                   className={
-                    distance != "" && walk_step != ""
+                    (distance != "" && walk_step != "" && criteria_distance) ||
+                    criteria_walk_step
                       ? style["btn-next-active"]
                       : style["btn-next"]
                   }
