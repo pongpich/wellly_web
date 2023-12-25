@@ -37,7 +37,7 @@ const getEventActivitySagaAsync = async () => {
     const apiResult = await API.get("wellly", "/getEventActivity", {
       queryStringParameters: {},
     });
-    /* console.log("get_event_activity apiResult", apiResult); */
+    /*  console.log("get_event_activity apiResult", apiResult); */
     return apiResult;
   } catch (error) {
     return { error, messsage: error.message };
@@ -78,8 +78,7 @@ export function* watchGetEventUser() {
 }
 
 export function* saga() {
-  yield all([fork(watchGetEventActivity)]);
-  yield all([fork(watchGetEventUser)]);
+  yield all([fork(watchGetEventActivity), fork(watchGetEventUser)]);
 }
 
 /* REDUCER Section */
