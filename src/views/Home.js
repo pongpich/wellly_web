@@ -48,14 +48,12 @@ const Home = ({ match }) => {
   }, []);
 
   useEffect(() => {
-    setEvent_activity(event_activity);
+    setEvent_activity(event);
   }, [event]);
 
   useEffect(() => {
     setEventUser(event_user);
   }, [event_user]);
-
- 
 
   useEffect(() => {
     if (status_event_message == "success") {
@@ -81,10 +79,10 @@ const Home = ({ match }) => {
   useEffect(() => {
     dispatch(getEventActivity());
   }, []);
+
   const params1 = "tha-0018";
   useEffect(() => {
     dispatch(getEventUser(user_id ? user_id : params1)); //สำหรับใช้งานจริงผ่านมือถือ
-
   }, []);
 
   // Extract the query string from the URL
