@@ -55,6 +55,8 @@ const Home = ({ match }) => {
     setEventUser(event_user);
   }, [event_user]);
 
+ 
+
   useEffect(() => {
     if (status_event_message == "success") {
       setStatusHead("ลงทะเบียนแล้ว");
@@ -81,9 +83,9 @@ const Home = ({ match }) => {
   }, []);
   const params1 = "tha-0018";
   useEffect(() => {
-    dispatch(getEventUser(user_id)); //สำหรับใช้งานจริงผ่านมือถือ
+    dispatch(getEventUser(user_id ? user_id : params1)); //สำหรับใช้งานจริงผ่านมือถือ
 
-    /*  dispatch(getEventUser(params1)); // สำหรับเทส เเค่ตัวเว็บ */
+    /* dispatch(getEventUser(params1)); // สำหรับเทส เเค่ตัวเว็บ */
   }, []);
 
   // Extract the query string from the URL
@@ -105,6 +107,10 @@ const Home = ({ match }) => {
   const renderActivityDetails = (item, tickData, itemUser, indexItem) => {
     let tickId =
       eventUser && eventUser.some((user) => user.event_id == item.id);
+
+    console.log("item.criteria_walk_step", item.criteria_walk_step);
+
+    console.log("item.criteria_distance", item.criteria_distance);
 
     return (
       <Link
@@ -129,9 +135,7 @@ const Home = ({ match }) => {
               }`}
             />
           </div>
-          <p className={style["details-text"]}>
-            {item.event_name} {item.id}
-          </p>
+          <p className={style["details-text"]}>{item.event_name}</p>
           <p className={style["details-text-date"]}>
             <span>
               <img src={dateIcon} className={style["date-icon"]} />
@@ -140,67 +144,76 @@ const Home = ({ match }) => {
           </p>
           {tickId && (
             <>
-              <div
-                className={`${style["success-text"]} ${style["justify-between"]}`}
-              >
-                <p className={`${!tickData && style["scores-text"]}`}>
-                  <span>
-                    <img src={Foot_step} className={style["date-icon"]} />
-                  </span>
-                  {itemUser && itemUser && itemUser.walk_step}
-                </p>
-                <p>
-                  {new Intl.NumberFormat("en-US").format(item.walk_step)} ก้าว
-                </p>
-              </div>
-              <div className={style["progress-activity"]}>
-                <div
-                  className={`${
-                    !tickData
-                      ? style["progress-bar-active"]
-                      : style["progress-bar"]
-                  }`}
-                  style={{
-                    width: `${
-                      (itemUser &&
-                        itemUser &&
-                        itemUser.walk_step / item.walk_step) * 100
-                    }%`,
-                    maxWidth: "100%",
-                  }}
-                ></div>
-              </div>
-              <div
-                className={`${style["success-text"]} ${style["justify-between"]}`}
-              >
-                <p className={!tickData && `${style["scores-text"]}`}>
-                  <span>
-                    <img src={Foot_step} className={style["date-icon"]} />
-                  </span>
-                  {itemUser && itemUser && itemUser.distance}
-                </p>
-                <p>
-                  {new Intl.NumberFormat("en-US").format(item.distance)}{" "}
-                  กิโลเมตร
-                </p>
-              </div>
-              <div className={style["progress-activity"]}>
-                <div
-                  className={`${
-                    !tickData
-                      ? style["progress-bar-active"]
-                      : style["progress-bar"]
-                  }`}
-                  style={{
-                    width: `${
-                      (itemUser &&
-                        itemUser &&
-                        itemUser.distance / item.distance) * 100
-                    }%`,
-                    maxWidth: "100%",
-                  }}
-                ></div>
-              </div>
+              {item.criteria_walk_step == "true" && (
+                <>
+                  <div
+                    className={`${style["success-text"]} ${style["justify-between"]}`}
+                  >
+                    <p className={`${!tickData && style["scores-text"]}`}>
+                      <span>
+                        <img src={Foot_step} className={style["date-icon"]} />
+                      </span>
+                      {itemUser && itemUser && itemUser.walk_step}
+                    </p>
+                    <p>
+                      {new Intl.NumberFormat("en-US").format(item.walk_step)}{" "}
+                      ก้าว
+                    </p>
+                  </div>
+                  <div className={style["progress-activity"]}>
+                    <div
+                      className={`${
+                        !tickData
+                          ? style["progress-bar-active"]
+                          : style["progress-bar"]
+                      }`}
+                      style={{
+                        width: `${
+                          (itemUser &&
+                            itemUser &&
+                            itemUser.walk_step / item.walk_step) * 100
+                        }%`,
+                        maxWidth: "100%",
+                      }}
+                    ></div>
+                  </div>
+                </>
+              )}
+              {item.criteria_distance == "true" && (
+                <>
+                  <div
+                    className={`${style["success-text"]} ${style["justify-between"]}`}
+                  >
+                    <p className={!tickData && `${style["scores-text"]}`}>
+                      <span>
+                        <img src={Foot_step} className={style["date-icon"]} />
+                      </span>
+                      {itemUser && itemUser && itemUser.distance}
+                    </p>
+                    <p>
+                      {new Intl.NumberFormat("en-US").format(item.distance)}{" "}
+                      กิโลเมตร
+                    </p>
+                  </div>
+                  <div className={style["progress-activity"]}>
+                    <div
+                      className={`${
+                        !tickData
+                          ? style["progress-bar-active"]
+                          : style["progress-bar"]
+                      }`}
+                      style={{
+                        width: `${
+                          (itemUser &&
+                            itemUser &&
+                            itemUser.distance / item.distance) * 100
+                        }%`,
+                        maxWidth: "100%",
+                      }}
+                    ></div>
+                  </div>
+                </>
+              )}
             </>
           )}
           {tickData && <p className={style["view-scores"]}>ดูผลคะแนน</p>}

@@ -14,6 +14,7 @@ import dateIcon from "../assets/image/icon/schedule.png";
 import Reward1 from "../assets/image/img/Reward1.png";
 import Reward2 from "../assets/image/img/Reward2.png";
 import Reward3 from "../assets/image/img/Reward3.png";
+import { format, parse } from "date-fns";
 
 const Detail = () => {
   const navigate = useNavigate();
@@ -59,7 +60,15 @@ const Detail = () => {
   };
 
   const messageContent = () => {
-    const startDate = event_activity && new Date(event_activity.start_date);
+    const formattedStartDate =
+      event_activity &&
+      format(
+        parse(event_activity.start_date, "dd-MM-yyyy", new Date()),
+        "yyyy-MM-dd"
+      );
+
+    console.log("formattedStartDate", formattedStartDate);
+    console.log("dateNow", dateNow);
     return (
       <>
         <p
@@ -72,9 +81,11 @@ const Detail = () => {
         <div className="box-button">
           <div
             className={
-              dateNow > startDate ? "btn-persianBlue" : "btn-persianGrey"
+              dateNow > new Date(formattedStartDate)
+                ? "btn-persianBlue"
+                : "btn-persianGrey"
             }
-            onClick={dateNow > startDate ? register : null}
+            onClick={dateNow > new Date(formattedStartDate) ? register : null}
           >
             ลงทะเบียน
           </div>
