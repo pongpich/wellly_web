@@ -81,9 +81,9 @@ const Home = ({ match }) => {
   }, []);
   const params1 = "tha-0018";
   useEffect(() => {
-    /*  dispatch(getEventUser(user_id)); //สำหรับใช้งานจริงผ่านมือถือ */
+    dispatch(getEventUser(user_id)); //สำหรับใช้งานจริงผ่านมือถือ
 
-    dispatch(getEventUser(params1)); // สำหรับเทส เเค่ตัวเว็บ
+    /*  dispatch(getEventUser(params1)); // สำหรับเทส เเค่ตัวเว็บ */
   }, []);
 
   // Extract the query string from the URL
@@ -97,7 +97,7 @@ const Home = ({ match }) => {
     if (accessParams) {
       dispatch(userId(accessParams));
     } else {
-      dispatch(userId(params1));
+      /*  dispatch(userId(params1)); */
     }
   }, []);
 

@@ -28,6 +28,7 @@ const Detail = () => {
   const [userId, setUserId] = useState(user_id);
   const [event_activity, setEvent_activity] = useState(null);
   const [eventUser, setEventUser] = useState(null);
+  const [dateNow, setDateNow] = useState(new Date());
 
   const { id } = useParams();
 
@@ -58,6 +59,7 @@ const Detail = () => {
   };
 
   const messageContent = () => {
+    const startDate = event_activity && new Date(event_activity.start_date);
     return (
       <>
         <p
@@ -66,8 +68,14 @@ const Detail = () => {
             __html: event_activity && event_activity.event_detail,
           }}
         />
+
         <div className="box-button">
-          <div className="btn-persianBlue" onClick={register}>
+          <div
+            className={
+              dateNow > startDate ? "btn-persianBlue" : "btn-persianGrey"
+            }
+            onClick={dateNow > startDate ? register : null}
+          >
             ลงทะเบียน
           </div>
         </div>

@@ -148,6 +148,18 @@ p {
   color: var(--white);
   background-color: var(--persianBlue);
 }
+.btn-persianGrey {
+  width: calc(100% - 32px);
+  height: 48px;
+  border-radius: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 16px;
+  font-family: bold;
+  color: var(--white);
+  background-color: var(--grey3);
+}
 
 .btn-persianWhite {
   width: calc(100% - 32px);
