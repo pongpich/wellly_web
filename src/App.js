@@ -18,6 +18,7 @@ import StartExercising from "./views/StartExercising";
 import DetailTimer from "../src/views/DetailTimer";
 import DetailSucceed from "../src/views/DetailSucceed";
 import GoogleAuth from "../src/views/GoogleAuth";
+import Home2 from "../src/views/Home2";
 import AllTest from "./views/AllTest";
 import Scoreboard from "./views/Scoreboard";
 import ScoreboardSucceed from "./views/ScoreboardSucceed";
@@ -68,6 +69,7 @@ const App = () => {
       <Route path="/scoreboard/:id" element={<Scoreboard />} />
       <Route path="/scoreboardSucceed" element={<ScoreboardSucceed />} />
       <Route path="/googleAuth" element={<GoogleAuth />} />
+      <Route path="/home2" element={<Home2 />} />
 
       {/*  backend */}
       <Route path="/login" element={<Login />} />
