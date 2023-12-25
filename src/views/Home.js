@@ -85,7 +85,6 @@ const Home = ({ match }) => {
   useEffect(() => {
     dispatch(getEventUser(user_id ? user_id : params1)); //สำหรับใช้งานจริงผ่านมือถือ
 
-    /* dispatch(getEventUser(params1)); // สำหรับเทส เเค่ตัวเว็บ */
   }, []);
 
   // Extract the query string from the URL
