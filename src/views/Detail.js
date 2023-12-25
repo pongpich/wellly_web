@@ -67,8 +67,6 @@ const Detail = () => {
         "yyyy-MM-dd"
       );
 
-    console.log("formattedStartDate", formattedStartDate);
-    console.log("dateNow", dateNow);
     return (
       <>
         <p
