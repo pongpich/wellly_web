@@ -55,7 +55,6 @@ const App = () => {
       console.error("window.ReactNativeWebView is undefined");
     }
   }, [hash]);
-  console.log("path", path);
 
   return (
     <Routes>

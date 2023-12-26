@@ -9,7 +9,9 @@ import { useSelector, useDispatch } from "react-redux";
 
 const data = Array(34).fill(null);
 const Scoreboard = () => {
-  const activity_users = useSelector(({ activity }) => (activity ? activity.activity_users : ""));
+  const activity_users = useSelector(({ activity }) =>
+    activity ? activity.activity_users : ""
+  );
 
   const [activityUsers, setActivityUsers] = useState(activity_users);
 
@@ -24,8 +26,7 @@ const Scoreboard = () => {
     setActivityUsers(activity_users);
   }, [activity_users]);
 
-
-  console.log(activityUsers);
+  console.log("activityUsers", activityUsers);
 
   return (
     <div className={style["box-head"]}>
@@ -43,22 +44,26 @@ const Scoreboard = () => {
           {activityUsers &&
             activityUsers.map((item, index) => (
               <div
-                className={` ${index == 20 && style["score-user"]} ${style["list-user"]
-                  }`}
+                className={` ${index == 20 && style["score-user"]} ${
+                  style["list-user"]
+                }`}
               >
                 <p className={style["list-id"]}>{index + 1}</p>
-                {item.display_name != null &&
-                  <div className={style["box-list-name"]}>{item.display_name[0].toUpperCase()}</div>
-                }
-
-
-                <p className={style["list-name"]}>{item.display_name}</p>
-
+                <div className="box-list">
+                <div className={style["box-list-name"]}>
+                  {item.display_name
+                    ? item.display_name[0].toUpperCase()
+                    : item.email[0].toUpperCase()}
+                </div>
+                </div>
+               
+                <p className={style["list-name"]}>
+                  {item.display_name ? item.display_name : item.email}
+                </p>
                 <p className={style["list-score"]}>{item.walk_step}</p>
                 <p className={style["list-score"]}>{item.distance}</p>
               </div>
             ))}
-
         </div>
       </div>
     </div>

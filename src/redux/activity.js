@@ -19,7 +19,7 @@ const getActivityUsersSagaAsync = async (id) => {
     const apiResult = await API.get("wellly", "/get_activity_users", {
       queryStringParameters: { id },
     });
-    console.log("getActivityUsers apiResult", apiResult);
+    /* console.log("getActivityUsers apiResult", apiResult); */
     return apiResult;
   } catch (error) {
     return { error, messsage: error.message };
@@ -30,7 +30,7 @@ function* getActivityUsersSaga({ payload }) {
   const { id } = payload;
   try {
     const apiResult = yield call(getActivityUsersSagaAsync, id);
-    console.log("apiResult", apiResult.results);
+    /*  console.log("apiResult", apiResult.results); */
     yield put({
       type: types.GET_ACTIVITY_USERS_SUCCESS,
       payload: apiResult.results.event_user,
@@ -51,7 +51,7 @@ export function* saga() {
 
 const INIT_STATE = {
   activity_users: null,
-  status_activity_users: "default"
+  status_activity_users: "default",
 };
 
 export function reducer(state = INIT_STATE, action) {
@@ -65,7 +65,7 @@ export function reducer(state = INIT_STATE, action) {
       return {
         ...state,
         activity_users: action.payload,
-        status_activity_users: "success"
+        status_activity_users: "success",
       };
     default:
       return { ...state };
