@@ -4,7 +4,7 @@ import style from "../assets/css/scoreboard.module.css";
 const Scoreboard = () => {
   return (
     <div className={style["box-head"]}>
-      <NavbarScoreboard path="/detailSucceed" />
+      <NavbarScoreboard path="/start-exercising" />
     </div>
   );
 };

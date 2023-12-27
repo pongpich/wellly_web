@@ -96,7 +96,7 @@ const Home = ({ match }) => {
     if (accessParams) {
       dispatch(userId(accessParams));
     } else {
-      /*  dispatch(userId(params1)); */
+      dispatch(userId(params1));
     }
   }, []);
 

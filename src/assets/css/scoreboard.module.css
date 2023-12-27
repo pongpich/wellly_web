@@ -4,7 +4,7 @@
 }
 
 .box-scoreboard {
-    margin-top: 64px;
+    margin-top: 16px;
     padding: 0px 16px 64px 16px;
 }
 
@@ -19,28 +19,36 @@
 }
 
 .list-head {
+    width: 100%;
     display: flex;
-    justify-content: space-between;
+    justify-content: end;
     font-size: 14px;
     color: var(--grey2);
     font-family: Regular;
 }
 
+
+
 .list-user {
     margin-top: -16px;
     display: flex;
-    justify-content: space-between;
+    /*     justify-content: space-between; */
 }
 
 .list-user .list-id {
-    width: 0px;
+    width: 32px;
+    padding-right: 8px;
     height: auto;
 }
 
 .list-name {
     font-size: 16px;
-    font-family: bold;
+    font-weight: bold;
     color: var(--grey1);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
 }
 
 .list-id {
@@ -50,9 +58,15 @@
 }
 
 .list-score {
+
     font-size: 16px;
     font-family: Regular;
     color: var(--grey1);
+}
+
+.box-list-score {
+    width: 64px;
+    margin-left: 16px;
 }
 
 .list-row {
@@ -81,4 +95,118 @@
     border-radius: 8px;
     padding: 0px 8px;
 
+}
+
+.box-list-icon {
+    width: 32px;
+    /*    height: 32px; */
+}
+
+.box-name-list {
+    margin-left: 16px;
+    width: 180px;
+}
+
+.box-head-list {
+    width: 150px;
+}
+
+.align-right {
+    display: flex;
+    text-align: right !important;
+    margin-right: 10px;
+    /* ปรับตำแหน่งตามความต้องการ */
+}
+
+.box-coin {
+    width: "100%";
+    height: 313px;
+    background: url('../../assets/image/icon/BACKGROUND.png');
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    justify-content: center !important;
+    align-items: flex-end !important;
+}
+
+
+
+.stab-gold {
+    width: 88px;
+    height: 150px;
+    background: linear-gradient(hsla(43, 93%, 44%, 0.800), hsla(43, 93%, 44%, 0));
+}
+
+.cold-coin {
+    width: 72px;
+    height: 72px;
+    margin-left: 8px;
+}
+
+.stab-silver {
+
+    width: 88px;
+    height: 117px;
+    background: linear-gradient(hsla(213, 27%, 67%, 0.800), hsla(213, 27%, 67%, 0));
+}
+
+.silver-coin {
+    margin-top: 46px;
+    width: 56px;
+    height: 56px;
+    margin-left: 16px;
+}
+
+.stab-copper {
+
+    width: 88px;
+    height: 96px;
+    background: linear-gradient(hsla(18, 58%, 69%, 0.800), hsla(18, 58%, 69%, 0));
+}
+
+
+.copper-coin {
+    margin-top: 65px;
+    width: 56px;
+    height: 56px;
+    margin-left: 16px;
+}
+
+.name-coin {
+    margin-top: -12px !important;
+    margin-bottom: 8px !important;
+    text-align: center;
+    font-family: bold;
+    font-size: 16px;
+    color: black;
+}
+
+.coin-number {
+    margin-top: 8px;
+    font-family: bold;
+    font-size: 16px;
+    text-align: center;
+    color: var(--white);
+
+}
+
+.icon-step {
+    width: 16px;
+    height: 16px;
+    /*     margin-right: 4px; */
+}
+
+.number-step {
+    margin-left: 8px !important;
+    font-family: Regular;
+    color: var(--grey1);
+    font-size: 14px;
+}
+
+.number-step2 {
+    margin-top: -8px !important;
+    margin-left: 8px !important;
+    font-family: Regular;
+    color: var(--grey1);
+    font-size: 14px;
 }

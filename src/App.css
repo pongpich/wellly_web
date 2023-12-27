@@ -148,6 +148,7 @@ p {
   color: var(--white);
   background-color: var(--persianBlue);
 }
+
 .btn-persianGrey {
   width: calc(100% - 32px);
   height: 48px;
