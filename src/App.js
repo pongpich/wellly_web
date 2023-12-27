@@ -59,7 +59,7 @@ const App = () => {
   return (
     <Routes>
       {/*  frontend */}
-      <Route path="/" element={<Home />} />
+      <Route path="/" element={<Home2 />} />
       <Route path="/all-test" element={<AllTest />} />
       <Route path="/detail/:id" element={<Detail />} />
       <Route path="/start-exercising/:id" element={<StartExercising />} />
@@ -68,7 +68,7 @@ const App = () => {
       <Route path="/scoreboard/:id" element={<Scoreboard />} />
       <Route path="/scoreboardSucceed" element={<ScoreboardSucceed />} />
       <Route path="/googleAuth" element={<GoogleAuth />} />
-      <Route path="/home2" element={<Home2 />} />
+      <Route path="/home_test" element={<Home />} />
 
       {/*  backend */}
       <Route path="/login" element={<Login />} />

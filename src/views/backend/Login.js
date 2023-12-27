@@ -98,7 +98,7 @@ const Login = () => {
       >
 
         <Typography component="h1" variant="h5">
-          <p className={style["event-creator"]}>Event Creator </p>
+          <p className={style["event-creator"]}>Login </p>
         </Typography>
         <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
           <TextField

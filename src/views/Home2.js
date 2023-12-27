@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link, useLocation, useParams, useNavigate } from "react-router-dom";
-import NavBar from "../views/backend/NavBackend";
+import NavBar from "../views/backend/NavBackend_test";
 import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
@@ -116,6 +116,67 @@ const Home2 = ({ match }) => {
         </Box>
         <Box sx={{
           width: "100%",
+          textAlign: '-webkit-center',
+          // paddingBottom: '85px',
+          backgroundColor: '#4A4A4A'
+        }}
+        >
+          <Grid container spacing={0} sx={{
+            padding: `2px`,
+            // textAlign: 'center',
+            // height: "15px",
+            fontFamily: 'Bold',
+            fontSize: 'Bold',
+            width: '50%',
+            padding: '30px',
+            color: 'white',
+          }}>
+            <Grid xs={12} >
+              <p>App's use and transfer of information received from Google APIs to any other app will adhere to
+                <a
+                  className={style["pointer"]}
+                  onClick={() => openInNewTab('https://support.google.com/cloud/answer/13463073?visit_id=638392557865361126-428148626&rd=1#explain-types')}
+                >
+                  &nbsp;<u>Google API Services User Data Policy</u>
+
+                </a>
+                &nbsp; and
+                <a
+                  className={style["pointer"]}
+                  onClick={() => openInNewTab('https://play.google.com/about/developer-distribution-agreement.html')}
+                >
+                  &nbsp;<u>Google Play Developer Distribution Agreement</u>
+
+                </a>, including the Limited Use requirements.</p>
+              <p>การใช้และการถ่ายโอนข้อมูลที่ได้รับจาก Google APIs ไปยังแอปอื่น ๆ ของ (แอป) จะปฏิบัติตาม
+                <a
+                  className={style["pointer"]}
+                  onClick={() => openInNewTab('https://support.google.com/cloud/answer/13463073?visit_id=638392557865361126-428148626&rd=1#explain-types')}
+                >
+                  <u> นโยบายข้อมูลผู้ใช้บริการ API ของ Google</u>
+
+                </a>
+                &nbsp; และ
+                <a
+                  className={style["pointer"]}
+                  onClick={() => openInNewTab('https://play.google.com/about/developer-distribution-agreement.html')}
+                >
+                  &nbsp;<u>ข้อตกลงการจัดจำหน่ายของนักพัฒนาซอฟต์แวร์ Google Play</u>
+
+                </a>
+                , รวมถึงข้อกำหนดการใช้งานที่ จำกัด</p>
+            </Grid>
+
+            {/* <Grid xs={2.2} sx={{ borderRight: `2px solid white` }}>
+              Cookies Policy
+            </Grid>
+            <Grid xs={2.2} >
+              Cookies Setting
+            </Grid> */}
+          </Grid>
+        </Box>
+        <Box sx={{
+          width: "100%",
           textAlign: 'center',
           paddingBottom: '85px',
           backgroundColor: '#3762FC'
@@ -143,23 +204,23 @@ const Home2 = ({ match }) => {
             padding: '30px',
             color: 'white'
           }}>
-            <Grid xs={4.5} sx={{ borderRight: `2px solid white` }}>
+            <Grid xs={6} sx={{ borderRight: `2px solid white` }}>
               © 2022 BBPF RIGHTS RESERVED
             </Grid>
-            <Grid xs={2.2} sx={{ borderRight: `2px solid white` }}>
+            <Grid xs={6} >
               <a
-                className={style["pointer"]}
+                className={style["pointer2"]}
                 onClick={() => openInNewTab('https://wellly.planforfit.com/privacy_policy.html')}
               >
                 Privacy Policy
               </a>
             </Grid>
-            <Grid xs={2.2} sx={{ borderRight: `2px solid white` }}>
+            {/* <Grid xs={2.2} sx={{ borderRight: `2px solid white` }}>
               Cookies Policy
             </Grid>
             <Grid xs={2.2} >
               Cookies Setting
-            </Grid>
+            </Grid> */}
           </Grid>
         </Box>
       </div>
