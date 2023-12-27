@@ -4,7 +4,7 @@ import NavbarWeb from "./layouts/NavbarWeb";
 const AllTest = () => {
   return (
     <>
-      <NavbarWeb path="/" />
+      <NavbarWeb path="/events" />
       <div style={{ marginTop: "48px" }}>
         <h1>Test All V.3 </h1>
         <nav className="navbar navbar-expand-lg bg-body-tertiary">

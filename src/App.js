@@ -68,7 +68,7 @@ const App = () => {
       <Route path="/scoreboard/:id" element={<Scoreboard />} />
       <Route path="/scoreboardSucceed" element={<ScoreboardSucceed />} />
       <Route path="/googleAuth" element={<GoogleAuth />} />
-      <Route path="/home_test" element={<Home />} />
+      <Route path="/events" element={<Home />} />
 
       {/*  backend */}
       <Route path="/login" element={<Login />} />

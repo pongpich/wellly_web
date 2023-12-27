@@ -289,7 +289,7 @@ const Detail = () => {
   return (
     <>
       <div className={style["box-head-img"]}>
-        <NavbarImg path="/" />
+        <NavbarImg path="/events" />
         <img src={Ads} className={style["img-Ads"]} />
       </div>
       <div className={style["box-content"]}>
