@@ -77,7 +77,7 @@ const App = () => {
 
       <Route path="/create-new-activity" element={<CreateNewActivity />} />
       <Route path="/event-activity" element={<EventActivity />} />
-      {/* <Route path="*" element={<Navigate to="/" replace />} /> */}
+      <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
   );
 };
