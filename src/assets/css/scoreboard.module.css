@@ -3,12 +3,19 @@
     justify-content: space-between;
 }
 
+
 .box-scoreboard {
     margin-top: 16px;
     padding: 0px 16px 64px 16px;
 }
 
+.box-scoreboard2 {
+    margin-top: 64px;
+    padding: 0px 16px 64px 16px;
+}
+
 .scoreboard-list {
+    margin-top: 120px !important;
     font-size: 24px;
     font-family: bold;
     color: var(--grey1);

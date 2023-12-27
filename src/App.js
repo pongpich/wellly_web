@@ -66,7 +66,7 @@ const App = () => {
       <Route path="/detailSucceed/:id" element={<DetailSucceed />} />
       <Route path="/detailTimer" element={<DetailTimer />} />
       <Route path="/scoreboard/:id" element={<Scoreboard />} />
-      <Route path="/scoreboardSucceed" element={<ScoreboardSucceed />} />
+      <Route path="/scoreboardSucceed/:id" element={<ScoreboardSucceed />} />
       <Route path="/googleAuth" element={<GoogleAuth />} />
       <Route path="/events" element={<Home />} />
 
@@ -77,7 +77,7 @@ const App = () => {
 
       <Route path="/create-new-activity" element={<CreateNewActivity />} />
       <Route path="/event-activity" element={<EventActivity />} />
-      <Route path="*" element={<Navigate to="/" replace />} />
+      {/* <Route path="*" element={<Navigate to="/" replace />} /> */}
     </Routes>
   );
 };
