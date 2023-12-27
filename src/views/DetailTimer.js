@@ -149,7 +149,7 @@ const DetailTimer = () => {
 
     dispatch(updateWalkStep(user_id, selected_event_id, (totalSteps > walk_step_goal) ? walk_step_goal : totalSteps));
     dispatch(updateDistance(user_id, selected_event_id, distance, distance_goal));
-    navigate("/detailRegister");
+    navigate("/events");
   };
 
   const callGetMyGoogleFit = async () => {
