@@ -65,16 +65,16 @@ const ScoreboardSucceed = () => {
               <p className={style["number-step"]}>
                 <img src={Foot_step} alt="" className={style["icon-step"]} />{" "}
                 {activityUsers &&
-                  activityUsers[2] &&
-                  activityUsers[2].walk_step &&
-                  activityUsers[2].walk_step.toLocaleString()}
+                  activityUsers[1] &&
+                  activityUsers[1].walk_step &&
+                  activityUsers[1].walk_step.toLocaleString()}
               </p>
               <p className={style["number-step2"]}>
                 <img src={Distance} alt="" className={style["icon-step"]} />{" "}
                 {activityUsers &&
-                  activityUsers[2] &&
-                  activityUsers[2].distance &&
-                  activityUsers[2].distance.toLocaleString()}
+                  activityUsers[1] &&
+                  activityUsers[1].distance &&
+                  activityUsers[1].distance.toLocaleString()}
               </p>
             </div>
           </div>
@@ -106,16 +106,16 @@ const ScoreboardSucceed = () => {
                 <p className={style["number-step"]}>
                   <img src={Foot_step} alt="" className={style["icon-step"]} />{" "}
                   {activityUsers &&
-                    activityUsers[2] &&
-                    activityUsers[2].walk_step &&
-                    activityUsers[2].walk_step.toLocaleString()}
+                    activityUsers[0] &&
+                    activityUsers[0].walk_step &&
+                    activityUsers[0].walk_step.toLocaleString()}
                 </p>
                 <p className={style["number-step2"]}>
                   <img src={Distance} alt="" className={style["icon-step"]} />{" "}
                   {activityUsers &&
-                    activityUsers[2] &&
-                    activityUsers[2].distance &&
-                    activityUsers[2].distance.toLocaleString()}
+                    activityUsers[0] &&
+                    activityUsers[0].distance &&
+                    activityUsers[0].distance.toLocaleString()}
                 </p>
               </div>
             </div>
