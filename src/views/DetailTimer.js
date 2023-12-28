@@ -137,7 +137,9 @@ const DetailTimer = () => {
 
   const clickFinish = async () => {
     const selected_event_id = localStorage.getItem("selected_event_id");
-    const selected_event_start_date = localStorage.getItem(
+    navigate(`/start-exercising/${selected_event_id}`);
+
+    /* const selected_event_start_date = localStorage.getItem(
       "selected_event_start_date"
     );
     const selected_event_end_date = localStorage.getItem(
@@ -164,7 +166,7 @@ const DetailTimer = () => {
     } else {
       //มีข้อมูลจำนวนก้าว
       totalSteps = dataTotalSteps.bucket[0].dataset[0].point[0].value[0].intVal;
-    }
+    } */
 
     /*  dispatch(
        updateWalkStep(
@@ -176,7 +178,7 @@ const DetailTimer = () => {
      dispatch(
        updateDistance(user_id, selected_event_id, distance, distance_goal)
      ); */
-    navigate(`/start-exercising/${selected_event_id}`);
+    //navigate(`/start-exercising/${selected_event_id}`);
   };
 
   const callGetMyGoogleFit = async () => {
