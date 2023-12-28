@@ -309,6 +309,8 @@ const CreateNewActivity = () => {
 
   const createActivity = () => {
     const selectedLocale = language === "th" ? th : enUS;
+
+    console.log("imageHead", imageHead);
     return (
       <>
         <div className={style["flex-row-date"]}>
@@ -462,14 +464,13 @@ const CreateNewActivity = () => {
 
           <button
             className={
-              eventName != "" &&
-              eventDetail != "" &&
-              startDate != null &&
-              endDate != null &&
-              startDateShow != null &&
-              endDateShow != null
-                ? style["btn-next-active"]
-                : style["btn-next"]
+              (eventName != "" &&
+                eventDetail != "" &&
+                startDate != null &&
+                endDate != null &&
+                startDateShow != null &&
+                endDateShow != null,
+              imageHead != null ? style["btn-next-active"] : style["btn-next"])
             }
             onClick={
               eventName != "" &&

@@ -4,11 +4,10 @@ import { useNavigate } from "react-router-dom";
 import style from "../assets/css/detail.module.css";
 import stop from "../assets/image/icon/stop.png";
 import Contextual from "../assets/image/icon/Contextual.png";
-import { getMyGoogleFit } from '../fitnessApi';
-import { checkLocalToken } from '../tokens';
-import { updateDistance, updateWalkStep } from '../redux/update';
+import { getMyGoogleFit } from "../fitnessApi";
+import { checkLocalToken } from "../tokens";
+import { updateDistance, updateWalkStep } from "../redux/update";
 import { useSelector, useDispatch } from "react-redux";
-
 
 const DetailTimer = () => {
   const dispatch = useDispatch();
@@ -20,11 +19,15 @@ const DetailTimer = () => {
   const [distance, setDistance] = useState(0);
   const [positions, setPositions] = useState([]);
   const [tracking, setTracking] = useState(false);
-  const [watchId, setWatchId] = useState(null)
+  const [watchId, setWatchId] = useState(null);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [timeStampStartPage, setTimeStampStartPage] = useState(Date.now());
-  const statusUpdateWalkStep = useSelector(({ update }) => (update ? update.statusUpdateWalkStep : ""));
-  const statusUpdateDistance = useSelector(({ update }) => (update ? update.statusUpdateDistance : ""));
+  const statusUpdateWalkStep = useSelector(({ update }) =>
+    update ? update.statusUpdateWalkStep : ""
+  );
+  const statusUpdateDistance = useSelector(({ update }) =>
+    update ? update.statusUpdateDistance : ""
+  );
   const { user_id } = useSelector(({ auth }) => (auth ? auth : ""));
 
   useEffect(() => {
@@ -33,7 +36,11 @@ const DetailTimer = () => {
     }
 
     if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(handleSuccess, handleError, { maximumAge: 60000, timeout: 5000, enableHighAccuracy: true });
+      navigator.geolocation.getCurrentPosition(handleSuccess, handleError, {
+        maximumAge: 60000,
+        timeout: 5000,
+        enableHighAccuracy: true,
+      });
     } else {
       console.log("Geolocation not supported");
     }
@@ -41,7 +48,9 @@ const DetailTimer = () => {
 
   const handleTokenFromQueryParams = () => {
     console.log("handleTokenFromQueryParams !!");
-    const query = new URLSearchParams(window.location.hash.substring(window.location.hash.indexOf('?')));
+    const query = new URLSearchParams(
+      window.location.hash.substring(window.location.hash.indexOf("?"))
+    );
     const accessToken = query.get("accessToken");
     const refreshToken = query.get("refreshToken");
     const expirationDate = newExpirationDate();
@@ -53,7 +62,7 @@ const DetailTimer = () => {
       storeTokenData(accessToken, refreshToken, expirationDate);
       setIsLoggedIn(true);
     }
-  }
+  };
 
   const newExpirationDate = () => {
     var expiration = new Date();
@@ -106,7 +115,6 @@ const DetailTimer = () => {
         handleError
       );
       setWatchId(watchId);
-
     }
   }, [tracking]);
 
@@ -117,62 +125,83 @@ const DetailTimer = () => {
     const a =
       Math.sin(dLat / 2) * Math.sin(dLat / 2) +
       Math.cos(lat1 * (Math.PI / 180)) *
-      Math.cos(lat2 * (Math.PI / 180)) *
-      Math.sin(dLon / 2) *
-      Math.sin(dLon / 2);
+        Math.cos(lat2 * (Math.PI / 180)) *
+        Math.sin(dLon / 2) *
+        Math.sin(dLon / 2);
     console.log("a :", a);
     const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
     const distance = R * c;
 
-    return a ? distance : 0; //เช็คค่า a ก่อน เพราะเวลาไม่มีข้อมูล lat, lon aจะมีค่าเป็น NaN 
+    return a ? distance : 0; //เช็คค่า a ก่อน เพราะเวลาไม่มีข้อมูล lat, lon aจะมีค่าเป็น NaN
   };
 
   const clickFinish = async () => {
     const selected_event_id = localStorage.getItem("selected_event_id");
-    const selected_event_start_date = localStorage.getItem("selected_event_start_date");
-    const selected_event_end_date = localStorage.getItem("selected_event_end_date");
+    const selected_event_start_date = localStorage.getItem(
+      "selected_event_start_date"
+    );
+    const selected_event_end_date = localStorage.getItem(
+      "selected_event_end_date"
+    );
     const walk_step_goal = localStorage.getItem("walk_step_goal");
     const distance_goal = localStorage.getItem("distance_goal");
-    const dateParts1 = selected_event_start_date.split('-'); // แยกส่วนของวันที่
-    const dateParts2 = selected_event_end_date.split('-'); // แยกส่วนของวันที่
-    const startEvent = new Date(`${dateParts1[2]}-${dateParts1[1]}-${dateParts1[0]}`).getTime();
-    const endEvent = new Date(`${dateParts2[2]}-${dateParts2[1]}-${dateParts2[0]}`).getTime();
+    const dateParts1 = selected_event_start_date.split("-"); // แยกส่วนของวันที่
+    const dateParts2 = selected_event_end_date.split("-"); // แยกส่วนของวันที่
+    const startEvent = new Date(
+      `${dateParts1[2]}-${dateParts1[1]}-${dateParts1[0]}`
+    ).getTime();
+    const endEvent = new Date(
+      `${dateParts2[2]}-${dateParts2[1]}-${dateParts2[0]}`
+    ).getTime();
 
     const dataTotalSteps = await getMyGoogleFit(startEvent, endEvent); //ดึงข้อมูลจำนวนก้าวทั้งหมดในช่วงระยะเวลา event
     let totalSteps = 0;
-    if ((dataTotalSteps.bucket.length === 0) || (dataTotalSteps.bucket[0].dataset[0].point.length === 0)) {
+    if (
+      dataTotalSteps.bucket.length === 0 ||
+      dataTotalSteps.bucket[0].dataset[0].point.length === 0
+    ) {
       //ไม่มีข้อมูลจำนวนก้าว
     } else {
       //มีข้อมูลจำนวนก้าว
       totalSteps = dataTotalSteps.bucket[0].dataset[0].point[0].value[0].intVal;
     }
 
-    dispatch(updateWalkStep(user_id, selected_event_id, (totalSteps > walk_step_goal) ? walk_step_goal : totalSteps));
-    dispatch(updateDistance(user_id, selected_event_id, distance, distance_goal));
+    dispatch(
+      updateWalkStep(
+        user_id,
+        selected_event_id,
+        totalSteps > walk_step_goal ? walk_step_goal : totalSteps
+      )
+    );
+    dispatch(
+      updateDistance(user_id, selected_event_id, distance, distance_goal)
+    );
     navigate("/events");
   };
 
   const callGetMyGoogleFit = async () => {
     const data = await getMyGoogleFit(timeStampStartPage, Date.now()); //ดึงข้อมูลจำนวนก้าวในช่วงเวลาที่จับ
     checkStepsData(data);
-  }
+  };
 
   function checkStepsData(data) {
     let status_data;
     let steps_count = 0;
-    if ((data.bucket.length === 0) || (data.bucket[0].dataset[0].point.length === 0)) {
+    if (
+      data.bucket.length === 0 ||
+      data.bucket[0].dataset[0].point.length === 0
+    ) {
       status_data = "no_data";
     } else {
       status_data = "there_is_data";
       steps_count = data.bucket[0].dataset[0].point[0].value[0].intVal;
     }
-    setSteps(steps_count)
+    setSteps(steps_count);
   }
 
   let intervalId;
   let intervalId2;
   useEffect(() => {
-
     if (isRunning) {
       intervalId = setInterval(() => {
         setTotalSeconds((prevSeconds) => prevSeconds + 1);
@@ -192,8 +221,8 @@ const DetailTimer = () => {
     //ตั้งไว้หลังจากเริ่มจับเวลา 3วินาที ค่อยเริ่มนับ km เพราะก่อนหน้านี้บัค
     if (totalSeconds === 1) {
       setTracking(true);
-    };
-  }, [totalSeconds])
+    }
+  }, [totalSeconds]);
 
   const formatTime = (seconds) => {
     const hours = Math.floor(seconds / 3600);
@@ -231,13 +260,13 @@ const DetailTimer = () => {
         <p className={style["time"]}>เวลา</p>
         <p className={style["count-time"]}>{formatTime(totalSeconds)}</p>
         <div className={style["justify-around"]}>
-          <div>
+          {/*  <div>
             <p className={style["text-walk"]}>ก้าวเดิน (ก้าว)</p>
             <p className={style["count-walk"]}>{steps}</p>
-            {/*   <button style={{ zIndex: 99, position: "relative" }} onClick={() => getMyGoogleFit(startTimeMillis, endTimeMillis)}>
+              <button style={{ zIndex: 99, position: "relative" }} onClick={() => getMyGoogleFit(startTimeMillis, endTimeMillis)}>
               Get Google Fit
-            </button> */}
-          </div>
+            </button>
+          </div> */}
           <div>
             <p className={style["text-walk"]}>ระยะทาง (กม.)</p>
             <p className={style["count-walk"]}>{distance.toFixed(2)}</p>
