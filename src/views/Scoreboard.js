@@ -20,6 +20,8 @@ const Scoreboard = () => {
   );
 
   const [activityUsers, setActivityUsers] = useState(activity_users);
+  const { user_id } = useSelector(({ auth }) => (auth ? auth : ""));
+
 
   const { id } = useParams();
   const dispatch = useDispatch();
@@ -48,7 +50,7 @@ const Scoreboard = () => {
           {activityUsers &&
             activityUsers.map((item, index) => (
               <div
-                className={` ${index == 2 && style["score-user"]} ${
+                className={` ${item.user_id == user_id && style["score-user"]} ${
                   style["list-user"]
                 }`}
               >
