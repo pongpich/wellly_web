@@ -135,7 +135,7 @@ const Home2 = ({ match }) => {
               <p>App's use and transfer of information received from Google APIs to any other app will adhere to
                 <a
                   className={style["pointer"]}
-                  onClick={() => openInNewTab('https://support.google.com/cloud/answer/13463073?visit_id=638392557865361126-428148626&rd=1#explain-types')}
+                  onClick={() => openInNewTab('https://developers.google.com/terms/api-services-user-data-policy')}
                 >
                   &nbsp;<u>Google API Services User Data Policy</u>
 
@@ -151,7 +151,7 @@ const Home2 = ({ match }) => {
               <p>การใช้และการถ่ายโอนข้อมูลที่ได้รับจาก Google APIs ไปยังแอปอื่น ๆ ของ (แอป) จะปฏิบัติตาม
                 <a
                   className={style["pointer"]}
-                  onClick={() => openInNewTab('https://support.google.com/cloud/answer/13463073?visit_id=638392557865361126-428148626&rd=1#explain-types')}
+                  onClick={() => openInNewTab('https://developers.google.com/terms/api-services-user-data-policy')}
                 >
                   <u> นโยบายข้อมูลผู้ใช้บริการ API ของ Google</u>
 
