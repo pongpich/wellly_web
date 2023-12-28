@@ -69,9 +69,8 @@ const Detail = () => {
     console.log("eventUser :", eventUser);
   }, [eventUser]);
 
-  const params1 = "tha-0018";
   useEffect(() => {
-    dispatch(getEventUser(user_id ? user_id : params1)); //สำหรับใช้งานจริงผ่านมือถือ
+    dispatch(getEventUser(user_id)); //สำหรับใช้งานจริงผ่านมือถือ
   }, []);
 
   const createGoogleAuthLink = async () => {
@@ -174,17 +173,27 @@ const Detail = () => {
     if (isLeft == false) {
       const accessToken = localStorage.getItem("accessToken");
       const refreshtoken = localStorage.getItem("refreshToken");
-      if (accessToken && refreshtoken) {
-        console.log("มี Token");
-        setTimeout(() => {
-          navigate(
-            `/detailTimer?accessToken=${accessToken}&refreshToken=${refreshtoken}`
-          );
-        }, 400);
-      } else {
-        console.log("ไม่มี Token");
-        createGoogleAuthLink();
-      }
+
+      //เช็ค Token จริง
+      /*       if (accessToken && refreshtoken) {
+              console.log("มี Token");
+              setTimeout(() => {
+                navigate(
+                  `/detailTimer?accessToken=${accessToken}&refreshToken=${refreshtoken}`
+                );
+              }, 400);
+            } else {
+              console.log("ไม่มี Token");
+              createGoogleAuthLink();
+            }
+       */
+      
+      //สำหรับ Demo
+      setTimeout(() => {
+        navigate(
+          `/detailTimer`
+        );
+      }, 400);
     }
   }, [isLeft]);
 
@@ -217,17 +226,15 @@ const Detail = () => {
             </div>
             <div className={style["progress-activity"]}>
               <div
-                className={`${
-                  statusProgressBar
-                    ? style["progress-bar-active"]
-                    : style["progress-bar"]
-                }`}
+                className={`${statusProgressBar
+                  ? style["progress-bar-active"]
+                  : style["progress-bar"]
+                  }`}
                 style={{
-                  width: `${
-                    ((eventUser && eventUser.walk_step) /
-                      (event_activity && event_activity.walk_step)) *
+                  width: `${((eventUser && eventUser.walk_step) /
+                    (event_activity && event_activity.walk_step)) *
                     100
-                  }%`,
+                    }%`,
                   maxWidth: "100%",
                 }}
               ></div>
@@ -250,17 +257,15 @@ const Detail = () => {
             </div>
             <div className={style["progress-activity"]}>
               <div
-                className={`${
-                  statusProgressBar
-                    ? style["progress-bar-active"]
-                    : style["progress-bar"]
-                }`}
+                className={`${statusProgressBar
+                  ? style["progress-bar-active"]
+                  : style["progress-bar"]
+                  }`}
                 style={{
-                  width: `${
-                    ((eventUser && eventUser.distance) /
-                      (event_activity && event_activity.distance)) *
+                  width: `${((eventUser && eventUser.distance) /
+                    (event_activity && event_activity.distance)) *
                     100
-                  }%`,
+                    }%`,
                   maxWidth: "100%",
                 }}
               ></div>
@@ -271,16 +276,14 @@ const Detail = () => {
         <div className={style["box-frame13754"]}>
           <img
             src={Frame13}
-            className={`${style["frame13"]} ${
-              isLeft ? style["left"] : style["right"]
-            }`}
+            className={`${style["frame13"]} ${isLeft ? style["left"] : style["right"]
+              }`}
             style={{ left: `${position}px` }}
             draggable="true"
             onTouchMove={handleTouchMove}
           />
           <p className={style["start-exercising"]}>เริ่มออกกำลังกาย</p>
-          {/*           <button onClick={createGoogleAuthLink}>Login</button>
-           */}{" "}
+          {" "}
         </div>
       </>
     );
@@ -306,34 +309,31 @@ const Detail = () => {
           )}
         </p>
         <div
-          className={` ${
-            statusManu == "score" ? "btn-manu-active" : "btn-manu"
-          } ${style["mr-9"]}`}
+          className={` ${statusManu == "score" ? "btn-manu-active" : "btn-manu"
+            } ${style["mr-9"]}`}
           onClick={() => setStatusManu("score")}
         >
           คะแนน
         </div>
         <div
-          className={` ${
-            statusManu == "details" ? "btn-manu-active" : "btn-manu"
-          } ${style["mr-9"]}`}
+          className={` ${statusManu == "details" ? "btn-manu-active" : "btn-manu"
+            } ${style["mr-9"]}`}
           onClick={() => setStatusManu("details")}
         >
           รายละเอียด
         </div>
         <div
           onClick={() => setStatusManu("reward")}
-          className={` ${
-            statusManu == "reward" ? "btn-manu-active" : "btn-manu"
-          }`}
+          className={` ${statusManu == "reward" ? "btn-manu-active" : "btn-manu"
+            }`}
         >
           รางวัล
         </div>
         {statusManu == "details"
           ? messageContent()
           : statusManu == "score"
-          ? rewardScore()
-          : rewardActivity()}
+            ? rewardScore()
+            : rewardActivity()}
       </div>
     </>
   );
