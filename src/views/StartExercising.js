@@ -187,12 +187,10 @@ const Detail = () => {
               createGoogleAuthLink();
             }
        */
-      
+
       //สำหรับ Demo
       setTimeout(() => {
-        navigate(
-          `/detailTimer`
-        );
+        navigate(`/detailTimer`);
       }, 400);
     }
   }, [isLeft]);
@@ -226,15 +224,17 @@ const Detail = () => {
             </div>
             <div className={style["progress-activity"]}>
               <div
-                className={`${statusProgressBar
-                  ? style["progress-bar-active"]
-                  : style["progress-bar"]
-                  }`}
+                className={`${
+                  statusProgressBar
+                    ? style["progress-bar-active"]
+                    : style["progress-bar"]
+                }`}
                 style={{
-                  width: `${((eventUser && eventUser.walk_step) /
-                    (event_activity && event_activity.walk_step)) *
+                  width: `${
+                    ((eventUser && eventUser.walk_step) /
+                      (event_activity && event_activity.walk_step)) *
                     100
-                    }%`,
+                  }%`,
                   maxWidth: "100%",
                 }}
               ></div>
@@ -257,15 +257,17 @@ const Detail = () => {
             </div>
             <div className={style["progress-activity"]}>
               <div
-                className={`${statusProgressBar
-                  ? style["progress-bar-active"]
-                  : style["progress-bar"]
-                  }`}
+                className={`${
+                  statusProgressBar
+                    ? style["progress-bar-active"]
+                    : style["progress-bar"]
+                }`}
                 style={{
-                  width: `${((eventUser && eventUser.distance) /
-                    (event_activity && event_activity.distance)) *
+                  width: `${
+                    ((eventUser && eventUser.distance) /
+                      (event_activity && event_activity.distance)) *
                     100
-                    }%`,
+                  }%`,
                   maxWidth: "100%",
                 }}
               ></div>
@@ -276,14 +278,14 @@ const Detail = () => {
         <div className={style["box-frame13754"]}>
           <img
             src={Frame13}
-            className={`${style["frame13"]} ${isLeft ? style["left"] : style["right"]
-              }`}
+            className={`${style["frame13"]} ${
+              isLeft ? style["left"] : style["right"]
+            }`}
             style={{ left: `${position}px` }}
             draggable="true"
             onTouchMove={handleTouchMove}
           />
-          <p className={style["start-exercising"]}>เริ่มออกกำลังกาย</p>
-          {" "}
+          <p className={style["start-exercising"]}>เริ่มออกกำลังกาย</p>{" "}
         </div>
       </>
     );
@@ -293,7 +295,10 @@ const Detail = () => {
     <>
       <div className={style["box-head-img"]}>
         <NavbarImg path="/events" />
-        <img src={Ads} className={style["img-Ads"]} />
+        <img
+          src={event_activity ? event_activity.cover_Image : Ads}
+          className={style["img-Ads"]}
+        />
       </div>
       <div className={style["box-content"]}>
         <p className={style["text-head"]}>
@@ -309,31 +314,34 @@ const Detail = () => {
           )}
         </p>
         <div
-          className={` ${statusManu == "score" ? "btn-manu-active" : "btn-manu"
-            } ${style["mr-9"]}`}
+          className={` ${
+            statusManu == "score" ? "btn-manu-active" : "btn-manu"
+          } ${style["mr-9"]}`}
           onClick={() => setStatusManu("score")}
         >
           คะแนน
         </div>
         <div
-          className={` ${statusManu == "details" ? "btn-manu-active" : "btn-manu"
-            } ${style["mr-9"]}`}
+          className={` ${
+            statusManu == "details" ? "btn-manu-active" : "btn-manu"
+          } ${style["mr-9"]}`}
           onClick={() => setStatusManu("details")}
         >
           รายละเอียด
         </div>
         <div
           onClick={() => setStatusManu("reward")}
-          className={` ${statusManu == "reward" ? "btn-manu-active" : "btn-manu"
-            }`}
+          className={` ${
+            statusManu == "reward" ? "btn-manu-active" : "btn-manu"
+          }`}
         >
           รางวัล
         </div>
         {statusManu == "details"
           ? messageContent()
           : statusManu == "score"
-            ? rewardScore()
-            : rewardActivity()}
+          ? rewardScore()
+          : rewardActivity()}
       </div>
     </>
   );

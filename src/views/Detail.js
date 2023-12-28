@@ -121,7 +121,10 @@ const Detail = () => {
     <>
       <div className={style["box-head-img"]}>
         <NavbarImg path="/events" />
-        <img src={Ads} className={style["img-Ads"]} />
+        <img
+          src={event_activity ? event_activity.cover_Image : Ads}
+          className={style["img-Ads"]}
+        />
       </div>
       <div className={style["box-content"]}>
         <p className={style["text-head"]}>
