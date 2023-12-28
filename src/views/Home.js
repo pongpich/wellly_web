@@ -113,20 +113,23 @@ const Home = ({ match }) => {
           tickData
             ? "/detailSucceed/" + item.id
             : tickId
-              ? "/start-exercising/" + item.id
-              : "/detail/" + item.id
+            ? "/start-exercising/" + item.id
+            : "/detail/" + item.id
         }
         key={indexItem}
       >
         <div className={style["activity-box-user"]}>
-          {tickId && tickData && (
-            <img src={Tick3x} className={style["img-tick3x"]} />
-          )}
+          {
+            /* tickId && */ tickData && (
+              <img src={Tick3x} className={style["img-tick3x"]} />
+            )
+          }
           <div className={style["activity-image"]}>
             <img
               src={item.cover_Image ? item.cover_Image : Frame13716}
-              className={`${style["img-activity"]} ${tickId && tickData && style["opacity-tick"]
-                }`}
+              className={`${style["img-activity"]} ${
+                /* tickId && */ tickData && style["opacity-tick"]
+              }`}
             />
           </div>
           <p className={style["details-text"]}>{item.event_name}</p>
@@ -156,15 +159,17 @@ const Home = ({ match }) => {
                   </div>
                   <div className={style["progress-activity"]}>
                     <div
-                      className={`${!tickData
-                        ? style["progress-bar-active"]
-                        : style["progress-bar"]
-                        }`}
+                      className={`${
+                        !tickData
+                          ? style["progress-bar-active"]
+                          : style["progress-bar"]
+                      }`}
                       style={{
-                        width: `${(itemUser &&
-                          itemUser &&
-                          itemUser.walk_step / item.walk_step) * 100
-                          }%`,
+                        width: `${
+                          (itemUser &&
+                            itemUser &&
+                            itemUser.walk_step / item.walk_step) * 100
+                        }%`,
                         maxWidth: "100%",
                       }}
                     ></div>
@@ -189,15 +194,17 @@ const Home = ({ match }) => {
                   </div>
                   <div className={style["progress-activity"]}>
                     <div
-                      className={`${!tickData
-                        ? style["progress-bar-active"]
-                        : style["progress-bar"]
-                        }`}
+                      className={`${
+                        !tickData
+                          ? style["progress-bar-active"]
+                          : style["progress-bar"]
+                      }`}
                       style={{
-                        width: `${(itemUser &&
-                          itemUser &&
-                          itemUser.distance / item.distance) * 100
-                          }%`,
+                        width: `${
+                          (itemUser &&
+                            itemUser &&
+                            itemUser.distance / item.distance) * 100
+                        }%`,
                         maxWidth: "100%",
                       }}
                     ></div>
