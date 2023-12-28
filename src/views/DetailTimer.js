@@ -125,9 +125,9 @@ const DetailTimer = () => {
     const a =
       Math.sin(dLat / 2) * Math.sin(dLat / 2) +
       Math.cos(lat1 * (Math.PI / 180)) *
-        Math.cos(lat2 * (Math.PI / 180)) *
-        Math.sin(dLon / 2) *
-        Math.sin(dLon / 2);
+      Math.cos(lat2 * (Math.PI / 180)) *
+      Math.sin(dLon / 2) *
+      Math.sin(dLon / 2);
     console.log("a :", a);
     const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
     const distance = R * c;
@@ -166,17 +166,17 @@ const DetailTimer = () => {
       totalSteps = dataTotalSteps.bucket[0].dataset[0].point[0].value[0].intVal;
     }
 
-    dispatch(
-      updateWalkStep(
-        user_id,
-        selected_event_id,
-        totalSteps > walk_step_goal ? walk_step_goal : totalSteps
-      )
-    );
-    dispatch(
-      updateDistance(user_id, selected_event_id, distance, distance_goal)
-    );
-    navigate("/events");
+    /*  dispatch(
+       updateWalkStep(
+         user_id,
+         selected_event_id,
+         totalSteps > walk_step_goal ? walk_step_goal : totalSteps
+       )
+     );
+     dispatch(
+       updateDistance(user_id, selected_event_id, distance, distance_goal)
+     ); */
+    navigate(`/start-exercising/${selected_event_id}`);
   };
 
   const callGetMyGoogleFit = async () => {
@@ -340,7 +340,14 @@ const DetailTimer = () => {
                   >
                     กลับ
                   </div>
-                  <div className={style["btn-finish-Abandon"]}>ละทิ้ง</div>
+                  <div
+                    onClick={() => clickFinish()}
+                    className={style["btn-finish-Abandon"]}
+                    data-bs-toggle="modal"
+                    data-bs-target="#staticBackdrop"
+                  >
+                    ละทิ้ง
+                  </div>
                 </div>
               </div>
             </div>
