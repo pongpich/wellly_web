@@ -29,7 +29,7 @@ const CreateNewActivity = () => {
   const { status_event_activity } = useSelector(({ createEv }) =>
     createEv ? createEv : ""
   );
-  const [statusCreateActivity, setStatusCreateActivity] = useState("activity"); //activity = กิจกรรม, criteria = เกณฑ์ ,Rewards = ของรางวัล,badge = ตราสัญลักษณ์
+  const [statusCreateActivity, setStatusCreateActivity] = useState("criteria"); //activity = กิจกรรม, criteria = เกณฑ์ ,Rewards = ของรางวัล,badge = ตราสัญลักษณ์
 
   const [language, setLanguage] = useState("th");
   const [rewardsNumber, setRewardsNumber] = useState(1);
@@ -53,9 +53,9 @@ const CreateNewActivity = () => {
 
   //   ส่วนเก็บข้อมูล   เกณฑ์  activityType
   const [criteria_distance, setCriteria_distance] = useState(false);
-  const [distance, setDistance] = useState("");
+  const [distance, setDistance] = useState(0);
   const [criteria_walk_step, setCriteria_walk_step] = useState(false);
-  const [walk_step, setWalk_step] = useState("");
+  const [walk_step, setWalk_step] = useState(0);
 
   //   ส่วนเก็บข้อมูล   Rewards รางวัล
   const [rewards, setRewards] = useState([
@@ -273,9 +273,9 @@ const CreateNewActivity = () => {
       setEndDateShow(null);
     } else if (event == "criteria") {
       setCriteria_distance(false);
-      setDistance("");
+      setDistance(0);
       setCriteria_walk_step(false);
-      setWalk_step("");
+      setWalk_step(0);
     } else {
       setRewards([{ number: 1, name: "", image: "", quantity: "" }]);
     }
@@ -464,13 +464,15 @@ const CreateNewActivity = () => {
 
           <button
             className={
-              (eventName != "" &&
-                eventDetail != "" &&
-                startDate != null &&
-                endDate != null &&
-                startDateShow != null &&
-                endDateShow != null,
-              imageHead != null ? style["btn-next-active"] : style["btn-next"])
+              eventName != "" &&
+              eventDetail != "" &&
+              startDate != null &&
+              endDate != null &&
+              startDateShow != null &&
+              endDateShow != null &&
+              imageHead != null
+                ? style["btn-next-active"]
+                : style["btn-next"]
             }
             onClick={
               eventName != "" &&
@@ -515,14 +517,17 @@ const CreateNewActivity = () => {
             </p>
             <div className={`${style["box-person"]}`}>
               <input
-                type="number"
+                type="text"
                 name="criteria_distance"
                 className="form-control"
                 id="exampleFormControlInput155"
                 placeholder="จำนวนระยะทาง"
                 min={0}
                 value={distance}
-                onChange={(event) => setDistance(event.target.value)}
+                onChange={(event) =>
+                  setDistance(event.target.value.replace(/\D/g, ""))
+                }
+                disabled={!criteria_distance}
               />
               <div className={style["person"]}>กิโลเมตร</div>
             </div>
@@ -546,14 +551,18 @@ const CreateNewActivity = () => {
             </p>
             <div className={`${style["box-person"]} `}>
               <input
-                type="number"
+                type="text"
                 className="form-control "
                 id="exampleFormControlInput1"
                 placeholder="จำนวนก้าวเดิน"
                 min={0}
                 value={walk_step}
-                onChange={(event) => setWalk_step(event.target.value)}
+                onChange={(event) =>
+                  setWalk_step(event.target.value.replace(/\D/g, ""))
+                }
+                disabled={!criteria_walk_step}
               />
+
               <div className={style["person"]}>ก้าว</div>
             </div>
           </div>
@@ -581,13 +590,12 @@ const CreateNewActivity = () => {
               <div>
                 <button
                   className={
-                    (distance != "" && walk_step != "" && criteria_distance) ||
-                    criteria_walk_step
+                    criteria_distance || criteria_walk_step
                       ? style["btn-next-active"]
                       : style["btn-next"]
                   }
                   onClick={
-                    distance != "" && walk_step != ""
+                    criteria_distance || criteria_walk_step
                       ? () => handleEventChange("criteria")
                       : null
                   }
@@ -668,7 +676,7 @@ const CreateNewActivity = () => {
                           />
                           <div className={style["quantity"]}>
                             <input
-                              type="number"
+                              type="text"
                               class="form-control"
                               id="exampleFormControlInput1"
                               placeholder="ระบุจำนวน"
@@ -677,7 +685,7 @@ const CreateNewActivity = () => {
                               onChange={(e) =>
                                 handleTextareaChange(
                                   reward.number,
-                                  e.target.value,
+                                  e.target.value.replace(/\D/g, ""),
                                   e.target.name
                                 )
                               }
