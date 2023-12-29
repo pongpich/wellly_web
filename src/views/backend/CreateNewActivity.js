@@ -29,7 +29,7 @@ const CreateNewActivity = () => {
   const { status_event_activity } = useSelector(({ createEv }) =>
     createEv ? createEv : ""
   );
-  const [statusCreateActivity, setStatusCreateActivity] = useState("criteria"); //activity = กิจกรรม, criteria = เกณฑ์ ,Rewards = ของรางวัล,badge = ตราสัญลักษณ์
+  const [statusCreateActivity, setStatusCreateActivity] = useState("activity"); //activity = กิจกรรม, criteria = เกณฑ์ ,Rewards = ของรางวัล,badge = ตราสัญลักษณ์
 
   const [language, setLanguage] = useState("th");
   const [rewardsNumber, setRewardsNumber] = useState(1);
