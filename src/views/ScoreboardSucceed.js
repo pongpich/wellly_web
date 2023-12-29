@@ -22,7 +22,6 @@ const ScoreboardSucceed = () => {
   const [activityUsers, setActivityUsers] = useState(activity_users);
   const { user_id } = useSelector(({ auth }) => (auth ? auth : ""));
 
-
   const { id } = useParams();
   const dispatch = useDispatch();
 
@@ -35,33 +34,60 @@ const ScoreboardSucceed = () => {
   }, [activity_users]);
   const maxLength = 10;
 
+  const nameGold =
+    activityUsers &&
+    activityUsers[0] &&
+    (activityUsers[0].display_name
+      ? activityUsers[0].display_name.length > maxLength
+        ? `${activityUsers[0].display_name.substring(0, maxLength)}`
+        : activityUsers[0].display_name
+      : activityUsers[0].email
+      ? activityUsers[0].email.length > maxLength
+        ? `${activityUsers[0].email.substring(0, maxLength)}`
+        : activityUsers[0].email
+      : null);
+  const nameSilver =
+    activityUsers &&
+    activityUsers[1] &&
+    (activityUsers[1].display_name
+      ? activityUsers[1].display_name.length > maxLength
+        ? `${activityUsers[1].display_name.substring(0, maxLength)}`
+        : activityUsers[1].display_name
+      : activityUsers[1].email
+      ? activityUsers[1].email.length > maxLength
+        ? `${activityUsers[1].email.substring(0, maxLength)}`
+        : activityUsers[1].email
+      : null);
+  const nameCopper =
+    activityUsers &&
+    activityUsers[2] &&
+    (activityUsers[2].display_name
+      ? activityUsers[2].display_name.length > maxLength
+        ? `${activityUsers[2].display_name.substring(0, maxLength)}`
+        : activityUsers[2].display_name
+      : activityUsers[2].email
+      ? activityUsers[2].email.length > maxLength
+        ? `${activityUsers[2].email.substring(0, maxLength)}`
+        : activityUsers[2].email
+      : null);
+
   return (
     <div className={style["box-head"]}>
       <NavbarScoreboard path={`/detailSucceed/${id}`} />
       <div className={style["box-coin"]}>
         <div className="row">
           <div className="col-4">
-            <img
-              src={silverCoin}
-              alt="Gold Coin"
-              className={style["silver-coin"]}
-            />
-            <p className={style["name-coin"]}>
-              {activityUsers &&
-                activityUsers[1] &&
-                (activityUsers[1].display_name
-                  ? activityUsers[1].display_name.length > maxLength
-                    ? `${activityUsers[1].display_name.substring(
-                        0,
-                        maxLength
-                      )}...`
-                    : activityUsers[1].display_name
-                  : activityUsers[1].email
-                  ? activityUsers[1].email.length > maxLength
-                    ? `${activityUsers[1].email.substring(0, maxLength)}...`
-                    : activityUsers[1].email
-                  : null)}
-            </p>
+            <div className={style["box-copper"]}>
+              <img
+                src={silverCoin}
+                alt="Gold Coin"
+                className={style["silver-coin"]}
+              />
+              <span className={style["silver-name-0"]}>
+                {nameSilver && nameSilver[0]}
+              </span>
+            </div>
+            <p className={style["name-coin"]}>{nameSilver}</p>
             <div className={style["stab-silver"]}>
               <p className={style["coin-number"]}>2</p>
               <p className={style["number-step"]}>
@@ -82,27 +108,17 @@ const ScoreboardSucceed = () => {
           </div>
           <div className="col-4 justify-justify-content">
             <div className="justify-justify-content">
-              <img
-                src={goldCoin}
-                alt="Gold Coin"
-                className={style["cold-coin"]}
-              />
-              <p className={style["name-coin"]}>
-                {activityUsers &&
-                  activityUsers[0] &&
-                  (activityUsers[0].display_name
-                    ? activityUsers[0].display_name.length > maxLength
-                      ? `${activityUsers[0].display_name.substring(
-                          0,
-                          maxLength
-                        )}...`
-                      : activityUsers[0].display_name
-                    : activityUsers[0].email
-                    ? activityUsers[0].email.length > maxLength
-                      ? `${activityUsers[0].email.substring(0, maxLength)}...`
-                      : activityUsers[0].email
-                    : null)}
-              </p>
+              <div className={style["box-copper"]}>
+                <img
+                  src={goldCoin}
+                  alt="Gold Coin"
+                  className={style["gold-coin"]}
+                />
+                <span className={style["gold-name-0"]}>
+                  {nameGold && nameGold[0]}
+                </span>
+              </div>
+              <p className={style["name-coin"]}>{nameGold}</p>
               <div className={style["stab-gold"]}>
                 <p className={style["coin-number"]}>1</p>
                 <p className={style["number-step"]}>
@@ -123,27 +139,17 @@ const ScoreboardSucceed = () => {
             </div>
           </div>
           <div className="col-4">
-            <img
-              src={copperCoin}
-              alt="Gold Coin"
-              className={style["copper-coin"]}
-            />
-            <p className={style["name-coin"]}>
-              {activityUsers &&
-                activityUsers[2] &&
-                (activityUsers[2].display_name
-                  ? activityUsers[2].display_name.length > maxLength
-                    ? `${activityUsers[2].display_name.substring(
-                        0,
-                        maxLength
-                      )}...`
-                    : activityUsers[2].display_name
-                  : activityUsers[2].email
-                  ? activityUsers[2].email.length > maxLength
-                    ? `${activityUsers[2].email.substring(0, maxLength)}...`
-                    : activityUsers[2].email
-                  : null)}
-            </p>
+            <div className={style["box-copper"]}>
+              <img
+                src={copperCoin}
+                alt="Gold Coin"
+                className={style["copper-coin"]}
+              />
+              <span className={style["copper-name-0"]}>
+                {nameCopper && nameCopper[0]}
+              </span>
+            </div>
+            <p className={style["name-coin"]}>{nameCopper}</p>
             <div className={style["stab-copper"]}>
               <p className={style["coin-number"]}>3</p>
               <p className={style["number-step"]}>
@@ -175,9 +181,9 @@ const ScoreboardSucceed = () => {
           {activityUsers &&
             activityUsers.map((item, index) => (
               <div
-                className={` ${item.user_id == user_id && style["score-user"]} ${
-                  style["list-user"]
-                }`}
+                className={` ${
+                  item.user_id == user_id && style["score-user"]
+                } ${style["list-user"]}`}
               >
                 <p className={style["list-id"]}>{index + 1}</p>
                 <div className={style["box-list-icon"]}>

@@ -144,10 +144,20 @@
     background: linear-gradient(hsla(43, 93%, 44%, 0.800), hsla(43, 93%, 44%, 0));
 }
 
-.cold-coin {
+.gold-coin {
     width: 72px;
     height: 72px;
     margin-left: 8px;
+}
+
+.gold-name-0 {
+    position: absolute;
+    font-size: 24px;
+    margin-top: 21px;
+    margin-left: -42px;
+    z-index: 10;
+    font-family: bold;
+    color: var(--white);
 }
 
 .stab-silver {
@@ -158,10 +168,22 @@
 }
 
 .silver-coin {
-    margin-top: 46px;
-    width: 56px;
-    height: 56px;
-    margin-left: 16px;
+    margin-bottom: -16px;
+    margin-top: 35px;
+    width: 86px;
+    height: 86px;
+    margin-left: 4px;
+    z-index: 0;
+}
+
+.silver-name-0 {
+    position: absolute;
+    font-size: 24px;
+    margin-top: -50px;
+    margin-left: 41px;
+    z-index: 10;
+    font-family: bold;
+    color: var(--white);
 }
 
 .stab-copper {
@@ -171,16 +193,32 @@
     background: linear-gradient(hsla(18, 58%, 69%, 0.800), hsla(18, 58%, 69%, 0));
 }
 
+.box-coin-name {
+    position: relative !important;
+
+}
+
+.copper-name-0 {
+    position: absolute;
+    font-size: 24px;
+    margin-top: 78px;
+    margin-left: -34px;
+    z-index: 10;
+    font-family: bold;
+    color: var(--white);
+}
 
 .copper-coin {
+    position: relative;
     margin-top: 65px;
     width: 56px;
     height: 56px;
     margin-left: 16px;
+    z-index: 0;
 }
 
 .name-coin {
-    margin-top: -12px !important;
+    margin-top: 0px !important;
     margin-bottom: 8px !important;
     text-align: center;
     font-family: bold;
