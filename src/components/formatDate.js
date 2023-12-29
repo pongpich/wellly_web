@@ -12,7 +12,19 @@ const formattedDate = (start_date, end_date) => {
     const formattedEndDate = format(endDate, "d MMM yyyy", {
       locale: th,
     });
-    let date = formattedStartDate + " - " + formattedEndDate;
+
+    const thaiYearStart = startDate.getFullYear() + 543; // เพิ่ม 543 เพื่อแปลงเป็น พ.ศ.
+    const thaiYearEnd = endDate.getFullYear() + 543; // เพิ่ม 543 เพื่อแปลงเป็น พ.ศ.
+
+    const formattedStartDateWithThaiYear = `${formattedStartDate} ${thaiYearStart}`;
+    const formattedStartDateWithThaiNoYear = `${formattedStartDate}`;
+    const formattedEndDateWithThaiYear = `${formattedEndDate} ${thaiYearEnd}`;
+    const isSameThaiYear =
+      thaiYearStart == thaiYearEnd
+        ? formattedStartDateWithThaiNoYear
+        : formattedStartDateWithThaiYear;
+
+    let date = isSameThaiYear + " - " + formattedEndDateWithThaiYear;
     return date;
   } catch (error) {
     return "Invalid Date Range";
