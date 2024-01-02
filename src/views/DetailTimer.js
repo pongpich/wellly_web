@@ -137,6 +137,10 @@ const DetailTimer = () => {
 
   const clickFinish = async () => {
     const selected_event_id = localStorage.getItem("selected_event_id");
+    const distance_goal = localStorage.getItem("distance_goal");
+    dispatch(
+      updateDistance(user_id, selected_event_id, distance, distance_goal)
+    );
     navigate(`/start-exercising/${selected_event_id}`);
 
     /* const selected_event_start_date = localStorage.getItem(
