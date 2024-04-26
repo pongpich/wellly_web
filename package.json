@@ -35,7 +35,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "deploy:prod": "REACT_APP_STAGE=prod npm run build && scp -i mainKP.pem -r build/* nc-user@139.5.147.76:/var/www/wellly.planforfit.com/html"
+    "deploy:prod": "REACT_APP_STAGE=prod npm run build && scp -i ~/.ssh/carrotKey.pem -r build/* dev@139.59.100.23:/var/www/wellly.planforfit.com/html"
   },
   "eslintConfig": {
     "extends": [
