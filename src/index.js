@@ -7,12 +7,7 @@ import ReactDOM from "react-dom/client";
 import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
 import { configureStore } from "./redux/store";
-import {
-  BrowserRouter as Router,
-  HashRouter,
-  Routes,
-  Route,
-} from "react-router-dom";
+import { BrowserRouter } from "react-router-dom";
 
 const { store, persister } = configureStore();
 
@@ -20,11 +15,11 @@ const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
     <Provider store={store}>
-      <HashRouter>
+      <BrowserRouter>
         <PersistGate persistor={persister}>
           <App />
         </PersistGate>
-      </HashRouter>
+      </BrowserRouter>
     </Provider>
   </React.StrictMode>
 );
